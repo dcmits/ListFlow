@@ -1,0 +1,105 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:SeatFlow.Themes">
+
+  <!--  Base style for title bar buttons  -->
+  <Style x:Key="CaptionButtonStyle" TargetType="Button">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid
+            x:Name="LayoutRoot"
+            Width="44"
+            Height="30"
+            Background="Transparent">
+            <TextBlock
+              x:Name="txt"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              FontFamily="Segoe MDL2 Assets"
+              FontSize="10"
+              Foreground="{StaticResource WindowTitleBarButton}"
+              RenderOptions.ClearTypeHint="Auto"
+              Text="{TemplateBinding Content}"
+              TextOptions.TextFormattingMode="Display"
+              TextOptions.TextRenderingMode="Aliased" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="LayoutRoot" Property="Background" Value="{StaticResource HoverWindowTitleBarButtonBackground}" />
+              <Setter TargetName="txt" Property="Foreground" Value="{StaticResource HoverWindowTitleBarButton}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--  Base style Close title bar button  -->
+  <Style x:Key="CaptionCloseButtonStyle" TargetType="Button">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid
+            x:Name="LayoutRoot"
+            Width="44"
+            Height="30"
+            Background="Transparent">
+            <TextBlock
+              x:Name="txt"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              FontFamily="Segoe MDL2 Assets"
+              FontSize="10"
+              Foreground="{StaticResource WindowTitleBarButton}"
+              RenderOptions.ClearTypeHint="Auto"
+              Text="{TemplateBinding Content}"
+              TextOptions.TextFormattingMode="Display"
+              TextOptions.TextRenderingMode="Aliased" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="LayoutRoot" Property="Background" Value="{StaticResource HoverWindowTitleBarCloseButtonBackground}" />
+              <Setter TargetName="txt" Property="Foreground" Value="{StaticResource HoverWindowTitleBarCloseButton}" />
+              <Setter Property="FontWeight" Value="Bold" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--  Minimize  -->
+  <Style
+    x:Key="MinimizeButtonStyle"
+    BasedOn="{StaticResource CaptionButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Content" Value="&#xE949;" />
+  </Style>
+
+  <!--  Maximize  -->
+  <Style
+    x:Key="MaximizeButtonStyle"
+    BasedOn="{StaticResource CaptionButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Content" Value="&#xE739;" />
+  </Style>
+
+  <!--  Restore  -->
+  <Style
+    x:Key="RestoreButtonStyle"
+    BasedOn="{StaticResource CaptionButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Content" Value="&#xE923;" />
+  </Style>
+
+  <!--  Close  -->
+  <Style
+    x:Key="CloseButtonStyle"
+    BasedOn="{StaticResource CaptionCloseButtonStyle}"
+    TargetType="Button">
+    <Setter Property="Content" Value="&#xE106;" />
+  </Style>
+
+</ResourceDictionary>

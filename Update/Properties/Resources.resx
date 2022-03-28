@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MandatoryField" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="ToolTip_MandatoryField" xml:space="preserve">
+    <value>Mandatory field</value>
+  </data>
+  <data name="ToolTip_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ViewTitle_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Column_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Info_XMLFileUnavailable" xml:space="preserve">
+    <value>The XML file containing the parameters of the operations to be performed during the update is not available. </value>
+  </data>
+  <data name="Info_XMLFilePath" xml:space="preserve">
+    <value>XML File:</value>
+  </data>
+  <data name="Info_UpdateCannotBePerformed" xml:space="preserve">
+    <value>The update cannot be performed !</value>
+  </data>
+  <data name="Info_ContactSupport" xml:space="preserve">
+    <value>Please contact support.</value>
+  </data>
+  <data name="Button_Close" xml:space="preserve">
+    <value>_Close</value>
+  </data>
+  <data name="Button_Update" xml:space="preserve">
+    <value>_Update</value>
+  </data>
+  <data name="Button_Quit" xml:space="preserve">
+    <value>_Exit</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>C_ancel</value>
+  </data>
+  <data name="Info_XMLParse" xml:space="preserve">
+    <value>An error occurred while reading the XML file containing the parameters of the operations to be performed during the update.</value>
+  </data>
+  <data name="Info_Exception" xml:space="preserve">
+    <value>Error message:</value>
+  </data>
+  <data name="Info_BeforeUpdate" xml:space="preserve">
+    <value>Click '{0}' to install SeatFlow version {1}.</value>
+  </data>
+  <data name="Info_WrongVersion" xml:space="preserve">
+    <value>The current SeatFlow release '{0}' does not match the updatable release '{1}'.</value>
+  </data>
+  <data name="Action_UpdateStarted" xml:space="preserve">
+    <value>Start the installation of the update from version '{0}' to version '{1}'.</value>
+  </data>
+  <data name="Action_ReplaceFile" xml:space="preserve">
+    <value>Replace the file '{0}' with its new version.</value>
+  </data>
+  <data name="Action_ReplaceFileError" xml:space="preserve">
+    <value>An error occurred while replacing the file '{0}'. </value>
+  </data>
+  <data name="Action_UpdateAborted" xml:space="preserve">
+    <value>The update is aborted!</value>
+  </data>
+  <data name="Action_ErrorCode" xml:space="preserve">
+    <value>Error message: {0}</value>
+  </data>
+  <data name="Action_BackupFolderError" xml:space="preserve">
+    <value>Unable to create the target folder '{0}' for data backup before update.</value>
+  </data>
+  <data name="Action_BackupFolder" xml:space="preserve">
+    <value>Folder: </value>
+  </data>
+  <data name="Action_CreateBackupFolder" xml:space="preserve">
+    <value>Create the data backup folder '{0}'.</value>
+  </data>
+  <data name="Action_BackupData" xml:space="preserve">
+    <value>Create a backup of the data file '{0}' as '{1}'.</value>
+  </data>
+  <data name="Action_File" xml:space="preserve">
+    <value>File:</value>
+  </data>
+  <data name="Action_CopyFileError" xml:space="preserve">
+    <value>The creation of the backup copy '{0}' of the file '{1}' has failed.</value>
+  </data>
+  <data name="Action_FileNotFound" xml:space="preserve">
+    <value>Unable to find the data file '{0}'.</value>
+  </data>
+  <data name="Action_BackupDataBeforeUpdate" xml:space="preserve">
+    <value>Backup of data before updating.</value>
+  </data>
+  <data name="Action_GetDataPath" xml:space="preserve">
+    <value>Extract the path to the data file from exe.config file.</value>
+  </data>
+  <data name="Action_ConfigFileElementError" xml:space="preserve">
+    <value>Unable to find the '{0}' item in the '{1}' configuration file.</value>
+  </data>
+  <data name="Action_XmlError" xml:space="preserve">
+    <value>An XML error occurred while reading the file '{0}'.</value>
+  </data>
+  <data name="Action_DataFilePath" xml:space="preserve">
+    <value>XML data file: {0}</value>
+  </data>
+  <data name="Action_GetSchemaPath" xml:space="preserve">
+    <value>Extract the path to the schema file from data file.</value>
+  </data>
+  <data name="Action_SchemaFilePath" xml:space="preserve">
+    <value>XSD schema file from XML data: {0}</value>
+  </data>
+  <data name="Action_XMLElementError" xml:space="preserve">
+    <value>Unable to find the '{0}' item in the '{1}' XML file.</value>
+  </data>
+  <data name="Action_BackupSchemaBeforeUpdate" xml:space="preserve">
+    <value>Backup schema before updating.</value>
+  </data>
+  <data name="Action_BackupSchema" xml:space="preserve">
+    <value>Create a backup of the schema file '{0}' as '{1}'.</value>
+  </data>
+  <data name="Action_ReplaceSchemaFile" xml:space="preserve">
+    <value>Replace the XSD data schema file '{0}' with the new version.</value>
+  </data>
+  <data name="Action_ReplaceSchema" xml:space="preserve">
+    <value>Replace the data schema.</value>
+  </data>
+  <data name="Action_UpdateData" xml:space="preserve">
+    <value>Updating data.</value>
+  </data>
+  <data name="Action_UpdateElement" xml:space="preserve">
+    <value>Updating '{0}' elements.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Room19" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Files\Room19.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Action_UpdatedSuccessfully" xml:space="preserve">
+    <value>Update successfully completed.</value>
+  </data>
+  <data name="Action_RestartSeatFlow" xml:space="preserve">
+    <value>You can restart SeatFlow.</value>
+  </data>
+  <data name="Action_DeleteUdpateFiles" xml:space="preserve">
+    <value>Delete all files used for the update.</value>
+  </data>
+  <data name="Info_AppNotFound" xml:space="preserve">
+    <value>The SeatFlow application is not installed in the '{0}' folder.</value>
+  </data>
+  <data name="Action_NewSchemaNameNotFound" xml:space="preserve">
+    <value>The path to the new XSD schema is not defined in the update parameter file.</value>
+  </data>
+  <data name="Info_UpdateEndedSuccessfully" xml:space="preserve">
+    <value>Version '{0}' of SeatFlow has been successfully installed.</value>
+  </data>
+  <data name="Info_RestartSeatFlow" xml:space="preserve">
+    <value>You can restart SeatFlow.</value>
+  </data>
+  <data name="Info_UpdateAborted" xml:space="preserve">
+    <value>The update did not successfully complete.</value>
+  </data>
+</root>

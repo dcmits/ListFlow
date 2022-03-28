@@ -1,0 +1,985 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SelectExcelFile" xml:space="preserve">
+    <value>Select the Excel file from Indico.UN containing the list of participants</value>
+  </data>
+  <data name="ViewTitle_Application" xml:space="preserve">
+    <value>ListFlow - Create a Word Document from Indico.UN participants list</value>
+  </data>
+  <data name="InputExcelFile" xml:space="preserve">
+    <value>Indico.UN Excel File</value>
+  </data>
+  <data name="WordTemplate" xml:space="preserve">
+    <value>Word Document Templates</value>
+  </data>
+  <data name="ToolTip_SelectExcelFile" xml:space="preserve">
+    <value>Select the Excel file generated by Indico.UN containing the list of participants.</value>
+  </data>
+  <data name="ViewProcessDetails" xml:space="preserve">
+    <value>View the detailed process of generating the Word document</value>
+  </data>
+  <data name="Button_CreateDocument" xml:space="preserve">
+    <value>Create the document</value>
+  </data>
+  <data name="ExcelFileDragDropInfoLine1" xml:space="preserve">
+    <value>Drag and drop the Excel file from Indico.UN containing the list of participants HERE</value>
+  </data>
+  <data name="ExcelFileDragDropInfoLine2" xml:space="preserve">
+    <value>or click on the Excel button on the right</value>
+  </data>
+  <data name="MessageBoxBody_MissingTemplateSubFolder" xml:space="preserve">
+    <value>The subfolder 'Templates' does not exist in '{0}'</value>
+  </data>
+  <data name="ExcelFilesFilter" xml:space="preserve">
+    <value>Microsoft Excel (*.xls)|*.xls|(*.xlsb)|*.xlsb|(*.xlsm)|*.xlsm|(*xlsx)|*.xlsx</value>
+  </data>
+  <data name="ExcelXlsxFileFilter" xml:space="preserve">
+    <value>Microsoft Excel (.*xlsx)|*.xlsx</value>
+  </data>
+  <data name="Import_DownloadExcelTemplate" xml:space="preserve">
+    <value>Download import template</value>
+  </data>
+  <data name="Import_ExcelSheetNames" xml:space="preserve">
+    <value>Name of the Excel sheets inside the file</value>
+  </data>
+  <data name="Import_ExcelTemplate" xml:space="preserve">
+    <value>Excel template with a single column</value>
+  </data>
+  <data name="Import_ExcelTemplateFull" xml:space="preserve">
+    <value>Excel template with all columns</value>
+  </data>
+  <data name="Import_MapData_ExcelFileContaint" xml:space="preserve">
+    <value>Extract from the contents of the Excel file</value>
+  </data>
+  <data name="Data_SelectExcelFile" xml:space="preserve">
+    <value>Excel file name</value>
+  </data>
+  <data name="Import_EmptyField" xml:space="preserve">
+    <value>The '{0}' field in line number {1} is empty.</value>
+  </data>
+  <data name="Import_FieldContentToLarge" xml:space="preserve">
+    <value>The content of field '{0}' exceeds the maximum allowed capacity of {1} characters and therefore the Participant '{2}' will not be imported.</value>
+  </data>
+  <data name="Import_FileInfo" xml:space="preserve">
+    <value>The Excel file must contain at least one column with the names of the participants. It is possible to have the names of the participants in English and French as well as a long name (limited to 100 characters) and a short name (limited to 42 characters). It is the latter that is used for positioning in the room and also the nameplate. You can download the templates by clicking on the links below.</value>
+  </data>
+  <data name="Import_MapData_ApplicationFields" xml:space="preserve">
+    <value>Fields available</value>
+  </data>
+  <data name="Import_MapData_FieldNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Import_MapData_ImportFields" xml:space="preserve">
+    <value>Fields to be imported</value>
+  </data>
+  <data name="Import_MapData_StepInfo" xml:space="preserve">
+    <value>Map the columns in the Excel sheet to the participant fields.</value>
+  </data>
+  <data name="Import_MapData_StepTitle" xml:space="preserve">
+    <value>Map the Fields</value>
+  </data>
+  <data name="Import_MapData_UserInfo" xml:space="preserve">
+    <value>You need to map the participant data in your Excel file to the information in the application. For each of the application fields, select the corresponding field in the Excel file. If the file to be imported has only one language, select the same field in the lists for all application fields.</value>
+  </data>
+  <data name="Import_Option_AddParticipants" xml:space="preserve">
+    <value>Adds participants to the existing list</value>
+  </data>
+  <data name="Import_Option_ReplaceParticipants" xml:space="preserve">
+    <value>Replaces all existing participants</value>
+  </data>
+  <data name="Import_Option_ReplaceParticipantsWarning" xml:space="preserve">
+    <value>All participants currently on the list will be replaced and their location assignments will be removed.</value>
+  </data>
+  <data name="Process_MergeInfo" xml:space="preserve">
+    <value>Merges into a new Word document, based on the selected template, the list of participants contained in the selected Excel file</value>
+  </data>
+  <data name="Process_MergeTitle" xml:space="preserve">
+    <value>Finish &amp; Merge</value>
+  </data>
+  <data name="Process_SortInfo" xml:space="preserve">
+    <value>Defines filter and sorting criteria for the different groups of participants (optional)</value>
+  </data>
+  <data name="Process_SortTitle" xml:space="preserve">
+    <value>Data sorting and filtering</value>
+  </data>
+  <data name="Process_StepInfo" xml:space="preserve">
+    <value>Options and summary of the participant import process</value>
+  </data>
+  <data name="Process_StepTitle" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Data_StepInfo" xml:space="preserve">
+    <value>Select the Excel file which contains the participants to be use for creating the final document based on '</value>
+  </data>
+  <data name="Data_StepTitle" xml:space="preserve">
+    <value>Select the Excel file</value>
+  </data>
+  <data name="Import_SelectSheet_StepInfo" xml:space="preserve">
+    <value>Select the Excel sheet containing the participants to be imported</value>
+  </data>
+  <data name="SelectSheet_StepTitle" xml:space="preserve">
+    <value>Select the Excel sheet</value>
+  </data>
+  <data name="Import_Step_Steps" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="Import_Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Import_Summary_ItemImported" xml:space="preserve">
+    <value>Number of participants imported</value>
+  </data>
+  <data name="Import_Summary_ItemRead" xml:space="preserve">
+    <value>Number of participants read</value>
+  </data>
+  <data name="Import_Summary_ItemSkipped" xml:space="preserve">
+    <value>Number of participants skipped</value>
+  </data>
+  <data name="Import_Summary_ViewErrorList" xml:space="preserve">
+    <value>Shows the list</value>
+  </data>
+  <data name="ViewTitle_About" xml:space="preserve">
+    <value>About ListFlow</value>
+  </data>
+  <data name="ViewTitle_ProcessReport" xml:space="preserve">
+    <value>Detail of the process of creating the final document</value>
+  </data>
+  <data name="ViewTitle_MainTemplateDetails" xml:space="preserve">
+    <value>Details of the selected template</value>
+  </data>
+  <data name="Button_CopyClipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="ToolTip_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ToolTip_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ToolTip_Maximize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="ToolTip_Minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="ToolTip_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>_No</value>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>_Yes</value>
+  </data>
+  <data name="Button_Ok" xml:space="preserve">
+    <value>_Ok</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>_Cancel</value>
+  </data>
+  <data name="Button_Import" xml:space="preserve">
+    <value>_Import</value>
+  </data>
+  <data name="Button_Quit" xml:space="preserve">
+    <value>_Exit</value>
+  </data>
+  <data name="Undo_Actions" xml:space="preserve">
+    <value>Undo {0} actions</value>
+  </data>
+  <data name="Undo_NoAction" xml:space="preserve">
+    <value>Undo No action</value>
+  </data>
+  <data name="Undo_OneAction" xml:space="preserve">
+    <value>Undo 1 action</value>
+  </data>
+  <data name="ListItemsCount" xml:space="preserve">
+    <value>({0} items)</value>
+  </data>
+  <data name="ListItemsCountNo" xml:space="preserve">
+    <value>(No item)</value>
+  </data>
+  <data name="ListItemsCountOne" xml:space="preserve">
+    <value>(1 item)</value>
+  </data>
+  <data name="CanBeEdited" xml:space="preserve">
+    <value>Can be updated.</value>
+  </data>
+  <data name="CannotBeEdited" xml:space="preserve">
+    <value>Cannot be updated</value>
+  </data>
+  <data name="MandatoryField" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="ToolTip_MandatoryField" xml:space="preserve">
+    <value>Mandatory field</value>
+  </data>
+  <data name="Button_Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="Participant_FullNameEN" xml:space="preserve">
+    <value>Full name in English</value>
+  </data>
+  <data name="Participant_FullNameFR" xml:space="preserve">
+    <value>Full name in French</value>
+  </data>
+  <data name="Participant_ShortNameEN" xml:space="preserve">
+    <value>Short name in English</value>
+  </data>
+  <data name="Participant_ShortNameFR" xml:space="preserve">
+    <value>Short name in French</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Button_ViewErrorList" xml:space="preserve">
+    <value>_View process report</value>
+  </data>
+  <data name="Button_NextStep" xml:space="preserve">
+    <value>_Next</value>
+  </data>
+  <data name="Template_StepTitle" xml:space="preserve">
+    <value>Select the document template</value>
+  </data>
+  <data name="Template_StepInfo" xml:space="preserve">
+    <value>Select the Word template used to generate the final document</value>
+  </data>
+  <data name="Event_Title" xml:space="preserve">
+    <value>Title of the event</value>
+  </data>
+  <data name="ContextualHelp_Event_Title_Optional" xml:space="preserve">
+    <value>Enter the name of the event so that it can be integrated into the final Word document (optional)</value>
+  </data>
+  <data name="Event_Location" xml:space="preserve">
+    <value>Location of the event</value>
+  </data>
+  <data name="ContextualHelp_Event_Date_Optional" xml:space="preserve">
+    <value>Enter the dates of the event so that it can be included in the final Word document (optional)</value>
+  </data>
+  <data name="Event_Date" xml:space="preserve">
+    <value>Dates of the event</value>
+  </data>
+  <data name="ContextualHelp_Event_Location_Optional" xml:space="preserve">
+    <value>Enter the location of the event so that it can be integrated into the final Word document (optional)</value>
+  </data>
+  <data name="Event_Details_Optional" xml:space="preserve">
+    <value>Event details (optional)</value>
+  </data>
+  <data name="ContextualHelp_Event_Details_Optional" xml:space="preserve">
+    <value>Event details to be included in the final Word document. This information is optional and can be entered directly into the final document.</value>
+  </data>
+  <data name="Template_Select" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="ContextualHelp_Template_Description" xml:space="preserve">
+    <value>Description of the template</value>
+  </data>
+  <data name="Template_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ContextualHelp_Template_Select" xml:space="preserve">
+    <value>Template used to create the final document</value>
+  </data>
+  <data name="Event_Title_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Event_Title_Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Event_Title_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ContextualHelp_Data_Select" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ContextualHelp_Data_StepInfo" xml:space="preserve">
+    <value>Select the Excel file exported from Indico.UN containing the list of participants for this event.</value>
+  </data>
+  <data name="Button_PrevStep" xml:space="preserve">
+    <value>_Previous</value>
+  </data>
+  <data name="Sort_StepTitle" xml:space="preserve">
+    <value>Data sorting and filtering</value>
+  </data>
+  <data name="Sort_UserInfo" xml:space="preserve">
+    <value>Sort and filter the data to be used to generate the final document. If the displayed parameters match your needs, click on the "Next" button</value>
+  </data>
+  <data name="Template_UserInfo_Optional" xml:space="preserve">
+    <value>Select the Word template and fill in the event information fields (optional)</value>
+  </data>
+  <data name="Sort_Asc" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="Sort_Desc" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="Sort_Filter_And" xml:space="preserve">
+    <value>And</value>
+  </data>
+  <data name="Sort_Filter_Or" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="Sort_By" xml:space="preserve">
+    <value>Sort by:</value>
+  </data>
+  <data name="Sort_ThenBy" xml:space="preserve">
+    <value>Then by:</value>
+  </data>
+  <data name="Sort_Comparison_Eq" xml:space="preserve">
+    <value>Equal to</value>
+  </data>
+  <data name="Sort_Comparison_Neq" xml:space="preserve">
+    <value>Not equal to</value>
+  </data>
+  <data name="Sort_Comparison_Lt" xml:space="preserve">
+    <value>Less than</value>
+  </data>
+  <data name="Sort_Comparison_Gt" xml:space="preserve">
+    <value>Greater than</value>
+  </data>
+  <data name="Sort_Comparison_Lte" xml:space="preserve">
+    <value>Less than or equal</value>
+  </data>
+  <data name="Sort_Comparison_Gte" xml:space="preserve">
+    <value>Greater than or equal</value>
+  </data>
+  <data name="Sort_Comparison_Blk" xml:space="preserve">
+    <value>Is blank</value>
+  </data>
+  <data name="Sort_Comparison_Nblk" xml:space="preserve">
+    <value>Is not blank</value>
+  </data>
+  <data name="Sort_Comparison_Contains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="Sort_Comparison_NotContains" xml:space="preserve">
+    <value>Does not contains</value>
+  </data>
+  <data name="Sort_SortTitle" xml:space="preserve">
+    <value>Sort Records</value>
+  </data>
+  <data name="Sort_FilterTitle" xml:space="preserve">
+    <value>Filter Records</value>
+  </data>
+  <data name="Sort_Filter_CompareTo" xml:space="preserve">
+    <value>Compare to:</value>
+  </data>
+  <data name="Sort_Filter_Comparison" xml:space="preserve">
+    <value>Comparison:</value>
+  </data>
+  <data name="Sort_Filter_Field" xml:space="preserve">
+    <value>Field:</value>
+  </data>
+  <data name="ToolTip_Setup" xml:space="preserve">
+    <value>Setup</value>
+  </data>
+  <data name="Event_Details_Mandatory" xml:space="preserve">
+    <value>Event details (mandatory)</value>
+  </data>
+  <data name="ContextualHelp_Event_Date_Mandatory" xml:space="preserve">
+    <value>Enter the dates of the event so that it can be included in the final Word document (mandatory)</value>
+  </data>
+  <data name="ContextualHelp_Event_Title_Mandatory" xml:space="preserve">
+    <value>Enter the name of the event so that it can be integrated into the final Word document (mandatory)</value>
+  </data>
+  <data name="ContextualHelp_Event_Location_Mandatory" xml:space="preserve">
+    <value>Enter the location of the event so that it can be integrated into the final Word document (mandatory)</value>
+  </data>
+  <data name="ContextualHelp_Event_Details_Mandatory" xml:space="preserve">
+    <value>Event details to be included in the final Word document. This information is mandatory.</value>
+  </data>
+  <data name="Template_UserInfo_Mandatory" xml:space="preserve">
+    <value>Select the Word template and fill in the event information fields (mandatory)</value>
+  </data>
+  <data name="Button_Reset" xml:space="preserve">
+    <value>_Reset</value>
+  </data>
+  <data name="ContextualHelp_Data_SelectExcelFile" xml:space="preserve">
+    <value>Select the Excel file exported from Indico.UN containing the list of participants for this event.</value>
+  </data>
+  <data name="ContextualHelp_Template_StepInfo" xml:space="preserve">
+    <value>Select the document template and enter the basic event information.</value>
+  </data>
+  <data name="SubTemplate_List_Title" xml:space="preserve">
+    <value>List of sub-templates</value>
+  </data>
+  <data name="ContextualHelp_SubTemplate_List" xml:space="preserve">
+    <value>List of sub-templates</value>
+  </data>
+  <data name="SubTemplate_QueryFilterSort_Title" xml:space="preserve">
+    <value>Query, filters and sorts for the selected sub-template</value>
+  </data>
+  <data name="Query" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="Button_SaveApply" xml:space="preserve">
+    <value>_Save &amp; Apply</value>
+  </data>
+  <data name="CreateDocument_StepTitle" xml:space="preserve">
+    <value>Create the document</value>
+  </data>
+  <data name="Button_LastStep" xml:space="preserve">
+    <value>_Create</value>
+  </data>
+  <data name="FinishMerge_Step_SourceFile" xml:space="preserve">
+    <value>Merges data from</value>
+  </data>
+  <data name="FinishMerge_Step_DestinationTemplateEnd" xml:space="preserve">
+    <value> template.</value>
+  </data>
+  <data name="FinishMerge_Step_DestinationTemplate" xml:space="preserve">
+    <value>file using the </value>
+  </data>
+  <data name="CreateDocument_Step_Proceed" xml:space="preserve">
+    <value>Click on the Create button to proceed</value>
+  </data>
+  <data name="Button_ProcessReport" xml:space="preserve">
+    <value>_View process report</value>
+  </data>
+  <data name="Button_Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="ToolTip_Settings" xml:space="preserve">
+    <value>Data sorting and filtering</value>
+  </data>
+  <data name="Process_CreateDocumentTitle" xml:space="preserve">
+    <value>Create the document</value>
+  </data>
+  <data name="Process_CreateDocumentInfo" xml:space="preserve">
+    <value>Creates a new Word document by merging, based on the selected template, the list of participants contained in the selected Excel file.</value>
+  </data>
+  <data name="Exception_NoTemplatesSubFolder" xml:space="preserve">
+    <value>The '{0}' sub-folder does not exist in the '{1}' folder.</value>
+  </data>
+  <data name="MessageBox_Title" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Exception_NoItemTemplatesSubFolder" xml:space="preserve">
+    <value>The sub-folder '{0}' does not contain any models sub-folder.</value>
+  </data>
+  <data name="Exception_LaunchWord" xml:space="preserve">
+    <value>Word can't be launched. Check if Word is properly installed and working on this computer.</value>
+  </data>
+  <data name="Exception_ReadMainTemplateFileProperties" xml:space="preserve">
+    <value>{0}
+This template is being ignored.</value>
+  </data>
+  <data name="Exception_ReadFileProperties_Details" xml:space="preserve">
+    <value>An error occurred while reading the properties of file '{0}'.</value>
+  </data>
+  <data name="Exception_ErrorDetails" xml:space="preserve">
+    <value>Error message:</value>
+  </data>
+  <data name="Exception_CreateWordDocPreview" xml:space="preserve">
+    <value>An error occurred while creating the PDF file for the basic template preview '{0}'.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ListFLow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ListFLow.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ViewTitle_SortFilter" xml:space="preserve">
+    <value>Selected template sorts &amp; filters settings</value>
+  </data>
+  <data name="Data_DropInfo" xml:space="preserve">
+    <value>Drop your Excel data file here or click "Browse..." to choose your file!</value>
+  </data>
+  <data name="Exception_MainTemplateNotExist" xml:space="preserve">
+    <value>The file '{0}' of the main template '{1}' doesn’t exist.</value>
+  </data>
+  <data name="Exception_WordOpenMainTemplate" xml:space="preserve">
+    <value>Word can't open the file '{0}' of the main template '{1}'. {2}.</value>
+  </data>
+  <data name="Exception_WordOpenFile" xml:space="preserve">
+    <value>Word can't open the file '{0}'.</value>
+  </data>
+  <data name="FinalDocumentCreation_Successfully" xml:space="preserve">
+    <value>The creation of the final document is successfully completed.</value>
+  </data>
+  <data name="FinalDocumentCreation_UpdateEventDetails" xml:space="preserve">
+    <value>Update of the event details form fields.</value>
+  </data>
+  <data name="Exception_WordOpenSubTemplate" xml:space="preserve">
+    <value>Word can't open the file '{0}' of the sub-template. '{1}'</value>
+  </data>
+  <data name="Exception_SubTemplateNotExist" xml:space="preserve">
+    <value>The sub-template file '{0}' doesn’t exist. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_NoQuery" xml:space="preserve">
+    <value>The data source query is not defined. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_DataSourceNotExist" xml:space="preserve">
+    <value>The data source file '{0}' doesn't exist. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_CloseSubTemplate" xml:space="preserve">
+    <value>Close the sub-template in Word.</value>
+  </data>
+  <data name="FinalDocumentCreation_CloseMergeResultSubTemplate" xml:space="preserve">
+    <value>Close the merge result document.</value>
+  </data>
+  <data name="Exception_TagNotExist" xml:space="preserve">
+    <value>The #{0}# tag does not exist in the main template. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_PasteMergeDataToMain" xml:space="preserve">
+    <value>Pastes the resulting data from the merge into the main model at the tag location.</value>
+  </data>
+  <data name="FinalDocumentCreation_FindTagInMain" xml:space="preserve">
+    <value>Finds the tag #{0}# in the main document '{1}' where the data should be copied.</value>
+  </data>
+  <data name="FinalDocumentCreation_CopyMergeDataToMain" xml:space="preserve">
+    <value>Copies the result of the merge to the clipboard.</value>
+  </data>
+  <data name="FinalDocumentCreation_SearchTagInMain" xml:space="preserve">
+    <value>Finds the tag '{0}' of the sub-template in the main document.</value>
+  </data>
+  <data name="FinalDocumentCreation_MergeSubTemplateSuccessfully" xml:space="preserve">
+    <value>Data merge for the sub-template successfully completed.</value>
+  </data>
+  <data name="Exception_MergeSubTemplate" xml:space="preserve">
+    <value>The error '{0}' occurred during the data merge for the sub-template. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_NoMatchingData" xml:space="preserve">
+    <value>No data matching the criteria. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_StartMergeSubTemplate" xml:space="preserve">
+    <value>Starts merging the data with the sub-template.</value>
+  </data>
+  <data name="FinalDocumentCreation_OpenDataSource" xml:space="preserve">
+    <value>Open the data source. File: '{0}' Query: "{1}{2}"</value>
+  </data>
+  <data name="Exception_QueryToLong" xml:space="preserve">
+    <value>The data source query "{0}" exceeds the maximum allowed capacity of 510 characters. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_SubTemplateOpened" xml:space="preserve">
+    <value>The sub-template has been opened in Word.</value>
+  </data>
+  <data name="FinalDocumentCreation_OpenSubTemplate" xml:space="preserve">
+    <value>Open the sub-template '{0}' in Word</value>
+  </data>
+  <data name="FinalDocumentCreation_OpenMainTemplate" xml:space="preserve">
+    <value>Open the main template '{0}' in Word</value>
+  </data>
+  <data name="FinalDocumentCreation_MainTemplateOpened" xml:space="preserve">
+    <value>The main template has been opened in Word.</value>
+  </data>
+  <data name="FinalDocumentCreation_SearchSheet" xml:space="preserve">
+    <value>Checks if the Excel sheet defined in the query exists in the data source. </value>
+  </data>
+  <data name="FinalDocumentCreation_FindSheet" xml:space="preserve">
+    <value>Finds the Excel sheet defined in the query "{0}" in data source file.</value>
+  </data>
+  <data name="Exception_SheetNotExist" xml:space="preserve">
+    <value>The Excel sheet defined in the query "{0}" does not exist in the data source. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_UpdateEventField" xml:space="preserve">
+    <value>The '{0}' form field has been updated.</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>ListFlow</value>
+  </data>
+  <data name="FlowDoc_Title" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="FlowDoc_File" xml:space="preserve">
+    <value>File path:</value>
+  </data>
+  <data name="FlowDoc_SelectedTemplateDetails" xml:space="preserve">
+    <value>Selected template details</value>
+  </data>
+  <data name="FlowDoc_Comment" xml:space="preserve">
+    <value>Comment:</value>
+  </data>
+  <data name="FlowDoc_OptionalFieldsRequired" xml:space="preserve">
+    <value>Event details required:</value>
+  </data>
+  <data name="FlowDoc_EventTitle" xml:space="preserve">
+    <value>Event title:</value>
+  </data>
+  <data name="FlowDoc_EventLocation" xml:space="preserve">
+    <value>Event location:</value>
+  </data>
+  <data name="FlowDoc_EventDate" xml:space="preserve">
+    <value>Event date:</value>
+  </data>
+  <data name="FlowDoc_ExcelFile" xml:space="preserve">
+    <value>Excel source file:</value>
+  </data>
+  <data name="FlowDoc_Steps" xml:space="preserve">
+    <value>Steps</value>
+  </data>
+  <data name="FinalDocumentCreation_DocumentName" xml:space="preserve">
+    <value>Final document name: '{0}'.</value>
+  </data>
+  <data name="FlowDoc_SubTemplatesCount" xml:space="preserve">
+    <value>Number of sub-templates:</value>
+  </data>
+  <data name="FlowDoc_ProcessDuration" xml:space="preserve">
+    <value>Process duration: {0:0.00} second(s).</value>
+  </data>
+  <data name="FlowDoc_CreationDateTime" xml:space="preserve">
+    <value>Creation date &amp; time:</value>
+  </data>
+  <data name="FinalDocumentCreation_NumberOfRecords" xml:space="preserve">
+    <value>Number of records matching the criteria: {0}.</value>
+  </data>
+  <data name="Exception_CountRecords" xml:space="preserve">
+    <value>Error '{0}' occurred when determining the number of records that met the criteria for merging the data. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_CheckMergeFields" xml:space="preserve">
+    <value>Check that the names of the merge fields match the fields in the source file.</value>
+  </data>
+  <data name="FinalDocumentCreation_MergeFieldsAvailable" xml:space="preserve">
+    <value>All merge fields are available in the data source.</value>
+  </data>
+  <data name="Exception_MergeFieldNotInDataSource" xml:space="preserve">
+    <value>The merge field '{0}' is not available in the data source file.</value>
+  </data>
+  <data name="Exception_SubTemplateIgnored" xml:space="preserve">
+    <value>The sub-template being processed is ignored.</value>
+  </data>
+  <data name="FinalDocumentCreation_GetSubTemplateMergeParameters" xml:space="preserve">
+    <value>Get the list of merge fields of the sub-template and the data source sheet name.</value>
+  </data>
+  <data name="FinalDocumentCreation_SubTemplateMergeFieldsAvailable" xml:space="preserve">
+    <value>All merge fields of the sub-template are available in the data source.</value>
+  </data>
+  <data name="FinalDocumentCreation_SubTemplateStartProcessing" xml:space="preserve">
+    <value>Start processing the '{0}' sub-template.</value>
+  </data>
+  <data name="FinalDocumentCreation_MainTemplateProcessing" xml:space="preserve">
+    <value>Processing the '{0}' template.</value>
+  </data>
+  <data name="Exception_SubTemplateGlobalException" xml:space="preserve">
+    <value>The error '{0}' occurred during the processing. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_OpenMainTemplate" xml:space="preserve">
+    <value>An error occurred during the opening of the main template file '{0}'.</value>
+  </data>
+  <data name="FlowDoc_TotalMergedRecord" xml:space="preserve">
+    <value>Total number of merged records: {0}</value>
+  </data>
+  <data name="Sort_NoField" xml:space="preserve">
+    <value>(none)</value>
+  </data>
+  <data name="Parameters_UserInfo" xml:space="preserve">
+    <value>Settings of the template located in folder: </value>
+  </data>
+  <data name="ViewTitle_Parameters" xml:space="preserve">
+    <value>Settings of the selected template</value>
+  </data>
+  <data name="Parameters_MainTabTitle" xml:space="preserve">
+    <value>Main template</value>
+  </data>
+  <data name="Parameters_MainUserInfo" xml:space="preserve">
+    <value>Main template settings. File:</value>
+  </data>
+  <data name="Parameters_MainTemplateTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Parameters_MainTemplateDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Parameters_MainTemplateEventFieldsMandatory" xml:space="preserve">
+    <value>Mandatory</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateTitle" xml:space="preserve">
+    <value>Title of the template (is used in the list of available templates)</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateDescription" xml:space="preserve">
+    <value>Description of the template</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateMandatoryFields" xml:space="preserve">
+    <value>If the box is checked, the information about the event must be filled in so that the creation of the final document can take place.</value>
+  </data>
+  <data name="Parameters_SubTemplatesList" xml:space="preserve">
+    <value>Sub-templates</value>
+  </data>
+  <data name="Parameters_SubQuery" xml:space="preserve">
+    <value>Query</value>
+  </data>
+  <data name="ContextualHelp_Parameters_SubQuery" xml:space="preserve">
+    <value>Query used for data selection for the selected sub-template</value>
+  </data>
+  <data name="ContextualHelp_Parameters_SubTemplatesList" xml:space="preserve">
+    <value>List of sub-templates used in the selected main template</value>
+  </data>
+  <data name="Parameters_SubUserInfo" xml:space="preserve">
+    <value>Select the sub-template and modify the query, if necessary. Attention: any errors in the query may change the result of the final document creation!</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>_Save</value>
+  </data>
+  <data name="Exception_WriteFileProperty" xml:space="preserve">
+    <value>An error occurred while writing the '{0}' property of file '{1}'.</value>
+  </data>
+  <data name="FileProperty_Description" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Exception_WriteFileProperties" xml:space="preserve">
+    <value>An error occurred while writing the properties of file '{0}'.</value>
+  </data>
+  <data name="FinalDocumentCreation_SubTemplateEndProcessing" xml:space="preserve">
+    <value>End processing the '{0}' sub-template.</value>
+  </data>
+  <data name="Exception_SubTemplateNoQueryDefined" xml:space="preserve">
+    <value>There is no query defined in the sub-template file '{0}'. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_CreateSubTemplateTagsList" xml:space="preserve">
+    <value>An error occurred while creating the list of sub-template tags for the '{0}' template.</value>
+  </data>
+  <data name="Parameters_MainTemplateEventFieldsOptional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
+  <data name="Parameters_MainTemplateEventFieldsHidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="Parameters_MainTemplateEventFields" xml:space="preserve">
+    <value>Event details fields</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateEventOptions" xml:space="preserve">
+    <value>Mandatory = Filling in the event details fields is mandatory in order to proceed to the next step.
+Optional = Filling in the event details fields is not mandatory in order to proceed to the next step.
+Hidden = The event details fields are hidden.</value>
+  </data>
+  <data name="Exception_SubTemplateNoSheetNameInQuery" xml:space="preserve">
+    <value>The sub-template '{0}' will be ignored during the creation of the final document because the query '{1}' does not contain the name of the Excel sheet containing the data.</value>
+  </data>
+  <data name="Exception_SubTemplateMissingQuery" xml:space="preserve">
+    <value>The sub-template '{0}' will be ignored during the creation of the final document because no query has been defined in the '{1}' file property.</value>
+  </data>
+  <data name="Exception_FileInUse" xml:space="preserve">
+    <value>'{0}'</value>
+  </data>
+  <data name="Exception_FileInUseNotExist" xml:space="preserve">
+    <value>The file '{0}' does not exist.</value>
+  </data>
+  <data name="Exception_SubTemplatePropertiesReading" xml:space="preserve">
+    <value>The sub-template '{0}' will be ignored during the creation of the final document. {1}</value>
+  </data>
+  <data name="FinalDocumentCreation_DisabledSubTemplateTitle" xml:space="preserve">
+    <value>List of sub-templates that will not be processed</value>
+  </data>
+  <data name="FlowDoc_DisabledSubTemplateList" xml:space="preserve">
+    <value>List of disabled sub-templates</value>
+  </data>
+  <data name="FinalDocumentCreation_SheetExist" xml:space="preserve">
+    <value>The sheet '{0}' exists in the Excel file.</value>
+  </data>
+  <data name="FinalDocumentCreation_UpdateParticipantsCount" xml:space="preserve">
+    <value>Update of the participants count.</value>
+  </data>
+  <data name="FinalDocumentCreation_UpdateParticipantsCountField" xml:space="preserve">
+    <value>The '{0}' form field has been updated.</value>
+  </data>
+  <data name="ToolTip_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ViewTitle_HelpAndUpdate" xml:space="preserve">
+    <value>Help and Update</value>
+  </data>
+  <data name="ToolTip_HelpAndUpdate" xml:space="preserve">
+    <value>Help and Update</value>
+  </data>
+  <data name="Update_CurrentVersion" xml:space="preserve">
+    <value>Current version: </value>
+  </data>
+  <data name="Update_AvailableVersion" xml:space="preserve">
+    <value>Available version:</value>
+  </data>
+  <data name="Update_NoNewVersionAvailable" xml:space="preserve">
+    <value>No new version available</value>
+  </data>
+  <data name="Exception_LaunchExcel" xml:space="preserve">
+    <value>Excel can't be launched. Check if Excel is properly installed and working on this computer.</value>
+  </data>
+  <data name="Exception_NoExcelSheet" xml:space="preserve">
+    <value>The name of the first sheet in the Excel file '{0}' could not be determined. The cause may be that the file is being used in another process.
+The process of generating the final document has been interrupted. 
+Correct the issue and restart the process.</value>
+  </data>
+  <data name="Exception_CopyExcelSourceToTemp" xml:space="preserve">
+    <value>An error occurred while copying the Excel source file '{1}' to the temporary folder '{2}'. The process of creating the final file is aborted.</value>
+  </data>
+  <data name="Exception_QueryFieldNotInDataSource" xml:space="preserve">
+    <value>The query field '{0}' is not available in the data source file.</value>
+  </data>
+  <data name="FlowDoc_OriginalExcelFile" xml:space="preserve">
+    <value>Original Excel file:</value>
+  </data>
+  <data name="FlowDoc_ColumnsRenamedExcelFile" xml:space="preserve">
+    <value>Formated Excel file:</value>
+  </data>
+  <data name="Data_StepInfo1" xml:space="preserve">
+    <value>' template.</value>
+  </data>
+  <data name="CreateDocument_KeepFormatedFile" xml:space="preserve">
+    <value>Keep the temporary (formatted) Excel file after creating the final document  </value>
+  </data>
+  <data name="FlowDoc_KeepRenamedExcelFile" xml:space="preserve">
+    <value>Keep the formatted Excel file:</value>
+  </data>
+  <data name="App_Running" xml:space="preserve">
+    <value>An instance is already running...</value>
+  </data>
+  <data name="Parameters_MainTemplateRenameColumns" xml:space="preserve">
+    <value>Rename Excel file columns</value>
+  </data>
+  <data name="Parameters_MainTemplateColumnForceToSplit" xml:space="preserve">
+    <value>Column force to split</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>[None]</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateRenameOptions" xml:space="preserve">
+    <value>Activates the column formatting function of the Excel source file. 
+All columns containing data are renamed, from the left, by C[x] where [x] represents the number of the column starting with 1. Columns whose name contains the separator / and whose row contents also contain the separator / are split in two. One column is inserted and contains the left part before the separator and the other the right part. Columns whose name does not contain a separator are not changed.
+The original name of the columns is kept in the second row in the Excel file to facilitate the creation/maintenance of Word templates. 
+The original Excel file is not modified but a copy is created in the same folder as the original and its name is prefixed with "ListFlow_". The "temporary" Excel file is automatically deleted after the final document is created if the user does not check the option to keep this file in the last step of the process.
+If this option is not checked, the process uses the original Excel file without making any changes to it and therefore the column names as defined in the file.</value>
+  </data>
+  <data name="ContextualHelp_Parameter_MainTemplateSplitOptions" xml:space="preserve">
+    <value>Designates the name of the Excel column whose contents should be separated using the / separator</value>
+  </data>
+  <data name="Exception_MessageBox_TitleText" xml:space="preserve">
+    <value>An error occurred</value>
+  </data>
+  <data name="Exception_CopySourceFile_Title" xml:space="preserve">
+    <value>Copy source file</value>
+  </data>
+  <data name="Exception_ConnectSource_Title" xml:space="preserve">
+    <value>Connection to the data source</value>
+  </data>
+  <data name="Exception_ReadFileProperties_Title" xml:space="preserve">
+    <value>Reading template properties</value>
+  </data>
+  <data name="Exception_LaunchWord_Title" xml:space="preserve">
+    <value>Launch Word</value>
+  </data>
+  <data name="Exception_CreateSubTemplateTagsList_Title" xml:space="preserve">
+    <value>Reading sub-template tags</value>
+  </data>
+  <data name="Exception_WriteFileProperties_Title" xml:space="preserve">
+    <value>Update file properties</value>
+  </data>
+  <data name="Exception_CloseWord_Title" xml:space="preserve">
+    <value>Close Word</value>
+  </data>
+  <data name="Data_FormatFile" xml:space="preserve">
+    <value>The Excel file is being formatted, please wait...</value>
+  </data>
+</root>

@@ -1,0 +1,13 @@
+ListFlow
+
+- Ajouter un message lors du traitement du fichier Excel afin que l'utilisateur comprenne qu'une action est en cours.
+- Vérifier que la première ligne du fichier Excel comprend des données, si non interompre le processus.
+- Controler pourquoi Excel n'est pas killer lorsque ListFlow se plante.
+- Gérer l'erreur si une entête de colonne contient une valeur num,rique et doit être comparée au paramètre columnFordeToSplit (ligne 232 de FormatFileContent()
+- Optimisation du precessus de formatage du fichier Excel afin de gagner en performance car cette étape est jugée trop longue (test avec un fichier d'envirion 2500 participants)
+	Analyser la piste OLEDB pour l'ajout des colonnes et le split des données.
+- Mauvaises performances avec le fichier UNESCO 1909 records en 200 seconces
+- Ajouter un message si le processus final est plus long que 30 seconde afin que l'utilisateur ne pense pas que le programme c'est planté.
+
+
+SELECT * FROM `Sheet1$` WHERE `C6` = 'Member States  / Etats membres' AND `C68` > '0' ORDER BY `C8` ASC, `C68` ASC, `C55` DESC, `C53` DESC, `C3` ASC, `C2` ASC

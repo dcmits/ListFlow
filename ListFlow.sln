@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListFlow", "ListFlow\ListFlow.csproj", "{4F50B184-D4BF-4EEC-AF36-71E9EFE856F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Update", "Update\Update.csproj", "{79EF467A-8AEF-4030-A6C6-9B3F2DF339B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F50B184-D4BF-4EEC-AF36-71E9EFE856F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F50B184-D4BF-4EEC-AF36-71E9EFE856F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F50B184-D4BF-4EEC-AF36-71E9EFE856F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F50B184-D4BF-4EEC-AF36-71E9EFE856F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79EF467A-8AEF-4030-A6C6-9B3F2DF339B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79EF467A-8AEF-4030-A6C6-9B3F2DF339B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79EF467A-8AEF-4030-A6C6-9B3F2DF339B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79EF467A-8AEF-4030-A6C6-9B3F2DF339B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F04274EF-4B2B-4507-9137-88096BC9F70B}
+	EndGlobalSection
+EndGlobal

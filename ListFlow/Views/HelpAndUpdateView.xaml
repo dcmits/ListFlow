@@ -1,0 +1,91 @@
+﻿<Window
+  x:Class="ListFlow.Views.HelpAndUpdateView"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ListFlow.Views"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:prop="clr-namespace:ListFlow.Properties"
+  Title="{x:Static prop:Resources.ViewTitle_HelpAndUpdate}"
+  Width="450"
+  Height="250"
+  Background="{StaticResource WindowBackground}"
+  Loaded="Window_Loaded"
+  ResizeMode="NoResize"
+  WindowStartupLocation="CenterOwner"
+  mc:Ignorable="d">
+
+  <!--  WindowChrome object for Window customisation  -->
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="34" />
+  </WindowChrome.WindowChrome>
+
+  <Border x:Name="MainWindowBorder" BorderThickness="0">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="536*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <!--  Window chrome  -->
+      <Grid Background="{StaticResource WindowBackground}">
+        <StackPanel
+          HorizontalAlignment="Left"
+          VerticalAlignment="Center"
+          Orientation="Horizontal">
+          <!--  Icon  -->
+          <Image
+            Width="18"
+            Margin="5,2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Source="{StaticResource Help_Large}" />
+          <TextBlock
+            Margin="4,3,0,0"
+            FontFamily="Segoe UI"
+            Foreground="{StaticResource TextForegroundBrush}"
+            Text="{x:Static prop:Resources.ViewTitle_HelpAndUpdate}" />
+        </StackPanel>
+
+        <!--  Windows Title bar Buttons  -->
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+          <Button
+            Command="{x:Static local:HelpAndUpdateView.CloseWindowCommand}"
+            Style="{StaticResource CloseButtonStyle}"
+            ToolTip="{x:Static prop:Resources.ToolTip_Close}"
+            WindowChrome.IsHitTestVisibleInChrome="True" />
+        </StackPanel>
+      </Grid>
+
+      <!--  Main Window Content  -->
+      <Grid Grid.Row="1">
+        <Grid Margin="5,10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <StackPanel Orientation="Vertical">
+            <Label Content="{x:Static prop:Resources.Update_CurrentVersion}" />
+            <Label Content="{x:Static prop:Resources.Update_AvailableVersion}" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Vertical">
+            <Label Content="{Binding CurrentVersion}" />
+            <Label Content="{Binding AvailableVersion}" />
+          </StackPanel>
+          <Button
+            Grid.Column="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="Check for Updates" />
+
+        </Grid>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
