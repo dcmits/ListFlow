@@ -411,6 +411,8 @@ namespace ListFlow.Models
                     columnFieldNames.Clear();
                 }
 
+                // TODO: Check if column name already exist, if yes, inform user on this issues.
+
                 for (int col = 1; col <= xRange.Column; col++)
                 {
                     columnFieldNames.Add(Convert.ToString(xSheet.Cells[1, col].Value), FormatMergeFieldName(Convert.ToString(xSheet.Cells[1, col].Value)));
