@@ -128,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DuplicateColumnView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\HelpAndUpdateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +196,9 @@
     <Compile Include="Models\MainTemplate.cs" />
     <Compile Include="Models\SubTemplate.cs" />
     <Compile Include="ViewModels\MainTemplatesViewModel.cs" />
+    <Compile Include="Views\DuplicateColumnView.xaml.cs">
+      <DependentUpon>DuplicateColumnView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HelpAndUpdateView.xaml.cs">
       <DependentUpon>HelpAndUpdateView.xaml</DependentUpon>
     </Compile>

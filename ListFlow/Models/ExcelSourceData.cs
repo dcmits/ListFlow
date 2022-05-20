@@ -23,6 +23,7 @@ namespace ListFlow.Models
         private string filePath;
         private string formatedFilePath;
         private Dictionary<string, string> columnFieldNames;
+        private Dictionary<string, string> duplicateColumnNames;
         private string sheetName;
 
         // Excel Application.
@@ -91,6 +92,14 @@ namespace ListFlow.Models
             }
         }
 
+        /// <summary>
+        /// List of duplicate column name present in the Excel table defined as data source.
+        /// </summary>
+        public Dictionary<string, string> DuplicateColumnNames
+        {
+            get => duplicateColumnNames;
+        }
+
         public string SheetName
         {
             get => sheetName;
@@ -131,7 +140,16 @@ namespace ListFlow.Models
                 }
                 else
                 {
-                    result = true;
+                    if (duplicateColumnNames.Count > 0)
+                    {
+                        _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_ExcelDuplicateColumn, filePath), Properties.Resources.Exception_ConnectSource_Title);
+
+                        result = false;
+                    }
+                    else
+                    {
+                        result = true;
+                    }
                 }
 
                 CloseExcel();
@@ -390,6 +408,10 @@ namespace ListFlow.Models
             return sb.ToString().ToLowerInvariant();
         }
 
+        /// <summary>
+        /// Check the columns name are unique and create a list with the original column name and the formated field name according the rules.
+        /// </summary>
+        /// <returns>Sheet name containing the data.</returns>
         private string CheckFile()
         {
             string dataSheetName = string.Empty;
@@ -411,11 +433,31 @@ namespace ListFlow.Models
                     columnFieldNames.Clear();
                 }
 
-                // TODO: Check if column name already exist, if yes, inform user on this issues.
+                // [ITBAU-353] : Check if column name already exist, if yes, inform user on this issues.
+                if (duplicateColumnNames is null)
+                {
+                    duplicateColumnNames = new Dictionary<string, string>();
+                }
+                else
+                {
+                    duplicateColumnNames.Clear();
+                }
+
+                string columnName;
 
                 for (int col = 1; col <= xRange.Column; col++)
                 {
-                    columnFieldNames.Add(Convert.ToString(xSheet.Cells[1, col].Value), FormatMergeFieldName(Convert.ToString(xSheet.Cells[1, col].Value)));
+                    columnName = Convert.ToString(xSheet.Cells[1, col].Value);
+                    if(columnFieldNames.ContainsKey(columnName))
+                    {
+                        // Duplicate column name.
+                        duplicateColumnNames.Add(columnName, ColumnIndexToColumnLetter(col));
+                    }
+                    else
+                    { 
+                        // Unique column name.
+                        columnFieldNames.Add(columnName, FormatMergeFieldName(columnName));
+                    }
                 }
                 xWorkbook.Close(oFalse, oMissing, oMissing);
 
@@ -458,6 +500,26 @@ namespace ListFlow.Models
             {
                 _ = new Helpers.CustomException(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Convert Excel column index to letter.
+        /// </summary>
+        /// <param name="colIndex">Index to be converted.</param>
+        /// <returns>Excel column letter.</returns>
+        private string ColumnIndexToColumnLetter(int colIndex)
+        {
+            int div = colIndex;
+            string colLetter = string.Empty;
+
+            while (div > 0)
+            {
+                int mod = (div - 1) % 26;
+                colLetter = (char)(65 + mod) + colLetter;
+                div = (int)((div - mod) / 26);
+            }
+
+            return colLetter;
         }
 
         public override string ToString()

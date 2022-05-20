@@ -758,6 +758,15 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Exception_ExcelDuplicateColumn {
+            get {
+                return ResourceManager.GetString("Exception_ExcelDuplicateColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos;.
         /// </summary>
         public static string Exception_FileInUse {
@@ -2576,6 +2585,15 @@ namespace ListFlow.Properties {
         public static string ViewTitle_Application {
             get {
                 return ResourceManager.GetString("ViewTitle_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate column in Excel file.
+        /// </summary>
+        public static string ViewTitle_DuplicateColumn {
+            get {
+                return ResourceManager.GetString("ViewTitle_DuplicateColumn", resourceCulture);
             }
         }
         

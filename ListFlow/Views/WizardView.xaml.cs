@@ -187,6 +187,8 @@ namespace ListFlow.Views
                     // Load the data.
                     if (!mainTemplatesViewModel.SelectedMainTemplate.ExcelData.Connect(mainTemplatesViewModel.SelectedMainTemplate.RenameColumns, mainTemplatesViewModel.SelectedMainTemplate.ColumnForceToSplit))
                     {
+                        Console.WriteLine($"{mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames.Count}");
+
                         // Closes the application if no connection can be established with the data source.
                         Close();
                     }
@@ -398,7 +400,5 @@ namespace ListFlow.Views
         #region Methods
 
         #endregion
-
-
     }
 }
