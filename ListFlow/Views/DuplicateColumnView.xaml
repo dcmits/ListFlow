@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:ListFlow.Views"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:prop="clr-namespace:ListFlow.Properties"
+  xmlns:ctrl="clr-namespace:ListFlow.Controls"  
   Title="{x:Static prop:Resources.ViewTitle_DuplicateColumn}"
   Width="450"
   Height="250"
@@ -71,22 +72,50 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
-          <StackPanel Orientation="Vertical"/>
-                    <StackPanel Orientation="Vertical">
-            <Label Content="{Binding Message}" Grid.ColumnSpan="3" />
-          </StackPanel>
-                    <ListView Grid.Row="1" Grid.Column="0" Margin="10" Grid.ColumnSpan="3" ItemsSource="{Binding DuplicateColumns}">
-                        <ListView.View>
-                            <GridView >
-                                <GridView.Columns>
-                                    <GridViewColumn Header="Excel column name" Width="130" DisplayMemberBinding="{Binding ExcelColumnName}"/>
-                                    <GridViewColumn Header="Column title" Width="250" DisplayMemberBinding="{Binding ColumnTitle}"/>
-                                </GridView.Columns>
+
+            <Label Content="{Binding Message}" Grid.ColumnSpan="3" Height="Auto"/>
+                    <!--<ctrl:ListViewSortable
+                        HorizontalAlignment="Stretch"
+                        Grid.Row="1"
+                        Margin="10" 
+                        Grid.ColumnSpan="3"
+                        VerticalAlignment="Stretch"
+                        GridViewColumnHeader.Click="SortableListViewColumnHeaderClicked"
+              IsSynchronizedWithCurrentItem="True"
+              ItemContainerStyle="{StaticResource ListViewItemStyle}"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              ScrollViewer.VerticalScrollBarVisibility="Disabled"
+              Style="{StaticResource ListViewSortableStyle}"
+                        ItemsSource="{Binding DuplicateColumns, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                        <ctrl:ListViewSortable.View>
+                            <GridView AllowsColumnReorder="False" ColumnHeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}">
+                                <GridViewColumn
+                    Width="Auto"
+                    DisplayMemberBinding="{Binding Key}"
+                    Header="{x:Static prop:Resources.ExcelDuplicateColumn_ExcelColumnName_Title}">
+                                    <GridViewColumn.HeaderContainerStyle>
+                                        <Style BasedOn="{StaticResource GridViewColumnHeaderStyle}" TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Control.ToolTip" Value="{x:Static prop:Resources.ExcelDuplicateColumn_ExcelColumnName_Message}" />
+                                        </Style>
+                                    </GridViewColumn.HeaderContainerStyle>
+                                </GridViewColumn>
+                                <GridViewColumn
+                    Width="Auto"
+                    DisplayMemberBinding="{Binding Value}"
+                    Header="{x:Static prop:Resources.ExcelDuplicateColumn_ExcelColumnTitle_Title}">
+                                    <GridViewColumn.HeaderContainerStyle>
+                                        <Style BasedOn="{StaticResource GridViewColumnHeaderStyle}" TargetType="{x:Type GridViewColumnHeader}">
+                                            <Setter Property="Control.ToolTip" Value="{x:Static prop:Resources.ExcelDuplicateColumn_ExcelColumnTitle_Messsage}" />
+                                        </Style>
+                                    </GridViewColumn.HeaderContainerStyle>
+                                </GridViewColumn>
                             </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <Button Content="Ok" Grid.Column="3" Grid.Row="2"/>
-                </Grid>
+                        </ctrl:ListViewSortable.View>
+                    </ctrl:ListViewSortable>-->
+                    <Button Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Grid.Row="2" Command="{x:Static local:DuplicateColumnView.ExitCommand}"
+        Content="{x:Static prop:Resources.Button_Quit}" IsEnabled="True" Visibility="Visible"
+/>
+        </Grid>
       </Grid>
     </Grid>
   </Border>

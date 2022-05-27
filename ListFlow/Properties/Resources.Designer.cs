@@ -632,6 +632,62 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of the column in Excel format (A, B, ... AA).
+        /// </summary>
+        public static string ExcelDuplicateColumn_ExcelColumnName_Message {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumn_ExcelColumnName_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column name.
+        /// </summary>
+        public static string ExcelDuplicateColumn_ExcelColumnName_Title {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumn_ExcelColumnName_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title of the column as defined in Indico.UN.
+        /// </summary>
+        public static string ExcelDuplicateColumn_ExcelColumnTitle_Messsage {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumn_ExcelColumnTitle_Messsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column title.
+        /// </summary>
+        public static string ExcelDuplicateColumn_ExcelColumnTitle_Title {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumn_ExcelColumnTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Excel file has one column with a non-unique title. 
+        ///To be able to generate the final document, the Excel file must not contain any column title that are not unique..
+        /// </summary>
+        public static string ExcelDuplicateColumn_Message {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumn_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Excel file has {0} columns with non-unique titles. 
+        ///To be able to generate the final document, the Excel file must not contain any column title that are not unique..
+        /// </summary>
+        public static string ExcelDuplicateColumns_Message {
+            get {
+                return ResourceManager.GetString("ExcelDuplicateColumns_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag and drop the Excel file from Indico.UN containing the list of participants HERE.
         /// </summary>
         public static string ExcelFileDragDropInfoLine1 {
@@ -758,11 +814,12 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The Excel file has {0} columns with non-unique titles. 
+        ///To be able to generate the final document, the Excel file must not contain any column title that are not unique..
         /// </summary>
-        public static string Exception_ExcelDuplicateColumn {
+        public static string Exception_ExcelDuplicateColumns {
             get {
-                return ResourceManager.GetString("Exception_ExcelDuplicateColumn", resourceCulture);
+                return ResourceManager.GetString("Exception_ExcelDuplicateColumns", resourceCulture);
             }
         }
         

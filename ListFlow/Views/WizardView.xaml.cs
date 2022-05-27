@@ -187,9 +187,19 @@ namespace ListFlow.Views
                     // Load the data.
                     if (!mainTemplatesViewModel.SelectedMainTemplate.ExcelData.Connect(mainTemplatesViewModel.SelectedMainTemplate.RenameColumns, mainTemplatesViewModel.SelectedMainTemplate.ColumnForceToSplit))
                     {
-                        Console.WriteLine($"{mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames.Count}");
+                        // Show the list of duplicate column names in the Excel file.
+                        if (mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames.Count > 0)
+                        {
+                            DuplicateColumnView dialog = new DuplicateColumnView(mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames)
+                            {
+                                Left = Left + 50,
+                                Top = Top + 50
+                            };
 
-                        // Closes the application if no connection can be established with the data source.
+                            _ = dialog.ShowDialog();
+                        }
+
+                        // Closes the application if no connection can be established with the data source or duplicate column names detected in the Excel file.
                         Close();
                     }
 

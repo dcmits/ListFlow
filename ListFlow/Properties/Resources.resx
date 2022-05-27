@@ -982,10 +982,31 @@ If this option is not checked, the process uses the original Excel file without 
   <data name="Data_FormatFile" xml:space="preserve">
     <value>The Excel file is being formatted, please wait...</value>
   </data>
-  <data name="Exception_ExcelDuplicateColumn" xml:space="preserve">
-    <value></value>
+  <data name="Exception_ExcelDuplicateColumns" xml:space="preserve">
+    <value>The Excel file has {0} columns with non-unique titles. 
+To be able to generate the final document, the Excel file must not contain any column title that are not unique.</value>
   </data>
   <data name="ViewTitle_DuplicateColumn" xml:space="preserve">
     <value>Duplicate column in Excel file</value>
+  </data>
+  <data name="ExcelDuplicateColumns_Message" xml:space="preserve">
+    <value>The Excel file has {0} columns with non-unique titles. 
+To be able to generate the final document, the Excel file must not contain any column title that are not unique.</value>
+  </data>
+  <data name="ExcelDuplicateColumn_Message" xml:space="preserve">
+    <value>The Excel file has one column with a non-unique title. 
+To be able to generate the final document, the Excel file must not contain any column title that are not unique.</value>
+  </data>
+  <data name="ExcelDuplicateColumn_ExcelColumnName_Title" xml:space="preserve">
+    <value>Column name</value>
+  </data>
+  <data name="ExcelDuplicateColumn_ExcelColumnTitle_Title" xml:space="preserve">
+    <value>Column title</value>
+  </data>
+  <data name="ExcelDuplicateColumn_ExcelColumnName_Message" xml:space="preserve">
+    <value>Name of the column in Excel format (A, B, ... AA)</value>
+  </data>
+  <data name="ExcelDuplicateColumn_ExcelColumnTitle_Messsage" xml:space="preserve">
+    <value>Title of the column as defined in Indico.UN</value>
   </data>
 </root>

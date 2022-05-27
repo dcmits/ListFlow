@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ListFlow.Controls;
 
 namespace ListFlow.Views
 {
@@ -45,11 +46,25 @@ namespace ListFlow.Views
             }
         }
 
+        public Dictionary<string, string> DuplicateColumns
+        {
+            get => duplicateColumns;
+            set
+            {
+                if (duplicateColumns != value)
+                {
+                    duplicateColumns = value;
+                    OnPropertyChanged(nameof(duplicateColumns));
+                }
+            }
+        }
+
         #endregion
 
         #region Command Routing
 
         public static readonly RoutedCommand CloseWindowCommand = new RoutedCommand();
+        public static readonly RoutedCommand ExitCommand = new RoutedCommand();
 
         #endregion
 
@@ -60,12 +75,23 @@ namespace ListFlow.Views
             InitializeComponent();
 
             _ = CommandBindings.Add(new CommandBinding(CloseWindowCommand, CloseWindowCommand_Executed));
+            _ = CommandBindings.Add(new CommandBinding(ExitCommand, ExitCommand_Executed, ExitCommand_CanExecuted));
 
             this.duplicateColumns = duplicateColumns;
 
             DataContext = this;
 
-            Message = "Liste des colonnes non unique dans le fichier Excel";
+            Message = duplicateColumns.Count > 1 ? Properties.Resources.ExcelDuplicateColumn_Message : string.Format(Properties.Resources.ExcelDuplicateColumns_Message, duplicateColumns.Count);
+        }
+
+        private void ExitCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
         }
 
         #endregion
@@ -88,6 +114,15 @@ namespace ListFlow.Views
 
         }
 
+        #region SortableListView (Events)
+
+        private void SortableListViewColumnHeaderClicked(object sender, RoutedEventArgs e)
+        {
+            ((ListViewSortable)sender).ListViewColumnHeaderClick(sender, e);
+        }
+
+        #endregion
+
         #region Properties Change (Events)
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,6 +142,5 @@ namespace ListFlow.Views
         #endregion
     }
 
-    class
 
 }

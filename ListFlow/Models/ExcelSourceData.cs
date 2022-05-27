@@ -140,16 +140,7 @@ namespace ListFlow.Models
                 }
                 else
                 {
-                    if (duplicateColumnNames.Count > 0)
-                    {
-                        _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_ExcelDuplicateColumn, filePath), Properties.Resources.Exception_ConnectSource_Title);
-
-                        result = false;
-                    }
-                    else
-                    {
-                        result = true;
-                    }
+                    result = duplicateColumnNames.Count == 0;
                 }
 
                 CloseExcel();
@@ -451,7 +442,7 @@ namespace ListFlow.Models
                     if(columnFieldNames.ContainsKey(columnName))
                     {
                         // Duplicate column name.
-                        duplicateColumnNames.Add(columnName, ColumnIndexToColumnLetter(col));
+                        duplicateColumnNames.Add(ColumnIndexToColumnLetter(col), columnName);
                     }
                     else
                     { 
