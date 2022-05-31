@@ -1,260 +1,260 @@
 ﻿<ResourceDictionary
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:hlp="clr-namespace:ListFlow.Helpers">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hlp="clr-namespace:ListFlow.Helpers">
 
-  <Style TargetType="{x:Type ProgressBar}">
-    <Setter Property="Foreground" Value="{StaticResource GradientAnimated}" />
-    <Setter Property="Background" Value="{StaticResource ProgressBarBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource ProgressBarBorder}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="MinHeight" Value="18" />
-    <Setter Property="Margin" Value="5,0" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ProgressBar}">
-          <Grid x:Name="Background" SnapsToDevicePixels="true">
-            <Rectangle
-              Fill="{TemplateBinding Background}"
-              RadiusX="3"
-              RadiusY="3"
-              SnapsToDevicePixels="True" />
-            <Rectangle
-              x:Name="PART_Track"
-              Margin="1"
-              RadiusX="3"
-              RadiusY="3"
-              SnapsToDevicePixels="True" />
-            <Decorator
-              x:Name="PART_Indicator"
-              Margin="1"
-              HorizontalAlignment="Left">
-              <Grid x:Name="Foreground">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition MaxWidth="15" />
-                  <ColumnDefinition Width="0.1*" />
-                  <ColumnDefinition MaxWidth="15" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                  <RowDefinition />
-                  <RowDefinition />
-                </Grid.RowDefinitions>
-                <Border
-                  x:Name="Indicator"
-                  Grid.RowSpan="2"
-                  Grid.ColumnSpan="3"
-                  Margin="0"
-                  Background="{StaticResource ProgressBarIndicatorBrush}"
-                  CornerRadius="2"
-                  SnapsToDevicePixels="True" />
-                <Rectangle
-                  x:Name="Animation"
-                  Grid.RowSpan="2"
-                  Grid.ColumnSpan="3"
-                  Fill="{StaticResource GradientAnimated}"
-                  RadiusX="2"
-                  RadiusY="2"
-                  SnapsToDevicePixels="True">
-                  <Rectangle.OpacityMask>
-                    <MultiBinding>
-                      <MultiBinding.Converter>
-                        <hlp:ProgressBarHighlightConverter />
-                      </MultiBinding.Converter>
-                      <Binding Source="{StaticResource ProgressBarIndicatorAnimatedFill}" />
-                      <Binding ElementName="Background" Path="ActualWidth" />
-                      <Binding ElementName="Background" Path="ActualHeight" />
-                    </MultiBinding>
-                  </Rectangle.OpacityMask>
-                </Rectangle>
-              </Grid>
-            </Decorator>
-            <Border
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
-              CornerRadius="3"
-              SnapsToDevicePixels="True" />
-            <Grid
-              x:Name="GridValue"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-              </Grid.ColumnDefinitions>
-              <Label
-                x:Name="LabelValue"
-                Grid.Column="0"
-                Padding="0"
-                Content="{TemplateBinding Value}"
-                Foreground="{StaticResource ProgressBarValueForeground}" />
-              <Label
-                x:Name="LabelPercent"
-                Grid.Column="1"
-                Padding="0"
-                Content="%"
-                Foreground="{StaticResource ProgressBarValueForeground}" />
-            </Grid>
-          </Grid>
-          <ControlTemplate.Triggers>
-            <Trigger Property="Orientation" Value="Vertical">
-              <Setter TargetName="Background" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="-90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="PART_Track" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="PART_Indicator" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="Foreground" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="-90" />
-                </Setter.Value>
-              </Setter>
-            </Trigger>
-            <Trigger Property="IsIndeterminate" Value="true">
-              <Setter TargetName="LabelValue" Property="Visibility" Value="Collapsed" />
-              <Setter TargetName="LabelPercent" Property="Visibility" Value="Collapsed" />
-            </Trigger>
-            <Trigger Property="IsIndeterminate" Value="false">
-              <Setter TargetName="Animation" Property="Fill" Value="{StaticResource GradientAnimated}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground" Value="{StaticResource GradientAnimated}" />
+        <Setter Property="Background" Value="{StaticResource ProgressBarBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ProgressBarBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MinHeight" Value="18" />
+        <Setter Property="Margin" Value="5,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid x:Name="Background" SnapsToDevicePixels="true">
+                        <Rectangle
+                            Fill="{TemplateBinding Background}"
+                            RadiusX="3"
+                            RadiusY="3"
+                            SnapsToDevicePixels="True" />
+                        <Rectangle
+                            x:Name="PART_Track"
+                            Margin="1"
+                            RadiusX="3"
+                            RadiusY="3"
+                            SnapsToDevicePixels="True" />
+                        <Decorator
+                            x:Name="PART_Indicator"
+                            Margin="1"
+                            HorizontalAlignment="Left">
+                            <Grid x:Name="Foreground">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="15" />
+                                    <ColumnDefinition Width="0.1*" />
+                                    <ColumnDefinition MaxWidth="15" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    x:Name="Indicator"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="3"
+                                    Margin="0"
+                                    Background="{StaticResource ProgressBarIndicatorBrush}"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="True" />
+                                <Rectangle
+                                    x:Name="Animation"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="3"
+                                    Fill="{StaticResource GradientAnimated}"
+                                    RadiusX="2"
+                                    RadiusY="2"
+                                    SnapsToDevicePixels="True">
+                                    <Rectangle.OpacityMask>
+                                        <MultiBinding>
+                                            <MultiBinding.Converter>
+                                                <hlp:ProgressBarHighlightConverter />
+                                            </MultiBinding.Converter>
+                                            <Binding Source="{StaticResource ProgressBarIndicatorAnimatedFill}" />
+                                            <Binding ElementName="Background" Path="ActualWidth" />
+                                            <Binding ElementName="Background" Path="ActualHeight" />
+                                        </MultiBinding>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Grid>
+                        </Decorator>
+                        <Border
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True" />
+                        <Grid
+                            x:Name="GridValue"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                x:Name="LabelValue"
+                                Grid.Column="0"
+                                Padding="0"
+                                Content="{TemplateBinding Value}"
+                                Foreground="{StaticResource ProgressBarValueForeground}" />
+                            <Label
+                                x:Name="LabelPercent"
+                                Grid.Column="1"
+                                Padding="0"
+                                Content="%"
+                                Foreground="{StaticResource ProgressBarValueForeground}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="Background" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Indicator" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Foreground" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate" Value="true">
+                            <Setter TargetName="LabelValue" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="LabelPercent" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate" Value="false">
+                            <Setter TargetName="Animation" Property="Fill" Value="{StaticResource GradientAnimated}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-  <Style x:Key="ProgressBarWithoutValue" TargetType="{x:Type ProgressBar}">
-    <Setter Property="Foreground" Value="{StaticResource GradientAnimated}" />
-    <Setter Property="Background" Value="{StaticResource ProgressBarBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource ProgressBarBorder}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="MinHeight" Value="18" />
-    <Setter Property="Margin" Value="5,0" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type ProgressBar}">
-          <Grid x:Name="Background" SnapsToDevicePixels="true">
-            <Rectangle
-              Fill="{TemplateBinding Background}"
-              RadiusX="3"
-              RadiusY="3"
-              SnapsToDevicePixels="True" />
-            <Rectangle
-              x:Name="PART_Track"
-              Margin="1"
-              RadiusX="3"
-              RadiusY="3"
-              SnapsToDevicePixels="True" />
-            <Decorator
-              x:Name="PART_Indicator"
-              Margin="1"
-              HorizontalAlignment="Left">
-              <Grid x:Name="Foreground">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition MaxWidth="15" />
-                  <ColumnDefinition Width="0.1*" />
-                  <ColumnDefinition MaxWidth="15" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                  <RowDefinition />
-                  <RowDefinition />
-                </Grid.RowDefinitions>
-                <Border
-                  x:Name="Indicator"
-                  Grid.RowSpan="2"
-                  Grid.ColumnSpan="3"
-                  Margin="0"
-                  Background="{StaticResource ProgressBarIndicatorBrush}"
-                  CornerRadius="2"
-                  SnapsToDevicePixels="True" />
-                <Rectangle
-                  x:Name="Animation"
-                  Grid.RowSpan="2"
-                  Grid.ColumnSpan="3"
-                  Fill="{StaticResource GradientAnimated}"
-                  RadiusX="2"
-                  RadiusY="2"
-                  SnapsToDevicePixels="True">
-                  <Rectangle.OpacityMask>
-                    <MultiBinding>
-                      <MultiBinding.Converter>
-                        <hlp:ProgressBarHighlightConverter />
-                      </MultiBinding.Converter>
-                      <Binding Source="{StaticResource ProgressBarIndicatorAnimatedFill}" />
-                      <Binding ElementName="Background" Path="ActualWidth" />
-                      <Binding ElementName="Background" Path="ActualHeight" />
-                    </MultiBinding>
-                  </Rectangle.OpacityMask>
-                </Rectangle>
-              </Grid>
-            </Decorator>
-            <Border
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
-              CornerRadius="3"
-              SnapsToDevicePixels="True" />
-            <Grid
-              x:Name="GridValue"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-              </Grid.ColumnDefinitions>
-              <Label
-                x:Name="LabelValue"
-                Grid.Column="0"
-                Padding="0"
-                Foreground="{StaticResource ProgressBarValueForeground}" />
-              <Label
-                x:Name="LabelPercent"
-                Grid.Column="1"
-                Padding="0"
-                Foreground="{StaticResource ProgressBarValueForeground}" />
-            </Grid>
-          </Grid>
-          <ControlTemplate.Triggers>
-            <Trigger Property="Orientation" Value="Vertical">
-              <Setter TargetName="Background" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="-90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="PART_Track" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="PART_Indicator" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="90" />
-                </Setter.Value>
-              </Setter>
-              <Setter TargetName="Foreground" Property="LayoutTransform">
-                <Setter.Value>
-                  <RotateTransform Angle="-90" />
-                </Setter.Value>
-              </Setter>
-            </Trigger>
-            <Trigger Property="IsIndeterminate" Value="true">
-              <Setter TargetName="LabelValue" Property="Visibility" Value="Collapsed" />
-              <Setter TargetName="LabelPercent" Property="Visibility" Value="Collapsed" />
-            </Trigger>
-            <Trigger Property="IsIndeterminate" Value="false">
-              <Setter TargetName="Animation" Property="Fill" Value="{StaticResource GradientAnimated}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+    <Style x:Key="ProgressBarWithoutValue" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground" Value="{StaticResource GradientAnimated}" />
+        <Setter Property="Background" Value="{StaticResource ProgressBarBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ProgressBarBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="MinHeight" Value="18" />
+        <Setter Property="Margin" Value="5,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid x:Name="Background" SnapsToDevicePixels="true">
+                        <Rectangle
+                            Fill="{TemplateBinding Background}"
+                            RadiusX="3"
+                            RadiusY="3"
+                            SnapsToDevicePixels="True" />
+                        <Rectangle
+                            x:Name="PART_Track"
+                            Margin="1"
+                            RadiusX="3"
+                            RadiusY="3"
+                            SnapsToDevicePixels="True" />
+                        <Decorator
+                            x:Name="PART_Indicator"
+                            Margin="1"
+                            HorizontalAlignment="Left">
+                            <Grid x:Name="Foreground">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="15" />
+                                    <ColumnDefinition Width="0.1*" />
+                                    <ColumnDefinition MaxWidth="15" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    x:Name="Indicator"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="3"
+                                    Margin="0"
+                                    Background="{StaticResource ProgressBarIndicatorBrush}"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="True" />
+                                <Rectangle
+                                    x:Name="Animation"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="3"
+                                    Fill="{StaticResource GradientAnimated}"
+                                    RadiusX="2"
+                                    RadiusY="2"
+                                    SnapsToDevicePixels="True">
+                                    <Rectangle.OpacityMask>
+                                        <MultiBinding>
+                                            <MultiBinding.Converter>
+                                                <hlp:ProgressBarHighlightConverter />
+                                            </MultiBinding.Converter>
+                                            <Binding Source="{StaticResource ProgressBarIndicatorAnimatedFill}" />
+                                            <Binding ElementName="Background" Path="ActualWidth" />
+                                            <Binding ElementName="Background" Path="ActualHeight" />
+                                        </MultiBinding>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Grid>
+                        </Decorator>
+                        <Border
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True" />
+                        <Grid
+                            x:Name="GridValue"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                x:Name="LabelValue"
+                                Grid.Column="0"
+                                Padding="0"
+                                Foreground="{StaticResource ProgressBarValueForeground}" />
+                            <Label
+                                x:Name="LabelPercent"
+                                Grid.Column="1"
+                                Padding="0"
+                                Foreground="{StaticResource ProgressBarValueForeground}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="Background" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Indicator" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Foreground" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate" Value="true">
+                            <Setter TargetName="LabelValue" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="LabelPercent" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsIndeterminate" Value="false">
+                            <Setter TargetName="Animation" Property="Fill" Value="{StaticResource GradientAnimated}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

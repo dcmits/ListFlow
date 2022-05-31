@@ -1,694 +1,695 @@
 ﻿<Window
-  x:Class="ListFlow.Views.WizardView"
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:ctrl="clr-namespace:ListFlow.Controls"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:hlp="clr-namespace:ListFlow.Helpers"
-  xmlns:local="clr-namespace:ListFlow.Views"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:prop="clr-namespace:ListFlow.Properties"
-  Width="850"
-  Height="590"
-  Background="{StaticResource WindowBackground}"
-  FontFamily="Segoe UI"
-  ResizeMode="NoResize"
-  ShowInTaskbar="True"
-  WindowStartupLocation="CenterOwner"
-  mc:Ignorable="d">
+    x:Class="ListFlow.Views.WizardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="clr-namespace:ListFlow.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hlp="clr-namespace:ListFlow.Helpers"
+    xmlns:local="clr-namespace:ListFlow.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prop="clr-namespace:ListFlow.Properties"
+    Width="850"
+    Height="590"
+    Background="{StaticResource WindowBackground}"
+    FontFamily="Segoe UI"
+    ResizeMode="NoResize"
+    ShowInTaskbar="True"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
 
-  <!--  WindowChrome object for Window customisation  -->
-  <WindowChrome.WindowChrome>
-    <WindowChrome CaptionHeight="34" />
-  </WindowChrome.WindowChrome>
+    <!--  WindowChrome object for Window customisation  -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="34" />
+    </WindowChrome.WindowChrome>
 
-  <Border x:Name="MainWindowBorder" BorderThickness="0">
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="536*" />
-      </Grid.RowDefinitions>
-
-      <!--  Window chrome  -->
-      <Grid Grid.Row="0" Background="{StaticResource WindowBackground}">
-        <StackPanel
-          HorizontalAlignment="Left"
-          VerticalAlignment="Center"
-          Orientation="Horizontal">
-          <!--  Icon  -->
-          <Image
-            Width="18"
-            Margin="5,2"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="{StaticResource ListFlow_Large}" />
-          <TextBlock
-            Margin="4,3,0,0"
-            FontFamily="Segoe UI"
-            Foreground="{StaticResource TextForegroundBrush}"
-            Text="{x:Static prop:Resources.ViewTitle_Application}" />
-        </StackPanel>
-        <!--  Buttons  -->
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-          <Button
-            Command="{x:Static local:WizardView.HelpCommand}"
-            Style="{StaticResource HelpButtonStyle}"
-            ToolTip="{x:Static prop:Resources.ToolTip_HelpAndUpdate}"
-            WindowChrome.IsHitTestVisibleInChrome="True" />
-          <Button
-            Command="{x:Static local:WizardView.SortFilterCommand}"
-            Style="{StaticResource SortFilterButtonStyle}"
-            ToolTip="{x:Static prop:Resources.ToolTip_Settings}"
-            WindowChrome.IsHitTestVisibleInChrome="True" />
-          <Button
-            Command="{x:Static local:WizardView.CloseWindowCommand}"
-            Style="{StaticResource CloseButtonStyle}"
-            ToolTip="{x:Static prop:Resources.ToolTip_Close}"
-            WindowChrome.IsHitTestVisibleInChrome="True" />
-        </StackPanel>
-      </Grid>
-
-      <!--  Main Content  -->
-      <Grid
-        x:Name="grdMain"
-        Grid.Row="1"
-        Grid.RowSpan="2"
-        Background="{StaticResource WindowBackground}">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="200*" MinHeight="80" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <!--  Info Steps  -->
-        <Grid Margin="40,20,40,10">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-          </Grid.ColumnDefinitions>
-          <!--  Info Step 1 / Select Template  -->
-          <StackPanel Grid.Column="0" Orientation="Vertical">
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-              </Grid.ColumnDefinitions>
-              <Grid
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Stretch">
-                <Ellipse
-                  x:Name="elpStep1"
-                  Fill="{StaticResource DisabledStep}"
-                  IsEnabled="False"
-                  Style="{StaticResource Step}" />
-                <Image IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}" Style="{StaticResource SelectTemplate}" />
-              </Grid>
-              <Rectangle Fill="{Binding ElementName=elpStep1, Path=Fill}" Style="{StaticResource LinkRight}" />
-            </Grid>
-            <StackPanel
-              Margin="5"
-              HorizontalAlignment="Center"
-              Orientation="Horizontal">
-              <Image
-                x:Name="imgDoneStep1"
-                IsEnabled="False"
-                Style="{StaticResource SteepDone}" />
-              <TextBlock
-                IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}"
-                Style="{StaticResource ProcessStep}"
-                Text="{x:Static prop:Resources.Template_StepTitle}" />
-            </StackPanel>
-            <TextBlock
-              IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}"
-              Style="{StaticResource ProcessStepInfo}"
-              Text="{x:Static prop:Resources.Template_StepInfo}" />
-          </StackPanel>
-          <!--  Info Step 2 / Select Excel  -->
-          <StackPanel Grid.Column="1" Orientation="Vertical">
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-              </Grid.ColumnDefinitions>
-              <Rectangle Fill="{Binding ElementName=elpStep2, Path=Fill}" Style="{StaticResource LinkLeft}" />
-              <Grid
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Stretch">
-                <Ellipse
-                  x:Name="elpStep2"
-                  Fill="{StaticResource DisabledStep}"
-                  IsEnabled="False"
-                  Style="{StaticResource Step}" />
-                <Image IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}" Style="{StaticResource SelectExcel}" />
-              </Grid>
-              <Rectangle Fill="{Binding ElementName=elpStep2, Path=Fill}" Style="{StaticResource LinkRight}" />
-            </Grid>
-            <StackPanel
-              Margin="5"
-              HorizontalAlignment="Center"
-              Orientation="Horizontal">
-              <Image
-                x:Name="imgDoneStep2"
-                IsEnabled="False"
-                Style="{StaticResource SteepDone}" />
-              <TextBlock
-                IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}"
-                Style="{StaticResource ProcessStep}"
-                Text="{x:Static prop:Resources.Data_StepTitle}" />
-            </StackPanel>
-            <TextBlock
-              IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}"
-              Style="{StaticResource ProcessStepInfo}"
-              Text="{x:Static prop:Resources.Data_StepInfo}" />
-          </StackPanel>
-          <!--  Info Step 3 / Create  -->
-          <StackPanel Grid.Column="3" Orientation="Vertical">
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-              </Grid.ColumnDefinitions>
-              <Grid
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Stretch">
-                <Ellipse
-                  x:Name="elpStep3"
-                  Fill="{StaticResource DisabledStep}"
-                  IsEnabled="False"
-                  Style="{StaticResource Step}" />
-                <Image IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}" Style="{StaticResource Import}" />
-              </Grid>
-              <Rectangle Fill="{Binding ElementName=elpStep3, Path=Fill}" Style="{StaticResource LinkLeft}" />
-            </Grid>
-            <StackPanel
-              Margin="5"
-              HorizontalAlignment="Center"
-              Orientation="Horizontal">
-              <Image
-                x:Name="imgDoneStep3"
-                IsEnabled="False"
-                Style="{StaticResource SteepDone}" />
-              <TextBlock
-                IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}"
-                Style="{StaticResource ProcessStep}"
-                Text="{x:Static prop:Resources.Process_CreateDocumentTitle}" />
-            </StackPanel>
-            <TextBlock
-              IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}"
-              Style="{StaticResource ProcessStepInfo}"
-              Text="{x:Static prop:Resources.Process_CreateDocumentInfo}" />
-          </StackPanel>
-        </Grid>
-        <!--  Process  -->
-        <!--  Process Step 1 / Select Template  -->
-        <GroupBox
-          x:Name="gbxStep1"
-          Grid.Row="1"
-          Visibility="Visible">
-          <GroupBox.Header>
-            <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="44" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="22" />
-                <ColumnDefinition Width="8" />
-              </Grid.ColumnDefinitions>
-              <Image
-                HorizontalAlignment="Left"
-                Source="{StaticResource SelectTemplate_Large}"
-                Style="{StaticResource StepTitleImage}" />
-              <TextBlock
-                Grid.Column="1"
-                Style="{StaticResource StepTitleLeft}"
-                Text="{x:Static prop:Resources.Template_StepTitle}" />
-              <TextBlock
-                Grid.Column="2"
-                Style="{StaticResource StepTitleRight}"
-                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-              <Image
-                Grid.Column="3"
-                Style="{StaticResource HelpImageGroupBoxTitle}"
-                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_StepTitle},
-                                               Message={x:Static prop:Resources.ContextualHelp_Template_StepInfo},
-                                               IconType=Help}" />
-            </Grid>
-          </GroupBox.Header>
-          <Grid Margin="5,5,5,10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="22" />
-            </Grid.ColumnDefinitions>
+    <Border x:Name="MainWindowBorder" BorderThickness="0">
+        <Grid>
             <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="536*" />
             </Grid.RowDefinitions>
-            <Label>
-              <Label.Style>
-                <Style BasedOn="{StaticResource StandardStyle}" TargetType="Label">
-                  <Setter Property="Grid.ColumnSpan" Value="4" />
-                  <Setter Property="Content" Value="{x:Static prop:Resources.Template_UserInfo_Optional}" />
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
-                      <Setter Property="Content" Value="{x:Static prop:Resources.Template_UserInfo_Mandatory}" />
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Label.Style>
-            </Label>
-            <StackPanel Grid.Row="1">
-              <Label Content="{x:Static prop:Resources.Template_Select}" MouseRightButtonDown="Label_MouseRightButtonDown" />
-              <Label Content="{x:Static prop:Resources.Template_Description}" />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1">
-              <ComboBox
-                DisplayMemberPath="Title"
-                ItemsSource="{Binding MainTemplates}"
-                SelectedItem="{Binding SelectedMainTemplate}"
-                SelectedValuePath="Organ" />
-              <TextBox
-                Margin="4,0,4,4"
-                Padding="1"
-                IsEnabled="True"
-                IsReadOnly="True"
-                MinLines="4"
-                Text="{Binding SelectedMainTemplate.Comment}" />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="2">
-              <Image
-                Margin="0,5,0,4"
-                Style="{StaticResource HelpImage}"
-                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_Select},
-                                               Message={x:Static prop:Resources.ContextualHelp_Template_Select},
-                                               IconType=Help}" />
-              <Image
-                Margin="0,4"
-                Source="{StaticResource HelpContextual_Small}"
-                Style="{StaticResource HelpImage}"
-                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_Description},
-                                               Message={x:Static prop:Resources.ContextualHelp_Template_Description},
-                                               IconType=Help}" />
-            </StackPanel>
-            <GroupBox
-              Grid.Row="2"
-              Grid.ColumnSpan="3"
-              Margin="0,5,3,0"
-              VerticalAlignment="Top"
-              Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}, ConverterParameter=True}">
-              <GroupBox.Header>
-                <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200*" />
-                    <ColumnDefinition Width="22" />
-                    <ColumnDefinition Width="8" />
-                  </Grid.ColumnDefinitions>
-                  <TextBlock>
-                    <TextBlock.Style>
-                      <Style BasedOn="{StaticResource GroupBoxHeader}" TargetType="TextBlock">
-                        <Setter Property="Text" Value="{x:Static prop:Resources.Event_Details_Optional}" />
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
-                            <Setter Property="Text" Value="{x:Static prop:Resources.Event_Details_Mandatory}" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </TextBlock.Style>
-                  </TextBlock>
-                  <Image>
-                    <Image.Style>
-                      <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
-                        <Setter Property="Grid.Column" Value="1" />
-                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Details_Optional}, Message={x:Static prop:Resources.ContextualHelp_Event_Details_Optional}, IconType=Help}" />
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
-                            <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Details_Mandatory}, Message={x:Static prop:Resources.ContextualHelp_Event_Details_Mandatory}, IconType=Help}" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </Image.Style>
-                  </Image>
-                </Grid>
-              </GroupBox.Header>
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="22" />
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Title}" />
-                    <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Date}" />
-                    <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
-                  </StackPanel>
-                  <StackPanel Orientation="Horizontal">
-                    <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Location}" />
-                    <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
-                  </StackPanel>
+
+            <!--  Window chrome  -->
+            <Grid Grid.Row="0" Background="{StaticResource WindowBackground}">
+                <StackPanel
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <!--  Icon  -->
+                    <Image
+                        Width="18"
+                        Margin="5,2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="{StaticResource ListFlow_Large}" />
+                    <TextBlock
+                        Margin="4,3,0,0"
+                        FontFamily="Segoe UI"
+                        Foreground="{StaticResource TextForegroundBrush}"
+                        Text="{x:Static prop:Resources.ViewTitle_Application}" />
                 </StackPanel>
-                <StackPanel Grid.Column="1">
-                  <TextBox
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="True"
-                    SpellCheck.IsEnabled="True"
-                    Text="{Binding SelectedMainTemplate.EventDetails.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                  <TextBox
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="True"
-                    SpellCheck.IsEnabled="True"
-                    Text="{Binding SelectedMainTemplate.EventDetails.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                  <TextBox
-                    Margin="1,1,1,5"
-                    HorizontalAlignment="Stretch"
-                    IsEnabled="True"
-                    SpellCheck.IsEnabled="True"
-                    Text="{Binding SelectedMainTemplate.EventDetails.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                  <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*" />
-                      <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}">
-                      <Label
-                        Margin="0"
-                        Padding="0,2,0,2"
-                        Style="{StaticResource MandatoryFieldIndicatorStyle}" />
-                      <Label
-                        Margin="3,0,0,0"
-                        Padding="0"
-                        HorizontalContentAlignment="Left"
-                        Content="{x:Static prop:Resources.ToolTip_MandatoryField}" />
-                    </StackPanel>
+                <!--  Buttons  -->
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button
-                      Grid.Column="1"
-                      HorizontalAlignment="Right"
-                      Command="{x:Static local:WizardView.ResetCommand}"
-                      Content="{x:Static prop:Resources.Button_Reset}" />
-                  </Grid>
+                        Command="{x:Static local:WizardView.HelpCommand}"
+                        Style="{StaticResource HelpButtonStyle}"
+                        ToolTip="{x:Static prop:Resources.ToolTip_HelpAndUpdate}"
+                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button
+                        Command="{x:Static local:WizardView.SortFilterCommand}"
+                        Style="{StaticResource SortFilterButtonStyle}"
+                        ToolTip="{x:Static prop:Resources.ToolTip_Settings}"
+                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button
+                        Command="{x:Static local:WizardView.CloseWindowCommand}"
+                        Style="{StaticResource CloseButtonStyle}"
+                        ToolTip="{x:Static prop:Resources.ToolTip_Close}"
+                        WindowChrome.IsHitTestVisibleInChrome="True" />
                 </StackPanel>
-                <StackPanel Grid.Column="2">
-                  <Image>
-                    <Image.Style>
-                      <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
-                        <Setter Property="Margin" Value="0,5,0,4" />
-                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Title}, Message={x:Static prop:Resources.ContextualHelp_Event_Title_Optional}, IconType=Help}" />
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
-                            <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Title}, Message={x:Static prop:Resources.ContextualHelp_Event_Title_Mandatory}, IconType=Help}" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </Image.Style>
-                  </Image>
-                  <Image>
-                    <Image.Style>
-                      <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
-                        <Setter Property="Margin" Value="0,5" />
-                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Date}, Message={x:Static prop:Resources.ContextualHelp_Event_Date_Optional}, IconType=Help}" />
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
-                            <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Date}, Message={x:Static prop:Resources.ContextualHelp_Event_Date_Mandatory}, IconType=Help}" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </Image.Style>
-                  </Image>
-                  <Image>
-                    <Image.Style>
-                      <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
-                        <Setter Property="Margin" Value="0,4" />
-                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Location}, Message={x:Static prop:Resources.ContextualHelp_Event_Location_Optional}, IconType=Help}" />
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
-                            <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Location}, Message={x:Static prop:Resources.ContextualHelp_Event_Location_Mandatory}, IconType=Help}" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                      </Style>
-                    </Image.Style>
-                  </Image>
-                </StackPanel>
-              </Grid>
-            </GroupBox>
-          </Grid>
-        </GroupBox>
-        <!--  Process Step 2 / Select Data  -->
-        <GroupBox
-          x:Name="gbxStep2"
-          Grid.Row="1"
-          Visibility="Visible">
-          <GroupBox.Header>
-            <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="44" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="22" />
-                <ColumnDefinition Width="8" />
-              </Grid.ColumnDefinitions>
-              <Image
-                HorizontalAlignment="Left"
-                Source="{StaticResource SelectExcel_Large}"
-                Style="{StaticResource StepTitleImage}" />
-              <TextBlock
-                Grid.Column="1"
-                Style="{StaticResource StepTitleLeft}"
-                Text="{x:Static prop:Resources.Data_StepTitle}" />
-              <TextBlock
-                Grid.Column="2"
-                Style="{StaticResource StepTitleRight}"
-                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-              <Image
-                Grid.Column="3"
-                Style="{StaticResource HelpImageGroupBoxTitle}"
-                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Data_StepTitle},
-                                               Message={x:Static prop:Resources.ContextualHelp_Data_StepInfo},
-                                               IconType=Help}" />
             </Grid>
-          </GroupBox.Header>
-          <Grid Margin="5,5,5,10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="27*" />
-              <ColumnDefinition Width="125*" />
-              <ColumnDefinition Width="22" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <TextBlock
-              Grid.ColumnSpan="5"
-              Margin="5,3,5,10"
-              TextWrapping="Wrap">
-              <Run Text="{x:Static prop:Resources.Data_StepInfo}" />
-              <Run
-                FontSize="13"
-                Foreground="#8CCDFC"
-                Text="{Binding SelectedMainTemplate.Title}" />
-              <Run Text="{x:Static prop:Resources.Data_StepInfo1}" />
-            </TextBlock>
-            <Label
-              Grid.Row="1"
-              Margin="0,2,0,0"
-              VerticalAlignment="Top"
-              Content="{x:Static prop:Resources.Data_SelectExcelFile}" />
+
+            <!--  Main Content  -->
             <Grid
-              Grid.Row="1"
-              Grid.Column="1"
-              Grid.ColumnSpan="2">
-              <TextBox
-                x:Name="ExcelTextBox"
-                Height="40"
-                Margin="0,2,0,4"
-                hlp:DropFilesBehavior.IsEnabled="True"
-                Cursor="Hand"
-                IsReadOnly="True"
-                Text="{Binding SelectedMainTemplate.ExcelData.FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
-              <TextBlock
-                Margin="{Binding Margin, ElementName=ExcelTextBox}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="{StaticResource ReadOnlyTextBoxForeground}"
-                IsHitTestVisible="False"
-                Text="{x:Static prop:Resources.Data_DropInfo}">
-                <TextBlock.Style>
-                  <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                      <DataTrigger Binding="{Binding Text, ElementName=ExcelTextBox}" Value="">
-                        <Setter Property="Visibility" Value="Visible" />
-                      </DataTrigger>
-                    </Style.Triggers>
-                  </Style>
-                </TextBlock.Style>
-              </TextBlock>
+                x:Name="grdMain"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Background="{StaticResource WindowBackground}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="200*" MinHeight="80" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <!--  Info Steps  -->
+                <Grid Margin="40,20,40,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <!--  Info Step 1 / Select Template  -->
+                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch">
+                                <Ellipse
+                                    x:Name="elpStep1"
+                                    Fill="{StaticResource DisabledStep}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource Step}" />
+                                <Image IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}" Style="{StaticResource SelectTemplate}" />
+                            </Grid>
+                            <Rectangle Fill="{Binding ElementName=elpStep1, Path=Fill}" Style="{StaticResource LinkRight}" />
+                        </Grid>
+                        <StackPanel
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Image
+                                x:Name="imgDoneStep1"
+                                IsEnabled="False"
+                                Style="{StaticResource SteepDone}" />
+                            <TextBlock
+                                IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}"
+                                Style="{StaticResource ProcessStep}"
+                                Text="{x:Static prop:Resources.Template_StepTitle}" />
+                        </StackPanel>
+                        <TextBlock
+                            IsEnabled="{Binding ElementName=elpStep1, Path=IsEnabled}"
+                            Style="{StaticResource ProcessStepInfo}"
+                            Text="{x:Static prop:Resources.Template_StepInfo}" />
+                    </StackPanel>
+                    <!--  Info Step 2 / Select Excel  -->
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Fill="{Binding ElementName=elpStep2, Path=Fill}" Style="{StaticResource LinkLeft}" />
+                            <Grid
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch">
+                                <Ellipse
+                                    x:Name="elpStep2"
+                                    Fill="{StaticResource DisabledStep}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource Step}" />
+                                <Image IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}" Style="{StaticResource SelectExcel}" />
+                            </Grid>
+                            <Rectangle Fill="{Binding ElementName=elpStep2, Path=Fill}" Style="{StaticResource LinkRight}" />
+                        </Grid>
+                        <StackPanel
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Image
+                                x:Name="imgDoneStep2"
+                                IsEnabled="False"
+                                Style="{StaticResource SteepDone}" />
+                            <TextBlock
+                                IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}"
+                                Style="{StaticResource ProcessStep}"
+                                Text="{x:Static prop:Resources.Data_StepTitle}" />
+                        </StackPanel>
+                        <TextBlock
+                            IsEnabled="{Binding ElementName=elpStep2, Path=IsEnabled}"
+                            Style="{StaticResource ProcessStepInfo}"
+                            Text="{x:Static prop:Resources.Data_StepInfo}" />
+                    </StackPanel>
+                    <!--  Info Step 3 / Create  -->
+                    <StackPanel Grid.Column="3" Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch">
+                                <Ellipse
+                                    x:Name="elpStep3"
+                                    Fill="{StaticResource DisabledStep}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource Step}" />
+                                <Image IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}" Style="{StaticResource Import}" />
+                            </Grid>
+                            <Rectangle Fill="{Binding ElementName=elpStep3, Path=Fill}" Style="{StaticResource LinkLeft}" />
+                        </Grid>
+                        <StackPanel
+                            Margin="5"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Image
+                                x:Name="imgDoneStep3"
+                                IsEnabled="False"
+                                Style="{StaticResource SteepDone}" />
+                            <TextBlock
+                                IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}"
+                                Style="{StaticResource ProcessStep}"
+                                Text="{x:Static prop:Resources.Process_CreateDocumentTitle}" />
+                        </StackPanel>
+                        <TextBlock
+                            IsEnabled="{Binding ElementName=elpStep3, Path=IsEnabled}"
+                            Style="{StaticResource ProcessStepInfo}"
+                            Text="{x:Static prop:Resources.Process_CreateDocumentInfo}" />
+                    </StackPanel>
+                </Grid>
+                <!--  Process  -->
+                <!--  Process Step 1 / Select Template  -->
+                <GroupBox
+                    x:Name="gbxStep1"
+                    Grid.Row="1"
+                    Visibility="Visible">
+                    <GroupBox.Header>
+                        <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="8" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                HorizontalAlignment="Left"
+                                Source="{StaticResource SelectTemplate_Large}"
+                                Style="{StaticResource StepTitleImage}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource StepTitleLeft}"
+                                Text="{x:Static prop:Resources.Template_StepTitle}" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Style="{StaticResource StepTitleRight}"
+                                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Image
+                                Grid.Column="3"
+                                Style="{StaticResource HelpImageGroupBoxTitle}"
+                                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_StepTitle},
+                                                               Message={x:Static prop:Resources.ContextualHelp_Template_StepInfo},
+                                                               IconType=Help}" />
+                        </Grid>
+                    </GroupBox.Header>
+                    <Grid Margin="5,5,5,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="22" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label>
+                            <Label.Style>
+                                <Style BasedOn="{StaticResource StandardStyle}" TargetType="Label">
+                                    <Setter Property="Grid.ColumnSpan" Value="4" />
+                                    <Setter Property="Content" Value="{x:Static prop:Resources.Template_UserInfo_Optional}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
+                                            <Setter Property="Content" Value="{x:Static prop:Resources.Template_UserInfo_Mandatory}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                        </Label>
+                        <StackPanel Grid.Row="1">
+                            <Label Content="{x:Static prop:Resources.Template_Select}" MouseRightButtonDown="Label_MouseRightButtonDown" />
+                            <Label Content="{x:Static prop:Resources.Template_Description}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <ComboBox
+                                DisplayMemberPath="Title"
+                                ItemsSource="{Binding MainTemplates}"
+                                SelectedItem="{Binding SelectedMainTemplate}"
+                                SelectedValuePath="Organ" />
+                            <TextBox
+                                Margin="4,0,4,4"
+                                Padding="1"
+                                IsEnabled="True"
+                                IsReadOnly="True"
+                                MinLines="4"
+                                Text="{Binding SelectedMainTemplate.Comment}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2">
+                            <Image
+                                Margin="0,5,0,4"
+                                Style="{StaticResource HelpImage}"
+                                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_Select},
+                                                               Message={x:Static prop:Resources.ContextualHelp_Template_Select},
+                                                               IconType=Help}" />
+                            <Image
+                                Margin="0,4"
+                                Source="{StaticResource HelpContextual_Small}"
+                                Style="{StaticResource HelpImage}"
+                                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Template_Description},
+                                                               Message={x:Static prop:Resources.ContextualHelp_Template_Description},
+                                                               IconType=Help}" />
+                        </StackPanel>
+                        <GroupBox
+                            Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            Margin="0,5,3,0"
+                            VerticalAlignment="Top"
+                            Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}, ConverterParameter=True}">
+                            <GroupBox.Header>
+                                <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200*" />
+                                        <ColumnDefinition Width="22" />
+                                        <ColumnDefinition Width="8" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style BasedOn="{StaticResource GroupBoxHeader}" TargetType="TextBlock">
+                                                <Setter Property="Text" Value="{x:Static prop:Resources.Event_Details_Optional}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
+                                                        <Setter Property="Text" Value="{x:Static prop:Resources.Event_Details_Mandatory}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
+                                                <Setter Property="Grid.Column" Value="1" />
+                                                <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Details_Optional}, Message={x:Static prop:Resources.ContextualHelp_Event_Details_Optional}, IconType=Help}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToBooleanConverter}, ConverterParameter=1}" Value="True">
+                                                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Details_Mandatory}, Message={x:Static prop:Resources.ContextualHelp_Event_Details_Mandatory}, IconType=Help}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </Grid>
+                            </GroupBox.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="22" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Title}" />
+                                        <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Date}" />
+                                        <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Padding="5,5,0,5" Content="{x:Static prop:Resources.Event_Title_Location}" />
+                                        <Label Style="{StaticResource MandatoryFieldIndicatorStyle}" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBox
+                                        HorizontalAlignment="Stretch"
+                                        IsEnabled="True"
+                                        SpellCheck.IsEnabled="True"
+                                        Text="{Binding SelectedMainTemplate.EventDetails.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        HorizontalAlignment="Stretch"
+                                        IsEnabled="True"
+                                        SpellCheck.IsEnabled="True"
+                                        Text="{Binding SelectedMainTemplate.EventDetails.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        Margin="1,1,1,5"
+                                        HorizontalAlignment="Stretch"
+                                        IsEnabled="True"
+                                        SpellCheck.IsEnabled="True"
+                                        Text="{Binding SelectedMainTemplate.EventDetails.Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedMainTemplate.UseEventDetailFields, Converter={StaticResource EventDetailsUsageToVisibilityConverter}}">
+                                            <Label
+                                                Margin="0"
+                                                Padding="0,2,0,2"
+                                                Style="{StaticResource MandatoryFieldIndicatorStyle}" />
+                                            <Label
+                                                Margin="3,0,0,0"
+                                                Padding="0"
+                                                HorizontalContentAlignment="Left"
+                                                Content="{x:Static prop:Resources.ToolTip_MandatoryField}" />
+                                        </StackPanel>
+                                        <Button
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Right"
+                                            Command="{x:Static local:WizardView.ResetCommand}"
+                                            Content="{x:Static prop:Resources.Button_Reset}" />
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <Image>
+                                        <Image.Style>
+                                            <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
+                                                <Setter Property="Margin" Value="0,5,0,4" />
+                                                <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Title}, Message={x:Static prop:Resources.ContextualHelp_Event_Title_Optional}, IconType=Help}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
+                                                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Title}, Message={x:Static prop:Resources.ContextualHelp_Event_Title_Mandatory}, IconType=Help}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
+                                                <Setter Property="Margin" Value="0,5" />
+                                                <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Date}, Message={x:Static prop:Resources.ContextualHelp_Event_Date_Optional}, IconType=Help}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
+                                                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Date}, Message={x:Static prop:Resources.ContextualHelp_Event_Date_Mandatory}, IconType=Help}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style BasedOn="{StaticResource HelpImageGroupBoxTitle}" TargetType="Image">
+                                                <Setter Property="Margin" Value="0,4" />
+                                                <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Location}, Message={x:Static prop:Resources.ContextualHelp_Event_Location_Optional}, IconType=Help}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedMainTemplate.UseEventDetailFields}" Value="True">
+                                                        <Setter Property="ToolTip" Value="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Event_Location}, Message={x:Static prop:Resources.ContextualHelp_Event_Location_Mandatory}, IconType=Help}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </GroupBox>
+                <!--  Process Step 2 / Select Data  -->
+                <GroupBox
+                    x:Name="gbxStep2"
+                    Grid.Row="1"
+                    Visibility="Visible">
+                    <GroupBox.Header>
+                        <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="8" />
+                            </Grid.ColumnDefinitions>
+                            <Image
+                                HorizontalAlignment="Left"
+                                Source="{StaticResource SelectExcel_Large}"
+                                Style="{StaticResource StepTitleImage}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource StepTitleLeft}"
+                                Text="{x:Static prop:Resources.Data_StepTitle}" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Style="{StaticResource StepTitleRight}"
+                                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Image
+                                Grid.Column="3"
+                                Style="{StaticResource HelpImageGroupBoxTitle}"
+                                ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Data_StepTitle},
+                                                               Message={x:Static prop:Resources.ContextualHelp_Data_StepInfo},
+                                                               IconType=Help}" />
+                        </Grid>
+                    </GroupBox.Header>
+                    <Grid Margin="5,5,5,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="27*" />
+                            <ColumnDefinition Width="125*" />
+                            <ColumnDefinition Width="22" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.ColumnSpan="5"
+                            Margin="5,3,5,10"
+                            TextWrapping="Wrap">
+                            <Run Text="{x:Static prop:Resources.Data_StepInfo}" />
+                            <Run
+                                FontSize="13"
+                                Foreground="#8CCDFC"
+                                Text="{Binding SelectedMainTemplate.Title}" />
+                            <Run Text="{x:Static prop:Resources.Data_StepInfo1}" />
+                        </TextBlock>
+                        <Label
+                            Grid.Row="1"
+                            Margin="0,2,0,0"
+                            VerticalAlignment="Top"
+                            Content="{x:Static prop:Resources.Data_SelectExcelFile}" />
+                        <Grid
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2">
+                            <TextBox
+                                x:Name="ExcelTextBox"
+                                Height="40"
+                                Margin="0,2,0,4"
+                                hlp:DropFilesBehavior.IsEnabled="True"
+                                Cursor="Hand"
+                                IsReadOnly="True"
+                                Text="{Binding SelectedMainTemplate.ExcelData.FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Margin="{Binding Margin, ElementName=ExcelTextBox}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ReadOnlyTextBoxForeground}"
+                                IsHitTestVisible="False"
+                                Text="{x:Static prop:Resources.Data_DropInfo}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=ExcelTextBox}" Value="">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Image
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            Margin="0,5,0,4"
+                            VerticalAlignment="Top"
+                            Style="{StaticResource HelpImage}"
+                            ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Data_SelectExcelFile},
+                                                           Message={x:Static prop:Resources.ContextualHelp_Data_SelectExcelFile},
+                                                           IconType=Help}" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            Margin="3,3,3,0"
+                            Command="{x:Static local:WizardView.SelectFileCommand}"
+                            Content="{x:Static prop:Resources.Button_Browse}" />
+                        <Label
+                            x:Name="lblFormatFile"
+                            Grid.Row="3"
+                            Grid.ColumnSpan="5"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{x:Static prop:Resources.Data_FormatFile}"
+                            FontSize="13"
+                            Visibility="Hidden" />
+                    </Grid>
+                </GroupBox>
+                <!--  Step 3 / Finish & Merge  -->
+                <GroupBox
+                    x:Name="gbxStep3"
+                    Grid.Row="1"
+                    Visibility="Collapsed">
+                    <GroupBox.Header>
+                        <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="7" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{StaticResource FinishMerge_Large}" Style="{StaticResource StepTitleImage}" />
+                                <TextBlock
+                                    x:Name="grxProcessTitle"
+                                    Grid.Column="0"
+                                    Style="{StaticResource StepTitleLeft}"
+                                    Text="{x:Static prop:Resources.CreateDocument_StepTitle}" />
+                            </StackPanel>
+                            <TextBlock
+                                Grid.Column="1"
+                                Style="{StaticResource StepTitleRight}"
+                                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </GroupBox.Header>
+                    <Grid Margin="5,5,5,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Margin="5,3,5,10" TextWrapping="Wrap">
+                                <Run Text="{x:Static prop:Resources.FinishMerge_Step_SourceFile}" />
+                                <Run
+                                    FontSize="13"
+                                    Foreground="#8CCDFC"
+                                    Text="{Binding SelectedMainTemplate.ExcelData.FormatedFilePath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Run Text="{x:Static prop:Resources.FinishMerge_Step_DestinationTemplate}" />
+                                <Run
+                                    FontSize="13"
+                                    Foreground="#8CCDFC"
+                                    Text="{Binding SelectedMainTemplate.Title}" />
+                                <Run Text="{x:Static prop:Resources.FinishMerge_Step_DestinationTemplateEnd}" />
+                            </TextBlock>
+                            <CheckBox
+                                Margin="5,0"
+                                Content="{x:Static prop:Resources.CreateDocument_KeepFormatedFile}"
+                                IsChecked="{Binding SelectedMainTemplate.KeepFormatedExcelFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding SelectedMainTemplate.RenameColumns, Converter={StaticResource BooleanToVisibiliyConverter}, ConverterParameter=True}" />
+                        </StackPanel>
+                        <Label
+                            x:Name="lblStep"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{x:Static prop:Resources.CreateDocument_Step_Proceed}"
+                            FontSize="13" />
+                        <ctrl:RadialProgressBar
+                            x:Name="rpbSteps"
+                            Grid.Row="1"
+                            Width="150"
+                            Height="150"
+                            Padding="50"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ArcDirection="Clockwise"
+                            ArcMode="Shape"
+                            ArcRotationDegree="270"
+                            ArcWidth="45"
+                            Foreground="{StaticResource ProgressBarIndicatorBrush}"
+                            InnerBackgroundBrush="Transparent"
+                            ShapeModeShape="Rectangle"
+                            ShapeModeStep="15"
+                            ShapeModeWidth="6"
+                            Visibility="Visible" />
+                        <Button
+                            Grid.Row="2"
+                            Margin="10"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static local:WizardView.ProcessReportCommand}"
+                            Content="{x:Static prop:Resources.Button_ViewErrorList}" />
+                    </Grid>
+                </GroupBox>
+                <!--  Button and Status Bar  -->
+                <Grid Grid.Row="2" Margin="0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Label
+                            x:Name="lblUserInfo"
+                            Margin="9,0,0,0"
+                            Padding="0"
+                            HorizontalContentAlignment="Left"
+                            Content="{Binding UserInfo}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static local:WizardView.CancelCommand}"
+                            Content="{x:Static prop:Resources.Button_Cancel}"
+                            IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static local:WizardView.PrevStepCommand}"
+                            Content="{x:Static prop:Resources.Button_PrevStep}"
+                            IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static local:WizardView.NextStepCommand}"
+                            Content="{Binding NextStepButtonText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding IsNotLastStep, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
             </Grid>
-            <Image
-              Grid.Row="1"
-              Grid.Column="3"
-              Margin="0,5,0,4"
-              VerticalAlignment="Top"
-              Style="{StaticResource HelpImage}"
-              ToolTip="{ctrl:AdvancedToolTip Title={x:Static prop:Resources.Data_SelectExcelFile},
-                                             Message={x:Static prop:Resources.ContextualHelp_Data_SelectExcelFile},
-                                             IconType=Help}" />
-            <Button
-              Grid.Row="1"
-              Grid.Column="4"
-              Margin="3,3,3,0"
-              Command="{x:Static local:WizardView.SelectFileCommand}"
-              Content="{x:Static prop:Resources.Button_Browse}" />
-            <Label
-              x:Name="lblFormatFile"
-              Grid.Row="3"
-              Grid.ColumnSpan="5"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Content="{x:Static prop:Resources.Data_FormatFile}"
-              FontSize="13"
-              Visibility="Hidden" />
-          </Grid>
-        </GroupBox>
-        <!--  Step 3 / Finish & Merge  -->
-        <GroupBox
-          x:Name="gbxStep3"
-          Grid.Row="1"
-          Visibility="Collapsed">
-          <GroupBox.Header>
-            <Grid MinWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type GroupBox}}, Path=ActualWidth}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="7" />
-              </Grid.ColumnDefinitions>
-              <StackPanel Orientation="Horizontal">
-                <Image Source="{StaticResource FinishMerge_Large}" Style="{StaticResource StepTitleImage}" />
-                <TextBlock
-                  x:Name="grxProcessTitle"
-                  Grid.Column="0"
-                  Style="{StaticResource StepTitleLeft}"
-                  Text="{x:Static prop:Resources.CreateDocument_StepTitle}" />
-              </StackPanel>
-              <TextBlock
-                Grid.Column="1"
-                Style="{StaticResource StepTitleRight}"
-                Text="{Binding StepFormated, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-          </GroupBox.Header>
-          <Grid Margin="5,5,5,10">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-              <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <StackPanel>
-              <TextBlock Margin="5,3,5,10" TextWrapping="Wrap">
-                <Run Text="{x:Static prop:Resources.FinishMerge_Step_SourceFile}" />
-                <Run
-                  FontSize="13"
-                  Foreground="#8CCDFC"
-                  Text="{Binding SelectedMainTemplate.ExcelData.FormatedFilePath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Run Text="{x:Static prop:Resources.FinishMerge_Step_DestinationTemplate}" />
-                <Run
-                  FontSize="13"
-                  Foreground="#8CCDFC"
-                  Text="{Binding SelectedMainTemplate.Title}" />
-                <Run Text="{x:Static prop:Resources.FinishMerge_Step_DestinationTemplateEnd}" />
-              </TextBlock>
-              <CheckBox
-                Margin="5,0"
-                Content="{x:Static prop:Resources.CreateDocument_KeepFormatedFile}"
-                IsChecked="{Binding SelectedMainTemplate.KeepFormatedExcelFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding SelectedMainTemplate.RenameColumns, Converter={StaticResource BooleanToVisibiliyConverter}, ConverterParameter=True}" />
-            </StackPanel>
-            <Label
-              x:Name="lblStep"
-              Grid.Row="1"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              Content="{x:Static prop:Resources.CreateDocument_Step_Proceed}"
-              FontSize="13" />
-            <ctrl:RadialProgressBar
-              x:Name="rpbSteps"
-              Grid.Row="1"
-              Width="150"
-              Height="150"
-              Padding="50"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              ArcDirection="Clockwise"
-              ArcMode="Shape"
-              ArcRotationDegree="270"
-              ArcWidth="45"
-              Foreground="{StaticResource ProgressBarIndicatorBrush}"
-              InnerBackgroundBrush="Transparent"
-              ShapeModeShape="Rectangle"
-              ShapeModeStep="15"
-              ShapeModeWidth="6"
-              Visibility="Visible" />
-            <Button
-              Grid.Row="2"
-              Margin="10"
-              HorizontalAlignment="Right"
-              Command="{x:Static local:WizardView.ProcessReportCommand}"
-              Content="{x:Static prop:Resources.Button_ViewErrorList}" />
-          </Grid>
-        </GroupBox>
-        <!--  Button and Status Bar  -->
-        <Grid Grid.Row="2" Margin="0,2">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <StackPanel Grid.Column="0" Orientation="Horizontal">
-            <Label
-              Margin="9,0,0,0"
-              Padding="0"
-              HorizontalContentAlignment="Left"
-              Content="{Binding UserInfo}" />
-          </StackPanel>
-          <StackPanel
-            Grid.Column="1"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-              Margin="5"
-              HorizontalAlignment="Right"
-              Command="{x:Static local:WizardView.CancelCommand}"
-              Content="{x:Static prop:Resources.Button_Cancel}"
-              IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button
-              Margin="5"
-              HorizontalAlignment="Right"
-              Command="{x:Static local:WizardView.PrevStepCommand}"
-              Content="{x:Static prop:Resources.Button_PrevStep}"
-              IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Button
-              Margin="5"
-              HorizontalAlignment="Right"
-              Command="{x:Static local:WizardView.NextStepCommand}"
-              Content="{Binding NextStepButtonText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-              IsEnabled="{Binding IsNotLastStep, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-          </StackPanel>
         </Grid>
-      </Grid>
-    </Grid>
-  </Border>
+    </Border>
 </Window>

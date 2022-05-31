@@ -81,7 +81,7 @@ namespace ListFlow.Views
 
             DataContext = this;
 
-            Message = duplicateColumns.Count > 1 ? Properties.Resources.ExcelDuplicateColumn_Message : string.Format(Properties.Resources.ExcelDuplicateColumns_Message, duplicateColumns.Count);
+            Message = duplicateColumns.Count > 1 ? string.Format(Properties.Resources.DupColumns_Message, duplicateColumns.Count) : Properties.Resources.DupColumn_Message;
         }
 
         private void ExitCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)

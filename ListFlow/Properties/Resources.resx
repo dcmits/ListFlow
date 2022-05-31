@@ -989,24 +989,26 @@ To be able to generate the final document, the Excel file must not contain any c
   <data name="ViewTitle_DuplicateColumn" xml:space="preserve">
     <value>Duplicate column in Excel file</value>
   </data>
-  <data name="ExcelDuplicateColumns_Message" xml:space="preserve">
+  <data name="DupColumns_Message" xml:space="preserve">
     <value>The Excel file has {0} columns with non-unique titles. 
-To be able to generate the final document, the Excel file must not contain any column title that are not unique.</value>
+To be able to generate the final document, the Excel file must not contain any column title that are not unique.
+Correct the issue in the Excel file and restart the process of building the final document.</value>
   </data>
-  <data name="ExcelDuplicateColumn_Message" xml:space="preserve">
+  <data name="DupColumn_Message" xml:space="preserve">
     <value>The Excel file has one column with a non-unique title. 
-To be able to generate the final document, the Excel file must not contain any column title that are not unique.</value>
+To be able to generate the final document, the Excel file must not contain any column title that are not unique.
+Correct the issue in the Excel file and restart the process of building the final document.</value>
   </data>
-  <data name="ExcelDuplicateColumn_ExcelColumnName_Title" xml:space="preserve">
-    <value>Column name</value>
+  <data name="DupColumn_ExcelColumnName" xml:space="preserve">
+    <value>Excel Column name</value>
   </data>
-  <data name="ExcelDuplicateColumn_ExcelColumnTitle_Title" xml:space="preserve">
-    <value>Column title</value>
+  <data name="DupColumn_ExcelColumnTitle" xml:space="preserve">
+    <value>Indico.UN Column title</value>
   </data>
-  <data name="ExcelDuplicateColumn_ExcelColumnName_Message" xml:space="preserve">
+  <data name="ContextualHelp_DupColumn_ExcelColumnName" xml:space="preserve">
     <value>Name of the column in Excel format (A, B, ... AA)</value>
   </data>
-  <data name="ExcelDuplicateColumn_ExcelColumnTitle_Messsage" xml:space="preserve">
+  <data name="ContextualHelp_DupColumn_ExcelColumnTitle" xml:space="preserve">
     <value>Title of the column as defined in Indico.UN</value>
   </data>
 </root>

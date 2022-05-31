@@ -218,9 +218,15 @@ namespace ListFlow.Controls
 
         private void RadialProgressBar_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(_arc == null) return;
-            if(_arc.ArcMode == ArcMode.Shape)
+            if(_arc == null)
+            {
+                return;
+            }
+
+            if (_arc.ArcMode == ArcMode.Shape)
+            {
                 _arc.RecalculateShapes();
+            }
         }
 
         public override void OnApplyTemplate()
@@ -234,8 +240,8 @@ namespace ListFlow.Controls
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var progress = (double)values[0];
-            var bar = values[1] as System.Windows.Controls.ProgressBar;
+            double progress = (double)values[0];
+            ProgressBar bar = values[1] as System.Windows.Controls.ProgressBar;
 
             return 359.999 * (progress / (bar.Maximum - bar.Minimum));
         }

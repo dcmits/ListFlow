@@ -187,14 +187,16 @@ namespace ListFlow.Views
                     // Load the data.
                     if (!mainTemplatesViewModel.SelectedMainTemplate.ExcelData.Connect(mainTemplatesViewModel.SelectedMainTemplate.RenameColumns, mainTemplatesViewModel.SelectedMainTemplate.ColumnForceToSplit))
                     {
-                        // Show the list of duplicate column names in the Excel file.
+                        // Show the list of duplicate column names in the Excel file if exist.
                         if (mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames.Count > 0)
                         {
                             DuplicateColumnView dialog = new DuplicateColumnView(mainTemplatesViewModel.SelectedMainTemplate.ExcelData.DuplicateColumnNames)
                             {
-                                Left = Left + 50,
-                                Top = Top + 50
+                                Left = Left + 100,
+                                Top = Top + 100
                             };
+
+                            Mouse.OverrideCursor = null;
 
                             _ = dialog.ShowDialog();
                         }
@@ -232,7 +234,7 @@ namespace ListFlow.Views
 
                     await Task.Run(() =>
                     {
-                        mainTemplatesViewModel.SelectedMainTemplate.Merge(rpbSteps, subTemplateLog);
+                        mainTemplatesViewModel.SelectedMainTemplate.Merge(rpbSteps, subTemplateLog, lblUserInfo);
                     });
 
                     rpbSteps.Visibility = Visibility.Hidden;

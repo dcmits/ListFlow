@@ -1,115 +1,115 @@
 <ResourceDictionary
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:hlp="clr-namespace:ListFlow.Helpers">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hlp="clr-namespace:ListFlow.Helpers">
 
-  <Style TargetType="{x:Type TextBox}">
-    <Setter Property="Foreground" Value="{StaticResource TextBoxForeground}" />
-    <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
-    <Setter Property="FontWeight" Value="Normal" />
-    <Setter Property="FontSize" Value="11" />
-    <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="Margin" Value="1" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="VerticalAlignment" Value="Top" />
-    <Setter Property="Padding" Value="1,2,1,1" />
-    <Setter Property="Height" Value="Auto" />
-    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-    <Setter Property="CaretBrush" Value="{StaticResource TextBoxForeground}" />
-    <Setter Property="hlp:TextBoxBehavior.SelectAllTextOnFocus" Value="True" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type TextBox}">
-          <Border
-            x:Name="Bd"
-            Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}"
-            BorderThickness="{TemplateBinding BorderThickness}"
-            SnapsToDevicePixels="true">
-            <ScrollViewer
-              x:Name="PART_ContentHost"
-              Margin="{TemplateBinding Padding}"
-              SnapsToDevicePixels="True" />
-          </Border>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-              <Setter Property="Background" Value="{StaticResource HoverTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource HoverTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource HoverTextBoxForeground}" />
-              <Setter Property="CaretBrush" Value="{StaticResource HoverTextBoxForeground}" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="true">
-              <Setter Property="Background" Value="{StaticResource FocusedTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource FocusedTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource FocusedTextBoxForeground}" />
-              <Setter Property="CaretBrush" Value="{StaticResource FocusedTextBoxForeground}" />
-            </Trigger>
-            <Trigger Property="IsReadOnly" Value="true">
-              <Setter Property="Background" Value="{StaticResource ReadOnlyTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource ReadOnlyTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource ReadOnlyTextBoxForeground}" />
-              <!--<Setter Property="Foreground" Value="{StaticResource ReadOnlyTextBoxForeground}"/>-->
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
-              <Setter Property="Background" Value="{StaticResource DisabledTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource DisabledTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource DisabledTextBoxForeground}" />
-              <Setter Property="CaretBrush" Value="{StaticResource DisabledTextBoxForeground}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="{StaticResource TextBoxForeground}" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Padding" Value="1,2,1,1" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="CaretBrush" Value="{StaticResource TextBoxForeground}" />
+        <Setter Property="hlp:TextBoxBehavior.SelectAllTextOnFocus" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource HoverTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource HoverTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource HoverTextBoxForeground}" />
+                            <Setter Property="CaretBrush" Value="{StaticResource HoverTextBoxForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="Background" Value="{StaticResource FocusedTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource FocusedTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource FocusedTextBoxForeground}" />
+                            <Setter Property="CaretBrush" Value="{StaticResource FocusedTextBoxForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsReadOnly" Value="true">
+                            <Setter Property="Background" Value="{StaticResource ReadOnlyTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource ReadOnlyTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource ReadOnlyTextBoxForeground}" />
+                            <!--<Setter Property="Foreground" Value="{StaticResource ReadOnlyTextBoxForeground}"/>-->
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{StaticResource DisabledTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource DisabledTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisabledTextBoxForeground}" />
+                            <Setter Property="CaretBrush" Value="{StaticResource DisabledTextBoxForeground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-  <Style TargetType="{x:Type PasswordBox}">
-    <Setter Property="Foreground" Value="{StaticResource TextBoxForeground}" />
-    <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
-    <Setter Property="FontWeight" Value="Normal" />
-    <Setter Property="FontSize" Value="12" />
-    <Setter Property="FontFamily" Value="Segoe UI" />
-    <Setter Property="Margin" Value="3" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="VerticalAlignment" Value="Top" />
-    <Setter Property="Padding" Value="1" />
-    <Setter Property="Height" Value="Auto" />
-    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type PasswordBox}">
-          <Border
-            x:Name="Bd"
-            Background="{TemplateBinding Background}"
-            BorderBrush="{TemplateBinding BorderBrush}"
-            BorderThickness="{TemplateBinding BorderThickness}"
-            SnapsToDevicePixels="true">
-            <ScrollViewer
-              x:Name="PART_ContentHost"
-              Margin="{TemplateBinding Padding}"
-              SnapsToDevicePixels="True" />
-          </Border>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-              <Setter Property="Background" Value="{StaticResource HoverTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource HoverTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource HoverTextBoxForeground}" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="true">
-              <Setter Property="Background" Value="{StaticResource FocusedTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource FocusedTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource FocusedTextBoxForeground}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
-              <Setter Property="Background" Value="{StaticResource DisabledTextBoxBackground}" />
-              <Setter Property="BorderBrush" Value="{StaticResource DisabledTextBoxBorder}" />
-              <Setter Property="Foreground" Value="{StaticResource DisabledTextBoxForeground}" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+    <Style TargetType="{x:Type PasswordBox}">
+        <Setter Property="Foreground" Value="{StaticResource TextBoxForeground}" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border
+                        x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource HoverTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource HoverTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource HoverTextBoxForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="Background" Value="{StaticResource FocusedTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource FocusedTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource FocusedTextBoxForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{StaticResource DisabledTextBoxBackground}" />
+                            <Setter Property="BorderBrush" Value="{StaticResource DisabledTextBoxBorder}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisabledTextBoxForeground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

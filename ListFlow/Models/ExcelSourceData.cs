@@ -140,7 +140,7 @@ namespace ListFlow.Models
                 }
                 else
                 {
-                    result = duplicateColumnNames.Count == 0;
+                    result = duplicateColumnNames is null || duplicateColumnNames.Count == 0;
                 }
 
                 CloseExcel();

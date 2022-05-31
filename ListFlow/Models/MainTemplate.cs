@@ -7,6 +7,7 @@ using System.IO.Packaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace ListFlow.Models
 {
@@ -31,7 +32,7 @@ namespace ListFlow.Models
         private readonly object oFalse = false;
 
         // Word visible.
-        private bool wAppVisible = false;
+        private readonly bool wAppVisible = false;
 
         // Selected Excel Data.
         private ExcelData excelData;
@@ -44,6 +45,9 @@ namespace ListFlow.Models
 
         // Radial Progress Bar control.
         private Controls.RadialProgressBar rpb;
+
+        // Progress information control.
+        private System.Windows.Controls.Label lbl;
 
         // Selected sub-template.
         private SubTemplate selectedSubTemplate;
@@ -504,11 +508,14 @@ namespace ListFlow.Models
         /// Create the final document by merging teh Excel file with all defined sub-templates.
         /// </summary>
         /// <param name="radialProgressBar">RadialProgressBar control used to track the progress of the final document generation.</param>
-        public void Merge(Controls.RadialProgressBar radialProgressBar, List<string> subTemplateLog)
+        /// <param name="subTemplateLog">List of all the sub-template that will be ignored.</param>
+        /// <param name="userInfo">Label control used to inform the user of the current step.</param>
+        public void Merge(Controls.RadialProgressBar radialProgressBar, List<string> subTemplateLog, System.Windows.Controls.Label userInfo)
         {
             DateTime start = DateTime.Now;
 
             rpb = radialProgressBar;
+            lbl = userInfo;
 
             // Logging of the steps.
             DocCreationSteps = new FinalDocCreationSteps();
@@ -564,6 +571,9 @@ namespace ListFlow.Models
                         // Loop over the Sub-templates list.
                         foreach (SubTemplate subTemplate in subTemplates)
                         {
+                            // Informs the user about the sub-template being processed.
+                            lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_SubTemplateStartProcessing, subTemplate.FileName); }));
+
                             DocCreationSteps.Add(FinalDocCreationSteps.EntryType.StartProcessing, string.Format(Properties.Resources.FinalDocumentCreation_SubTemplateStartProcessing, subTemplate.FileName));
                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
@@ -846,6 +856,10 @@ namespace ListFlow.Models
                             DocCreationSteps.Add(FinalDocCreationSteps.EntryType.EndProcessing, string.Format(Properties.Resources.FinalDocumentCreation_SubTemplateEndProcessing, subTemplate.FileName));
                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                         }
+
+                        // Clean user information.
+                        lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Empty; }));
+
                         // Update the Events Fields.
                         if (!string.IsNullOrEmpty(eventDetails.Title) || !string.IsNullOrEmpty(eventDetails.Date) || !string.IsNullOrEmpty(eventDetails.Location))
                         {
