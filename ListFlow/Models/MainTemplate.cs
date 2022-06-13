@@ -592,7 +592,27 @@ namespace ListFlow.Models
                                         Document wSubTemplate = wApp.Documents.OpenNoRepairDialog(subTemplate.FilePath, oTrue, oFalse, oFalse, oMissing, oMissing, oMissing,
                                                                                         oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing);
 
-                                        if (wSubTemplate != null)
+                                        // Ignore this sub-template if document are opened in protectedview.
+                                        bool protectedView = false;
+                                        if (wApp.ProtectedViewWindows.Count > 0)
+                                        {
+                                            for (int i = 0; i < wApp.ProtectedViewWindows.Count - 1; i++)
+                                            {
+                                                if (wSubTemplate.Name.CompareTo($"{wApp.ProtectedViewWindows[i].Document.Name}") == 0)
+                                                {
+                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateInProtectedView, subTemplate.FilePath));
+                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                    _ = Marshal.ReleaseComObject(wSubTemplate);
+
+                                                    protectedView = true;
+
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (wSubTemplate != null & !protectedView)
                                         {
                                             DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_SubTemplateOpened);
                                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());

@@ -85,7 +85,7 @@ namespace ListFlow.Views
             {
                 Mouse.OverrideCursor = null;
 
-                _ = new Helpers.CustomException(ex.Message, Properties.Resources.Exception_MessageBox_TitleText);                
+                _ = new CustomException(ex.Message, Properties.Resources.Exception_MessageBox_TitleText);
                 //_ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
 
                 Close();
@@ -147,7 +147,7 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
-        private static Action EmptyDelegate = delegate () { };
+        private static readonly Action EmptyDelegate = delegate () { };
 
         private async void NextStepCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {

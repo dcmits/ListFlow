@@ -1011,4 +1011,9 @@ Correct the issue in the Excel file and restart the process of building the fina
   <data name="ContextualHelp_DupColumn_ExcelColumnTitle" xml:space="preserve">
     <value>Title of the column as defined in Indico.UN</value>
   </data>
+  <data name="Exception_SubTemplateInProtectedView" xml:space="preserve">
+    <value>The {0} sub-template has been opened in protected mode in Word because its source is not considered reliable (Internet download or attachment).
+In order to be used in ListFlow the sub-templates must be approved, therefore this sub-template will be ignored in the final document creation process.
+Click {1} to learn how to approve the sub-template.</value>
+  </data>
 </root>

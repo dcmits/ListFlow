@@ -1036,6 +1036,17 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} sub-template has been opened in protected mode in Word because its source is not considered reliable (Internet download or attachment).
+        ///In order to be used in ListFlow the sub-templates must be approved, therefore this sub-template will be ignored in the final document creation process.
+        ///Click {1} to learn how to approve the sub-template..
+        /// </summary>
+        public static string Exception_SubTemplateInProtectedView {
+            get {
+                return ResourceManager.GetString("Exception_SubTemplateInProtectedView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The sub-template &apos;{0}&apos; will be ignored during the creation of the final document because no query has been defined in the &apos;{1}&apos; file property..
         /// </summary>
         public static string Exception_SubTemplateMissingQuery {

@@ -24,9 +24,9 @@ namespace ListFlow.ViewModels
         // Interop missing value.
         private object oMissing = Missing.Value;
         // Interop true value.
-        private object oTrue = true;
+        private readonly object oTrue = true;
         // Interop false value.
-        private object oFalse = false;
+        private readonly object oFalse = false;
         // Current step in the Wizard.
         private int currentStep;
         // Current step formated text.
@@ -241,8 +241,6 @@ namespace ListFlow.ViewModels
                     selectedMainTemplate.ExcelData.Disconnect();
                 }
             };
-
-
         }
 
         #endregion
