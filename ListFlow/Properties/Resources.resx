@@ -1016,4 +1016,10 @@ Correct the issue in the Excel file and restart the process of building the fina
 In order to be used in ListFlow the sub-templates must be approved, therefore this sub-template will be ignored in the final document creation process.
 Click {1} to learn how to approve the sub-template.</value>
   </data>
+  <data name="Exception_SqlSyntaxIssue" xml:space="preserve">
+    <value>The SQL query to select and sort data contains one syntax error. The sub-template being processed is ignored.</value>
+  </data>
+  <data name="Exception_SqlSyntaxIssues" xml:space="preserve">
+    <value>The SQL query to select and sort data contains {0} syntax errors. The sub-template being processed is ignored.</value>
+  </data>
 </root>

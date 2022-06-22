@@ -7,7 +7,9 @@ using System.IO.Packaging;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
+using System.Linq;
 using System.Windows.Threading;
+using Microsoft.SqlServer.Management.SqlParser.Parser;
 
 namespace ListFlow.Models
 {
@@ -582,17 +584,17 @@ namespace ListFlow.Models
 
                             try
                             {
-                                // Ignore this sub-template of no Query are defined.
+                                // Check if the query are defined in this sub-template.
                                 if (!string.IsNullOrEmpty(subTemplate.Query))
                                 {
-                                    // Ignore this sub-template if file doens't exist.
+                                    // Check if this sub-template file exist.
                                     if (File.Exists(subTemplate.FilePath))
                                     {
-                                        // Open the sub-template in Word (read-only).
+                                        // Open this sub-template in Word (read-only).
                                         Document wSubTemplate = wApp.Documents.OpenNoRepairDialog(subTemplate.FilePath, oTrue, oFalse, oFalse, oMissing, oMissing, oMissing,
                                                                                         oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing);
 
-                                        // Ignore this sub-template if document are opened in protectedview.
+                                        // Check if this sub-template are opened in ProtectedView in Word.
                                         bool protectedView = false;
                                         if (wApp.ProtectedViewWindows.Count > 0)
                                         {
@@ -600,11 +602,6 @@ namespace ListFlow.Models
                                             {
                                                 if (wSubTemplate.Name.CompareTo($"{wApp.ProtectedViewWindows[i].Document.Name}") == 0)
                                                 {
-                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateInProtectedView, subTemplate.FilePath));
-                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                    _ = Marshal.ReleaseComObject(wSubTemplate);
-
                                                     protectedView = true;
 
                                                     break;
@@ -612,6 +609,7 @@ namespace ListFlow.Models
                                             }
                                         }
 
+                                        // Checks if the sub-template was opened succesfully in Word and not opened in Word in ProtectedView (file comes from Internet or mail attachment).
                                         if (wSubTemplate != null & !protectedView)
                                         {
                                             DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_SubTemplateOpened);
@@ -652,217 +650,251 @@ namespace ListFlow.Models
 
                                             if (!queryToLong)
                                             {
-                                                // Ignore this sub-template if the Excxel source file doesn't exist.
-                                                if (File.Exists(ExcelData.FormatedFilePath))
+                                                //TODO: Add SQL Parser.
+                                                // Check the query syntax.
+                                                ParseResult sqlParseResult = Parser.Parse(subTemplate.Query);
+                                                if (sqlParseResult.Errors.Count() == 0)
                                                 {
-                                                    DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_SearchSheet);
-                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                    // Check if the sheet name defined in the query exist in the Excel source file.
-                                                    bool sheetExist = subTemplate.Query.Contains(ExcelData.SheetName);
-
-                                                    // Ignore this sub-template if the sheet name defined in the query doesn't exist in the Excel source file.
-                                                    if (sheetExist)
+                                                    // Check if the Excel source file doesn't exist.
+                                                    if (File.Exists(ExcelData.FormatedFilePath))
                                                     {
-                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CheckMergeFields);
+                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_SearchSheet);
                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
-                                                        // Check that the names of the merge fields match the fields in the source file.
-                                                        List<string> notMatchingMergeFields = subTemplate.CheckMergeFields(ExcelData.ColumnFieldNames);
+                                                        // Check if the sheet name defined in the query exist in the Excel source file.
+                                                        bool sheetExist = subTemplate.Query.Contains(ExcelData.SheetName);
 
-                                                        // Ignore this sub-template if one or more merge field doesn't exist in the Excel source file.
-                                                        if (notMatchingMergeFields.Count == 0)
+                                                        // Ignore this sub-template if the sheet name defined in the query doesn't exist in the Excel source file.
+                                                        if (sheetExist)
                                                         {
-                                                            // Check if the fields defined in the query exist in the Excel source file.
-                                                            List<string> notMatchingQueryFields = subTemplate.CheckQueryFields(ExcelData.ColumnFieldNames);
+                                                            DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CheckMergeFields);
+                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
-                                                            // Ignore this sub-template if one or more query field doesn't exist in the Excel source file.
-                                                            if (notMatchingQueryFields.Count == 0)
+                                                            // Check that the names of the merge fields match the fields in the source file.
+                                                            List<string> notMatchingMergeFields = subTemplate.CheckMergeFields(ExcelData.ColumnFieldNames);
+
+                                                            // Ignore this sub-template if one or more merge field doesn't exist in the Excel source file.
+                                                            if (notMatchingMergeFields.Count == 0)
                                                             {
-                                                                // Set the merge type to Catalog.
-                                                                wSubTemplate.MailMerge.MainDocumentType = WdMailMergeMainDocType.wdCatalog;
+                                                                // Check if the fields defined in the query exist in the Excel source file.
+                                                                List<string> notMatchingQueryFields = subTemplate.CheckQueryFields(ExcelData.ColumnFieldNames);
 
-                                                                DocCreationSteps.Add(string.Format(Properties.Resources.FinalDocumentCreation_OpenDataSource, ExcelData.FormatedFilePath, queryPart1, queryPart2));
-                                                                rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                                wSubTemplate.MailMerge.OpenDataSource(ExcelData.FormatedFilePath, oMissing, oFalse, oTrue, oMissing, oFalse, oMissing, oMissing,
-                                                                                                            oMissing, oMissing, oMissing, oMissing, queryPart1, queryPart2, oFalse, oMissing);
-
-                                                                // Counts the number of records matching the criteria (query). 
-                                                                bool noRecord = false;
-                                                                try
+                                                                // Ignore this sub-template if one or more query field doesn't exist in the Excel source file.
+                                                                if (notMatchingQueryFields.Count == 0)
                                                                 {
-                                                                    wSubTemplate.MailMerge.DataSource.ActiveRecord = WdMailMergeActiveRecord.wdLastRecord;
-                                                                    _ = int.TryParse(wSubTemplate.MailMerge.DataSource.ActiveRecord.ToString(), out int lastRecordID);
-                                                                    wSubTemplate.MailMerge.DataSource.ActiveRecord = WdMailMergeActiveRecord.wdFirstRecord;
+                                                                    // Set the merge type to Catalog.
+                                                                    wSubTemplate.MailMerge.MainDocumentType = WdMailMergeMainDocType.wdCatalog;
 
-                                                                    totalMergedRecord += lastRecordID;
-
-                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Result, string.Format(Properties.Resources.FinalDocumentCreation_NumberOfRecords, lastRecordID));
-                                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-                                                                }
-                                                                catch (COMException ex)
-                                                                {
-                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Warning, Properties.Resources.Exception_NoMatchingData);
+                                                                    DocCreationSteps.Add(string.Format(Properties.Resources.FinalDocumentCreation_OpenDataSource, ExcelData.FormatedFilePath, queryPart1, queryPart2));
                                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
-                                                                    // No matching record.
-                                                                    noRecord = ex.HResult == -2146822435;
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_CountRecords, ex.Message));
-                                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                    wSubTemplate.MailMerge.OpenDataSource(ExcelData.FormatedFilePath, oMissing, oFalse, oTrue, oMissing, oFalse, oMissing, oMissing,
+                                                                                                                oMissing, oMissing, oMissing, oMissing, queryPart1, queryPart2, oFalse, oMissing);
 
-                                                                    noRecord = true;
-                                                                }
-
-                                                                // Ignore thi sub-template if no matching record or an error occured.
-                                                                bool mergeError = false;
-                                                                if (!noRecord)
-                                                                {
-                                                                    // Set the mail merge destination to a new document.
-                                                                    wSubTemplate.MailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
-
+                                                                    // Counts the number of records matching the criteria (query). 
+                                                                    bool noRecord = false;
                                                                     try
                                                                     {
-                                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_StartMergeSubTemplate);
-                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                        wSubTemplate.MailMerge.DataSource.ActiveRecord = WdMailMergeActiveRecord.wdLastRecord;
+                                                                        _ = int.TryParse(wSubTemplate.MailMerge.DataSource.ActiveRecord.ToString(), out int lastRecordID);
+                                                                        wSubTemplate.MailMerge.DataSource.ActiveRecord = WdMailMergeActiveRecord.wdFirstRecord;
 
-                                                                        // Performs the sub-template mailmerge.
-                                                                        wSubTemplate.MailMerge.Execute(oFalse);
+                                                                        totalMergedRecord += lastRecordID;
+
+                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Result, string.Format(Properties.Resources.FinalDocumentCreation_NumberOfRecords, lastRecordID));
+                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                                     }
                                                                     catch (COMException ex)
                                                                     {
-                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Warning, string.Format(Properties.Resources.Exception_NoMatchingData, subTemplate.FileName));
+                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Warning, Properties.Resources.Exception_NoMatchingData);
                                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
                                                                         // No matching record.
-                                                                        noRecord = ex.HResult == -2146822657;
+                                                                        noRecord = ex.HResult == -2146822435;
                                                                     }
                                                                     catch (Exception ex)
                                                                     {
-                                                                        mergeError = true;
-
-                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MergeSubTemplate, ex.Message));
+                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_CountRecords, ex.Message));
                                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                        noRecord = true;
+                                                                    }
+
+                                                                    // Ignore thi sub-template if no matching record or an error occured.
+                                                                    bool mergeError = false;
+                                                                    if (!noRecord)
+                                                                    {
+                                                                        // Set the mail merge destination to a new document.
+                                                                        wSubTemplate.MailMerge.Destination = WdMailMergeDestination.wdSendToNewDocument;
+
+                                                                        try
+                                                                        {
+                                                                            DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_StartMergeSubTemplate);
+                                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                            // Performs the sub-template mailmerge.
+                                                                            wSubTemplate.MailMerge.Execute(oFalse);
+                                                                        }
+                                                                        catch (COMException ex)
+                                                                        {
+                                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Warning, string.Format(Properties.Resources.Exception_NoMatchingData, subTemplate.FileName));
+                                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                            // No matching record.
+                                                                            noRecord = ex.HResult == -2146822657;
+                                                                        }
+                                                                        catch (Exception ex)
+                                                                        {
+                                                                            mergeError = true;
+
+                                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MergeSubTemplate, ex.Message));
+                                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                        }
+                                                                    }
+
+                                                                    if (!noRecord && !mergeError)
+                                                                    {
+                                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_MergeSubTemplateSuccessfully);
+                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+
+                                                                        // Merge successfully.
+                                                                        Document wMailMergeResult = wApp.ActiveDocument;
+
+                                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CopyMergeDataToMain);
+                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                        // Copy to the Office Clipboard the result of the merge.
+                                                                        wMailMergeResult.StoryRanges[WdStoryType.wdMainTextStory].Copy();
+
+                                                                        DocCreationSteps.Add(string.Format(Properties.Resources.FinalDocumentCreation_SearchTagInMain, subTemplate.FileName));
+                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                        // Find the tag of this sub-template in the main template.
+                                                                        Range wRange = wDoc.Content;
+                                                                        wRange.Find.ClearFormatting();
+                                                                        wRange.Find.Text = $"#{subTemplate.FileName}#";
+                                                                        wRange.Find.Forward = true;
+                                                                        wRange.Find.Wrap = WdFindWrap.wdFindStop;
+                                                                        if (wRange.Find.Execute())
+                                                                        {
+                                                                            DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_PasteMergeDataToMain);
+                                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                            // Paste the merge result to this location with keeping the original formatting (from sub-template).
+                                                                            wRange.PasteAndFormat(WdRecoveryType.wdFormatOriginalFormatting);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_TagNotExist, subTemplate.FileName));
+                                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                        }
+
+                                                                        _ = Marshal.ReleaseComObject(wRange);
+
+                                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CloseMergeResultSubTemplate);
+                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                                        // Close the merge result document without saving, if Word if hidden.
+                                                                        if (!wAppVisible)
+                                                                        {
+                                                                            wMailMergeResult.Close(oFalse, oMissing, oMissing);
+                                                                        }
+
+                                                                        _ = Marshal.ReleaseComObject(wMailMergeResult);
                                                                     }
                                                                 }
-
-                                                                if (!noRecord && !mergeError)
+                                                                else
                                                                 {
-                                                                    DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_MergeSubTemplateSuccessfully);
-                                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-
-                                                                    // Merge successfully.
-                                                                    Document wMailMergeResult = wApp.ActiveDocument;
-
-                                                                    DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CopyMergeDataToMain);
-                                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                                    // Copy to the Office Clipboard the result of the merge.
-                                                                    wMailMergeResult.StoryRanges[WdStoryType.wdMainTextStory].Copy();
-
-                                                                    DocCreationSteps.Add(string.Format(Properties.Resources.FinalDocumentCreation_SearchTagInMain, subTemplate.FileName));
-                                                                    rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                                    // Find the tag of this sub-template in the main template.
-                                                                    Range wRange = wDoc.Content;
-                                                                    wRange.Find.ClearFormatting();
-                                                                    wRange.Find.Text = $"#{subTemplate.FileName}#";
-                                                                    wRange.Find.Forward = true;
-                                                                    wRange.Find.Wrap = WdFindWrap.wdFindStop;
-                                                                    if (wRange.Find.Execute())
+                                                                    // Liste the query fields that are not available in the data source Excel file, for debuging purpose.
+                                                                    foreach (string item in notMatchingQueryFields)
                                                                     {
-                                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_PasteMergeDataToMain);
-                                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                                        // Paste the merge result to this location with keeping the original formatting (from sub-template).
-                                                                        wRange.PasteAndFormat(WdRecoveryType.wdFormatOriginalFormatting);                                                                    
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_TagNotExist, subTemplate.FileName));
+                                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_QueryFieldNotInDataSource, item));
                                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                                     }
 
-                                                                    _ = Marshal.ReleaseComObject(wRange);
-
-                                                                    DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CloseMergeResultSubTemplate);
+                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SubTemplateIgnored);
                                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                                    // Close the merge result document without saving, if Word if hidden.
-                                                                    if (!wAppVisible)
-                                                                    {
-                                                                        wMailMergeResult.Close(oFalse, oMissing, oMissing);
-                                                                    }
-
-                                                                    _ = Marshal.ReleaseComObject(wMailMergeResult);
                                                                 }
                                                             }
                                                             else
                                                             {
-                                                                // Liste the query fields that are not available in the data source Excel file, for debuging purpose.
-                                                                foreach (string item in notMatchingQueryFields)
+                                                                // Liste the merge fields that are not available in the data source Excel file, for debuging purpose.
+                                                                foreach (string item in notMatchingMergeFields)
                                                                 {
-                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_QueryFieldNotInDataSource, item));
+                                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MergeFieldNotInDataSource, item));
                                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                                 }
 
                                                                 DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SubTemplateIgnored);
                                                                 rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                             }
+
+                                                            DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CloseSubTemplate);
+                                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+
+                                                            // Close the sub-template without saving.
+                                                            wSubTemplate.Close(oFalse, oMissing, oMissing);
+
+                                                            //TODO: Can be deleted.
+                                                            // _ = Marshal.ReleaseComObject(wSubTemplate);
                                                         }
                                                         else
                                                         {
-                                                            // Liste the merge fields that are not available in the data source Excel file, for debuging purpose.
-                                                            foreach (string item in notMatchingMergeFields)
-                                                            {
-                                                                DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MergeFieldNotInDataSource, item));
-                                                                rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-                                                            }
-
-                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SubTemplateIgnored);
+                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SheetNotExist, subTemplate.Query));
                                                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                         }
-
-                                                        DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CloseSubTemplate);
-                                                        rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                        // Close the sub-template without saving.
-                                                        wSubTemplate.Close(oFalse, oMissing, oMissing);
-
-                                                        _ = Marshal.ReleaseComObject(wSubTemplate);
                                                     }
                                                     else
                                                     {
-                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SheetNotExist, subTemplate.Query));
+                                                        // Ignore this sub-template because the Excel source file doesn't exist.
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_DataSourceNotExist, ExcelData.FormatedFilePath));
                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_DataSourceNotExist, ExcelData.FormatedFilePath));
+                                                    //TODO: generate error message in case of SQL syntax issues.
+                                                    // Ignore this sub-template because a syntax error is present in the SQL code.
+                                                    if (sqlParseResult.Errors.Count() == 1)
+                                                    {
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SqlSyntaxIssue, ExcelData.FormatedFilePath));
+                                                    }
+                                                    else
+                                                    {
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(string.Format(Properties.Resources.Exception_SqlSyntaxIssues,sqlParseResult.Errors.Count()), ExcelData.FormatedFilePath));
+                                                    }
                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                                 }
                                             }
                                         }
                                         else
                                         {
-                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNotExist, subTemplate.FilePath));
-                                            rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                            if (protectedView)
+                                            {
+                                                // Ignore this sub-template because the sub-template was opened in ProtectedView in Word. 
+                                                DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateInProtectedView, subTemplate.FilePath));
+                                                rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                            }
+                                            else
+                                            {
+                                                // Ignore this sub-template because the sub-template object doesn't exist. 
+                                                DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNotExist, subTemplate.FilePath));
+                                                rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                            }
                                         }
                                         _ = Marshal.ReleaseComObject(wSubTemplate);
                                     }
                                     else
                                     {
+                                        // Ignore this sub-template because the sub-template file doesn't exist. 
                                         DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNotExist, subTemplate.FilePath));
                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                     }
                                 }
                                 else
                                 {
+                                    // Ignore this sub-template because no query was defined.
                                     DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNoQueryDefined, subTemplate.FilePath));
                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                 }

@@ -1018,6 +1018,24 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The SQL query to select and sort data contains one syntax error. The sub-template being processed is ignored..
+        /// </summary>
+        public static string Exception_SqlSyntaxIssue {
+            get {
+                return ResourceManager.GetString("Exception_SqlSyntaxIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SQL query to select and sort data contains {0} syntax errors. The sub-template being processed is ignored..
+        /// </summary>
+        public static string Exception_SqlSyntaxIssues {
+            get {
+                return ResourceManager.GetString("Exception_SqlSyntaxIssues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The error &apos;{0}&apos; occurred during the processing. The sub-template being processed is ignored..
         /// </summary>
         public static string Exception_SubTemplateGlobalException {
