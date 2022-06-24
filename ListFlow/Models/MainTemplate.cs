@@ -515,6 +515,7 @@ namespace ListFlow.Models
         public void Merge(Controls.RadialProgressBar radialProgressBar, List<string> subTemplateLog, System.Windows.Controls.Label userInfo)
         {
             DateTime start = DateTime.Now;
+            bool errorRaised = false;
 
             rpb = radialProgressBar;
             lbl = userInfo;
@@ -640,6 +641,7 @@ namespace ListFlow.Models
                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
                                                     queryToLong = true;
+                                                    errorRaised = true;
                                                 }
                                             }
                                             else
@@ -718,6 +720,7 @@ namespace ListFlow.Models
                                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
 
                                                                         noRecord = true;
+                                                                        errorRaised = true;
                                                                     }
 
                                                                     // Ignore thi sub-template if no matching record or an error occured.
@@ -749,6 +752,7 @@ namespace ListFlow.Models
 
                                                                             DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MergeSubTemplate, ex.Message));
                                                                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                            errorRaised = true;
                                                                         }
                                                                     }
 
@@ -815,6 +819,7 @@ namespace ListFlow.Models
 
                                                                     DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SubTemplateIgnored);
                                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                    errorRaised = true;
                                                                 }
                                                             }
                                                             else
@@ -828,16 +833,11 @@ namespace ListFlow.Models
 
                                                                 DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SubTemplateIgnored);
                                                                 rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                                errorRaised = true;
                                                             }
 
                                                             DocCreationSteps.Add(Properties.Resources.FinalDocumentCreation_CloseSubTemplate);
                                                             rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
-
-                                                            // Close the sub-template without saving.
-                                                            wSubTemplate.Close(oFalse, oMissing, oMissing);
-
-                                                            //TODO: Can be deleted.
-                                                            // _ = Marshal.ReleaseComObject(wSubTemplate);
                                                         }
                                                         else
                                                         {
@@ -850,21 +850,34 @@ namespace ListFlow.Models
                                                         // Ignore this sub-template because the Excel source file doesn't exist.
                                                         DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_DataSourceNotExist, ExcelData.FormatedFilePath));
                                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                        errorRaised = true;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    //TODO: generate error message in case of SQL syntax issues.
                                                     // Ignore this sub-template because a syntax error is present in the SQL code.
                                                     if (sqlParseResult.Errors.Count() == 1)
                                                     {
-                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SqlSyntaxIssue, ExcelData.FormatedFilePath));
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, Properties.Resources.Exception_SqlSyntaxIssue);
                                                     }
                                                     else
                                                     {
-                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(string.Format(Properties.Resources.Exception_SqlSyntaxIssues,sqlParseResult.Errors.Count()), ExcelData.FormatedFilePath));
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SqlSyntaxIssues,sqlParseResult.Errors.Count()));
+                                                    }
+
+                                                    DocCreationSteps.Add(FinalDocCreationSteps.EntryType.SqlSyntax, string.Format(Properties.Resources.Exception_SqlSyntaxIssuesQuery, subTemplate.Query));
+                                                    foreach (Error item in sqlParseResult.Errors)
+                                                    {
+                                                        DocCreationSteps.Add(FinalDocCreationSteps.EntryType.SqlSyntax, string.Format(Properties.Resources.Exception_SqlSyntaxIssuesErrorText, item.Message));
+
+                                                        List<string> queryErrorLocation = ExtractQuerySyntaxErrorLocation(subTemplate.Query, item.Start.Offset, item.End.Offset);
+                                                        if (queryErrorLocation.Count == 3)
+                                                        {
+                                                            DocCreationSteps.Add(FinalDocCreationSteps.EntryType.SqlSyntax, string.Format(Properties.Resources.Exception_SqlSyntaxIssuesErrorLocation, queryErrorLocation[0], queryErrorLocation[1], queryErrorLocation[2]));
+                                                        }
                                                     }
                                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                                    errorRaised = true;
                                                 }
                                             }
                                         }
@@ -882,7 +895,11 @@ namespace ListFlow.Models
                                                 DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNotExist, subTemplate.FilePath));
                                                 rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
                                             }
+                                            errorRaised = true;
                                         }
+
+                                        // Close the sub-template without saving.
+                                        wSubTemplate.Close(oFalse, oMissing, oMissing);
                                         _ = Marshal.ReleaseComObject(wSubTemplate);
                                     }
                                     else
@@ -890,6 +907,7 @@ namespace ListFlow.Models
                                         // Ignore this sub-template because the sub-template file doesn't exist. 
                                         DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNotExist, subTemplate.FilePath));
                                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                        errorRaised = true;
                                     }
                                 }
                                 else
@@ -897,6 +915,7 @@ namespace ListFlow.Models
                                     // Ignore this sub-template because no query was defined.
                                     DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_SubTemplateNoQueryDefined, subTemplate.FilePath));
                                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar());
+                                    errorRaised = true;
                                 }
                             }
                             catch (Exception ex)
@@ -982,12 +1001,14 @@ namespace ListFlow.Models
                     {
                         DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_OpenMainTemplate, FullPath));
                         rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar(true, true));
+                        errorRaised = true;
                     }
                 }
                 catch (Exception ex)
                 {
                     DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_WordOpenMainTemplate, FullPath, Title, ex.Message));
                     rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar(true, true));
+                    errorRaised = true;
                 }
                 _ = Marshal.ReleaseComObject(wDoc);
             }
@@ -995,7 +1016,19 @@ namespace ListFlow.Models
             {
                 DocCreationSteps.Add(FinalDocCreationSteps.EntryType.Error, string.Format(Properties.Resources.Exception_MainTemplateNotExist, FullPath, Title));
                 rpb?.Dispatcher.Invoke(() => UpdateRadialProgressBar(true, true));
+                errorRaised = true;
             }
+
+            // Show a message when merge is completed with or without error.
+            if (errorRaised)
+            {
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Unsuccessfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
+            }
+            else
+            {
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Successfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
+            }
+
 
             // Logging the time spend for making the final document ready.
             TimeSpan ts = DateTime.Now - start;
@@ -1169,6 +1202,36 @@ namespace ListFlow.Models
 
                 return false;
             }
+        }
+
+        private List<string> ExtractQuerySyntaxErrorLocation(string query, int errorStartPos, int errorEndPos)
+        {
+            List<string> queryParts = new List<string>();
+            // Number of characters extracted before and after the syntax error location.
+            const int BeforeAfterPos = 10;
+
+            // Before syntax error location.
+            if (errorStartPos >= BeforeAfterPos)
+            {
+                queryParts.Add(query.Substring(errorStartPos - BeforeAfterPos, BeforeAfterPos));
+            }
+            else
+            {
+                queryParts.Add(query.Substring(0, errorStartPos));
+            }
+            // Syntax error.
+            queryParts.Add(query.Substring(errorStartPos, errorEndPos - errorStartPos));
+            // After syntax error location.
+            if (errorEndPos + BeforeAfterPos <= query.Length)
+            {
+                queryParts.Add(query.Substring(errorEndPos, BeforeAfterPos));
+            }
+            else
+            {
+                queryParts.Add(query.Substring(errorEndPos, query.Length - errorEndPos));
+            }
+
+            return queryParts;
         }
 
         public override string ToString()

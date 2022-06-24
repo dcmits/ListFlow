@@ -1022,4 +1022,19 @@ Click {1} to learn how to approve the sub-template.</value>
   <data name="Exception_SqlSyntaxIssues" xml:space="preserve">
     <value>The SQL query to select and sort data contains {0} syntax errors. The sub-template being processed is ignored.</value>
   </data>
+  <data name="Exception_SqlSyntaxIssuesQuery" xml:space="preserve">
+    <value>&lt;TextErrorForegroundBrush&gt;SQL query: &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;&lt;!--{0}--&gt;&lt;/TextForegroundBrush&gt;</value>
+  </data>
+  <data name="Exception_SqlSyntaxIssuesErrorText" xml:space="preserve">
+    <value>&lt;TextErrorForegroundBrush&gt;Error message: &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;{0}&lt;/TextForegroundBrush&gt;</value>
+  </data>
+  <data name="Exception_SqlSyntaxIssuesErrorLocation" xml:space="preserve">
+    <value>&lt;TextErrorForegroundBrush&gt;Error location (highlighted in red): &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;{0}&lt;/TextForegroundBrush&gt;&lt;TextErrorBackgroundBrush&gt;{1}&lt;/TextErrorBackgroundBrush&gt;&lt;TextForegroundBrush&gt;{2}&lt;/TextForegroundBrush&gt;</value>
+  </data>
+  <data name="FinalDocumentCreation_Successfully_UserInfo" xml:space="preserve">
+    <value>The creation of the final document is successfully completed. Click on the button '{0}' to view the process report</value>
+  </data>
+  <data name="FinalDocumentCreation_Unsuccessfully_UserInfo" xml:space="preserve">
+    <value>Errors occurred during the creation of the final document. Click the '{0}' button to view the process report</value>
+  </data>
 </root>

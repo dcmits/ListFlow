@@ -24,7 +24,8 @@ namespace ListFlow.Models
             Warning,
             StartProcessing,
             EndProcessing,
-            Error
+            Error,
+            SqlSyntax
         }
 
         public enum EntryCategory
@@ -93,7 +94,6 @@ namespace ListFlow.Models
         }
 
         #endregion
-
     }
 
     public class Entry
@@ -102,14 +102,13 @@ namespace ListFlow.Models
 
         public FinalDocCreationSteps.EntryType EntryType { get; set; }
         public FinalDocCreationSteps.EntryCategory EntryCategory { get; set; }
-
         public string Message { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Entry(FinalDocCreationSteps.EntryType entryType, FinalDocCreationSteps.EntryCategory entryCategory,string message)
+        public Entry(FinalDocCreationSteps.EntryType entryType, FinalDocCreationSteps.EntryCategory entryCategory, string message)
         {
             EntryType = entryType;
             EntryCategory = entryCategory;

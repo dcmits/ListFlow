@@ -1036,6 +1036,33 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;TextErrorForegroundBrush&gt;Error location (highlighted in red): &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;{0}&lt;/TextForegroundBrush&gt;&lt;TextErrorBackgroundBrush&gt;{1}&lt;/TextErrorBackgroundBrush&gt;&lt;TextForegroundBrush&gt;{2}&lt;/TextForegroundBrush&gt;.
+        /// </summary>
+        public static string Exception_SqlSyntaxIssuesErrorLocation {
+            get {
+                return ResourceManager.GetString("Exception_SqlSyntaxIssuesErrorLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;TextErrorForegroundBrush&gt;Error message: &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;{0}&lt;/TextForegroundBrush&gt;.
+        /// </summary>
+        public static string Exception_SqlSyntaxIssuesErrorText {
+            get {
+                return ResourceManager.GetString("Exception_SqlSyntaxIssuesErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;TextErrorForegroundBrush&gt;SQL query: &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;&lt;!--{0}--&gt;&lt;/TextForegroundBrush&gt;.
+        /// </summary>
+        public static string Exception_SqlSyntaxIssuesQuery {
+            get {
+                return ResourceManager.GetString("Exception_SqlSyntaxIssuesQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The error &apos;{0}&apos; occurred during the processing. The sub-template being processed is ignored..
         /// </summary>
         public static string Exception_SubTemplateGlobalException {
@@ -1421,6 +1448,24 @@ namespace ListFlow.Properties {
         public static string FinalDocumentCreation_Successfully {
             get {
                 return ResourceManager.GetString("FinalDocumentCreation_Successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The creation of the final document is successfully completed. Click on the button &apos;{0}&apos; to view the process report.
+        /// </summary>
+        public static string FinalDocumentCreation_Successfully_UserInfo {
+            get {
+                return ResourceManager.GetString("FinalDocumentCreation_Successfully_UserInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors occurred during the creation of the final document. Click the &apos;{0}&apos; button to view the process report.
+        /// </summary>
+        public static string FinalDocumentCreation_Unsuccessfully_UserInfo {
+            get {
+                return ResourceManager.GetString("FinalDocumentCreation_Unsuccessfully_UserInfo", resourceCulture);
             }
         }
         

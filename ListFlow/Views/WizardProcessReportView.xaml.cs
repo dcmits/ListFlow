@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using ListFlow.Models;
 using System.IO;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace ListFlow.Views
 {
@@ -246,39 +249,86 @@ namespace ListFlow.Views
                     FontSize = 14,
                     FontWeight = FontWeights.Light
                 };
-                run = new Run(entry.Message);
                 switch (entry.EntryType)
                 {
                     case FinalDocCreationSteps.EntryType.Information:
                         p.Foreground = clipboard ? flowDoc.Foreground = FindResource("FlowDocumentForeground") as SolidColorBrush : FindResource("TextForegroundBrush") as SolidColorBrush;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
                         break;
                     case FinalDocCreationSteps.EntryType.Result:
                         p.Foreground = FindResource("TextResultForegroundBrush") as SolidColorBrush;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
                         break;
                     case FinalDocCreationSteps.EntryType.Warning:
                         p.Foreground = FindResource("TextWarningForegroundBrush") as SolidColorBrush;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
                         break;
                     case FinalDocCreationSteps.EntryType.Error:
                         p.Foreground = FindResource("TextErrorForegroundBrush") as SolidColorBrush;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
                         break;
                     case FinalDocCreationSteps.EntryType.StartProcessing:
                         p.Foreground = clipboard ? flowDoc.Foreground = FindResource("StartEndProcessPrintForegroundBrush") as SolidColorBrush : FindResource("StartEndProcessScreenForegroundBrush") as SolidColorBrush;
+                        //p.Foreground = clipboard ? FindResource("StartEndProcessPrintForegroundBrush") as SolidColorBrush : FindResource("StartEndProcessScreenForegroundBrush") as SolidColorBrush;
                         p.FontSize = 16;
                         p.Margin = new Thickness(0, 8, 0, 0);
                         p.FontStyle = FontStyles.Italic;
                         FontWeight = FontWeights.SemiBold;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
                         break;
                     case FinalDocCreationSteps.EntryType.EndProcessing:
                         p.Foreground = clipboard ? flowDoc.Foreground = FindResource("StartEndProcessPrintForegroundBrush") as SolidColorBrush : FindResource("StartEndProcessScreenForegroundBrush") as SolidColorBrush;
+                        //p.Foreground = clipboard ? FindResource("StartEndProcessPrintForegroundBrush") as SolidColorBrush : FindResource("StartEndProcessScreenForegroundBrush") as SolidColorBrush;
                         p.FontSize = 16;
                         p.Margin = new Thickness(0, 0, 0, 8);
                         p.FontStyle = FontStyles.Italic;
                         FontWeight = FontWeights.SemiBold;
+
+                        run = new Run(entry.Message);
+                        p.Inlines.Add(run);
+
+                        break;
+                    case FinalDocCreationSteps.EntryType.SqlSyntax:
+                        // List of styles and contents composing the message.
+                        List<TextStyling> textStylings = ParseTextStyling(entry.Message);
+
+                        // Applies the style defined in the message resource.
+                        foreach (TextStyling item in textStylings)
+                        {
+                            Run runSqlSyntax = new Run(item.Text);
+
+                            Brush brush = clipboard ?  FindResource($"{item.Styling}Clipboard") as SolidColorBrush : TryFindResource(item.Styling) as SolidColorBrush;
+                            if (item.Styling.Contains("Background"))
+                            {
+                                runSqlSyntax.Background = brush != null ? brush : clipboard ? FindResource("TextErrorBackgroundBrushClipboard") as SolidColorBrush : FindResource("TextErrorBackgroundBrush") as SolidColorBrush;
+                                runSqlSyntax.Foreground = clipboard ? FindResource("TextForegroundBrushClipboard") as SolidColorBrush : FindResource("TextForegroundBrush") as SolidColorBrush;
+                            }
+                            else
+                            {
+                                runSqlSyntax.Foreground = brush != null ? brush : clipboard ? FindResource("TextForegroundBrushClipboard") as SolidColorBrush : FindResource("TextForegroundBrush") as SolidColorBrush;
+                            }
+                            p.Inlines.Add(runSqlSyntax);
+                        }
+
                         break;
                     default:
                         break;
                 }
-                p.Inlines.Add(run);
                 listItem.Blocks.Add(p);
                 list.ListItems.Add(listItem);
             }
@@ -323,6 +373,26 @@ namespace ListFlow.Views
             return tableRow;
         }
 
+        private List<TextStyling> ParseTextStyling(string content)
+        {
+            List<TextStyling> textStylings = new List<TextStyling>();
+
+            foreach (XElement xElement in XDocument.Parse($"<root>{content}</root>").Element("root").Elements())
+            {
+                // SQL queries are embedded as a XML comment <!-- --> in the element because they may contain special characters that are not supported.
+                if (string.IsNullOrEmpty(xElement.Value.ToString()))
+                {
+                    textStylings.Add(new TextStyling(((XComment)xElement.LastNode).Value, xElement.Name.LocalName));
+                }
+                else
+                {
+                    textStylings.Add(new TextStyling(xElement.Value, xElement.Name.LocalName));
+                }
+            }
+
+            return textStylings;
+        }
+
         #endregion
 
         #region Events
@@ -365,5 +435,17 @@ namespace ListFlow.Views
         #endregion
 
         #endregion
+    }
+
+    public class TextStyling
+    {
+        public string Text { get; set; }
+        public string Styling { get; set; }
+
+        public TextStyling(string text, string styling)
+        {
+            Text = text;
+            Styling = styling;
+        }
     }
 }

@@ -493,24 +493,6 @@ namespace Update.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;Room19&gt;
-        ///	&lt;SeatingAreas&gt;
-        ///		&lt;SeatingArea Location=&quot;Pupitre (#1-#1)&quot;&gt;
-        ///			&lt;Seats&gt;
-        ///				&lt;Seat ID=&quot;1&quot; Text=&quot;#1&quot; Available=&quot;true&quot; Comment=&quot;&quot; Rotate=&quot;0&quot; ContentAlignment=&quot;Right&quot; OriginX=&quot;0&quot; OriginY=&quot;0&quot; Matrix=&quot;0.8414 0 0 1 161.0000 631.4820&quot; Width=&quot;52&quot; Height=&quot;14.5&quot; /&gt;
-        ///			&lt;/Seats&gt;
-        ///		&lt;/SeatingArea&gt;
-        ///		&lt;SeatingArea Location=&quot;Podium (#2-#10)&quot;&gt;
-        ///			&lt;Seats&gt;
-        ///				&lt;Seat ID=&quot;2&quot; Text=&quot;#2&quot; Available=&quot;true&quot; Comment=&quot;&quot; Rotate=&quot;0&quot; ContentAlignment=&quot;Right&quot; OriginX=&quot;0&quot; OriginY=&quot;0&quot; Matrix=&quot;0.8414 0 0 1 175.2000 598.9072&quot; Wid [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Room19 {
-            get {
-                return ResourceManager.GetString("Room19", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string ToolTip_Close {
