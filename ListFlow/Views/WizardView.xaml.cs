@@ -237,6 +237,9 @@ namespace ListFlow.Views
                         mainTemplatesViewModel.SelectedMainTemplate.Merge(rpbSteps, subTemplateLog, lblUserInfo);
                     });
 
+                    mainTemplatesViewModel.CurrentStep++;
+
+                    rpbSteps.Value = rpbSteps.Maximum;
                     rpbSteps.Visibility = Visibility.Hidden;
 
                     imgDoneStep3.IsEnabled = true;
@@ -246,8 +249,6 @@ namespace ListFlow.Views
                     mainTemplatesViewModel.IsNotLastStep = true;
 
                     Mouse.OverrideCursor = null;
-
-                    mainTemplatesViewModel.CurrentStep++;
 
                     break;
                 case 4:
@@ -354,7 +355,7 @@ namespace ListFlow.Views
 
         private void ProcessReportCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = rpbSteps.Value == rpbSteps.Maximum;
+            e.CanExecute = mainTemplatesViewModel.CurrentStep == 4;
         }
 
         private void TemplateParametersCommand_Executed(object sender, ExecutedRoutedEventArgs e)

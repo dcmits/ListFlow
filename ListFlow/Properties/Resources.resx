@@ -1032,9 +1032,12 @@ Click {1} to learn how to approve the sub-template.</value>
     <value>&lt;TextErrorForegroundBrush&gt;Error location (highlighted in red): &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;{0}&lt;/TextForegroundBrush&gt;&lt;TextErrorBackgroundBrush&gt;{1}&lt;/TextErrorBackgroundBrush&gt;&lt;TextForegroundBrush&gt;{2}&lt;/TextForegroundBrush&gt;</value>
   </data>
   <data name="FinalDocumentCreation_Successfully_UserInfo" xml:space="preserve">
-    <value>The creation of the final document is successfully completed. Click on the button '{0}' to view the process report</value>
+    <value>Successfully completed. Click on the button '{0}' to view the process report</value>
   </data>
   <data name="FinalDocumentCreation_Unsuccessfully_UserInfo" xml:space="preserve">
-    <value>Errors occurred during the creation of the final document. Click the '{0}' button to view the process report</value>
+    <value>Errors occurred. Click the '{0}' button to view the process report</value>
+  </data>
+  <data name="FinalDocumentCreation_Warning_UserInfo" xml:space="preserve">
+    <value>Warnings occurred. Click the '{0}' button to view the process report</value>
   </data>
 </root>

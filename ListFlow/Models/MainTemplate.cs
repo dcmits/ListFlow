@@ -516,6 +516,7 @@ namespace ListFlow.Models
         {
             DateTime start = DateTime.Now;
             bool errorRaised = false;
+            bool warningRaided = false;
 
             rpb = radialProgressBar;
             lbl = userInfo;
@@ -713,6 +714,7 @@ namespace ListFlow.Models
 
                                                                         // No matching record.
                                                                         noRecord = ex.HResult == -2146822435;
+                                                                        warningRaided = true;
                                                                     }
                                                                     catch (Exception ex)
                                                                     {
@@ -745,6 +747,7 @@ namespace ListFlow.Models
 
                                                                             // No matching record.
                                                                             noRecord = ex.HResult == -2146822657;
+                                                                            warningRaided = true;
                                                                         }
                                                                         catch (Exception ex)
                                                                         {
@@ -1022,13 +1025,21 @@ namespace ListFlow.Models
             // Show a message when merge is completed with or without error.
             if (errorRaised)
             {
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Foreground = Brushes.Red; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Unsuccessfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
+            }
+            else if (warningRaided)
+            {
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Foreground = Brushes.Orange; }));
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Warning_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
             }
             else
             {
+                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Successfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
             }
-
 
             // Logging the time spend for making the final document ready.
             TimeSpan ts = DateTime.Now - start;

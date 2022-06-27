@@ -1452,7 +1452,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The creation of the final document is successfully completed. Click on the button &apos;{0}&apos; to view the process report.
+        ///   Looks up a localized string similar to Successfully completed. Click on the button &apos;{0}&apos; to view the process report.
         /// </summary>
         public static string FinalDocumentCreation_Successfully_UserInfo {
             get {
@@ -1461,7 +1461,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Errors occurred during the creation of the final document. Click the &apos;{0}&apos; button to view the process report.
+        ///   Looks up a localized string similar to Errors occurred. Click the &apos;{0}&apos; button to view the process report.
         /// </summary>
         public static string FinalDocumentCreation_Unsuccessfully_UserInfo {
             get {
@@ -1502,6 +1502,15 @@ namespace ListFlow.Properties {
         public static string FinalDocumentCreation_UpdateParticipantsCountField {
             get {
                 return ResourceManager.GetString("FinalDocumentCreation_UpdateParticipantsCountField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warnings occurred. Click the &apos;{0}&apos; button to view the process report.
+        /// </summary>
+        public static string FinalDocumentCreation_Warning_UserInfo {
+            get {
+                return ResourceManager.GetString("FinalDocumentCreation_Warning_UserInfo", resourceCulture);
             }
         }
         
