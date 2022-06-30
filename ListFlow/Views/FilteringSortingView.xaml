@@ -1,0 +1,453 @@
+﻿<Window
+    x:Class="ListFlow.Views.FilteringSortingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrl="clr-namespace:ListFlow.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hlp="clr-namespace:ListFlow.Helpers"
+    xmlns:local="clr-namespace:ListFlow.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prop="clr-namespace:ListFlow.Properties"
+    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    Title="{x:Static prop:Resources.ViewTitle_FilteringSorting}"
+    Width="700"
+    Height="416"
+    Background="{StaticResource WindowBackground}"
+    Loaded="Window_Loaded"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+
+    <!--  WindowChrome object for Window customisation  -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="34" />
+    </WindowChrome.WindowChrome>
+
+    <Border x:Name="MainWindowBorder" BorderThickness="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="536*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  Window chrome  -->
+            <Grid Background="{StaticResource WindowBackground}">
+                <StackPanel
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <!--  Icon  -->
+                    <Image
+                        Width="18"
+                        Margin="5,2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="{StaticResource SortFilter_Large}" />
+                    <TextBlock
+                        Margin="4,3,0,0"
+                        FontFamily="Segoe UI"
+                        Foreground="{StaticResource TextForegroundBrush}"
+                        Text="{x:Static prop:Resources.ViewTitle_FilteringSortingParameters}" />
+                </StackPanel>
+
+                <!--  Windows Title bar Buttons  -->
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button
+                        Command="{x:Static local:FilteringSortingView.CloseWindowCommand}"
+                        Style="{StaticResource CloseButtonStyle}"
+                        ToolTip="{x:Static prop:Resources.ToolTip_Close}"
+                        WindowChrome.IsHitTestVisibleInChrome="True" />
+                </StackPanel>
+            </Grid>
+
+            <!--  Main Window Content  -->
+            <Grid Grid.Row="1">
+                <Grid Margin="5,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Padding="5,0,0,0" Content="{x:Static prop:Resources.Parameters_QuerySubTemplate}" />
+                        <Label Content="Selected Sub-Template" />
+                    </StackPanel>
+                    <TabControl
+                        x:Name="tbc"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Margin="5,0,5,2"
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <TabItem Header="{x:Static prop:Resources.Parameters_QueryFilteringTabTitle}">
+                            <Grid x:Name="grdFilter" Margin="5,8,5,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Vertical">
+                                    <Label
+                                        Padding="5,0"
+                                        Content=""
+                                        Visibility="Hidden" />
+                                    <ComboBox x:Name="cbxFilterLogic_0" Visibility="Hidden" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_1"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[1], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_2"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[2], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_3"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[3], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_4"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[4], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_5"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[5], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_6"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[6], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                    <ComboBox
+                                        x:Name="cbxFilterLogic_7"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        SelectedValue="{Binding SortAndFilter.FilterLogics[7], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <Label Padding="5,0" Content="{x:Static prop:Resources.Filter_Field}" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_0"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[0], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_1"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[1], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_2"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[2], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_3"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[3], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_4"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[4], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_5"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[5], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_6"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[6], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterField_7"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.FilterFields[7], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxFilterField_SelectionChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Vertical">
+                                    <Label Padding="5,0" Content="{x:Static prop:Resources.Filter_Comparison}" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_0"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[0], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_1"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[1], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_2"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[2], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_3"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[3], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_4"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[4], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_5"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[5], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_6"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[6], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxFilterComp_7"
+                                        DisplayMemberPath="Value"
+                                        ItemsSource="{Binding SortAndFilter.Comparisons}"
+                                        SelectedValue="{Binding SortAndFilter.FilterComparisons[7], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key"
+                                        SelectionChanged="cbxFilterComp_SelectionChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="3" Orientation="Vertical">
+                                    <Label Padding="5,0" Content="{x:Static prop:Resources.Filter_CompareTo}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_0"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[0], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_1"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[1], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_2"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[2], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_3"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[3], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_4"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[4], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_5"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[5], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_6"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[6], UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        x:Name="tbxFilterValue_7"
+                                        Margin="5,2"
+                                        Text="{Binding SortAndFilter.FilterComparesTo[7], UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="{x:Static prop:Resources.Parameters_QuerySortingTabTitle}">
+                            <Grid x:Name="grdSort" Margin="5,8,5,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Vertical">
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_By}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                    <Label Margin="0,0,0,2" Content="{x:Static prop:Resources.Sort_ThenBy}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                    <ComboBox
+                                        x:Name="cbxSortField_0"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[0], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_1"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[1], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_2"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[2], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_3"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[3], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_4"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[4], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_5"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[5], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_6"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[6], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                    <ComboBox
+                                        x:Name="cbxSortField_7"
+                                        ItemsSource="{Binding Fields}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[7], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectionChanged="cbxSortField_SelectionChanged" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Vertical">
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_0"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_1"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_2"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_3"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_4"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_5"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_6"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Asc}"
+                                        GroupName="SortDir_7"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="3" Orientation="Vertical">
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_0" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_1" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_2" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_3" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_4" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_5" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_6" />
+                                    <RadioButton
+                                        Margin="4,4,4,5"
+                                        Content="{x:Static prop:Resources.Sort_Desc}"
+                                        GroupName="SortDir_7" />
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="5"
+                            Command="{x:Static local:FilteringSortingView.QueryResetCommand}"
+                            Content="{x:Static prop:Resources.Button_Reset}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                        <Button
+                            Margin="5"
+                            Command="{x:Static local:FilteringSortingView.QuerySaveCommand}"
+                            Content="{x:Static prop:Resources.Button_Save}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

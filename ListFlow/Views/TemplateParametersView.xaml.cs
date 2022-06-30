@@ -6,6 +6,7 @@ using System.Linq;
 using ListFlow.Models;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System;
 
 namespace ListFlow.Views
 {
@@ -18,7 +19,7 @@ namespace ListFlow.Views
 
         private MainTemplate selectedMainTemplate;
         private bool dataUpdated;
-        private List<string> fields;
+        //private List<string> fields;
 
         #endregion
 
@@ -26,6 +27,7 @@ namespace ListFlow.Views
 
         public static readonly RoutedCommand QuerySaveCommand = new RoutedCommand();
         public static readonly RoutedCommand MainSaveCommand = new RoutedCommand();
+        public static readonly RoutedCommand QueryUICommand = new RoutedCommand();
         public static readonly RoutedCommand OpenOrganFolder = new RoutedCommand();
         public static readonly RoutedCommand CloseWindowCommand = new RoutedCommand();
 
@@ -48,15 +50,7 @@ namespace ListFlow.Views
 
         public List<string> Fields
         {
-            get => fields;
-            set
-            {
-                if (fields != value)
-                {
-                    fields = value;
-                    OnPropertyChanged(nameof(Fields));
-                }
-            }
+            get => SelectedMainTemplate.ExcelData.SortedColumns;
         }
 
         #endregion
@@ -70,6 +64,7 @@ namespace ListFlow.Views
             // Command Bindings.
             _ = CommandBindings.Add(new CommandBinding(MainSaveCommand, MainSaveCommand_Executed, MainSaveCommand_CanExecuted));
             _ = CommandBindings.Add(new CommandBinding(QuerySaveCommand, QuerySaveCommand_Executed, QuerySaveCommand_CanExecuted));
+            _ = CommandBindings.Add(new CommandBinding(QueryUICommand, QueryUICommand_Executed, QueryUICommand_CanExecuted));
             _ = CommandBindings.Add(new CommandBinding(OpenOrganFolder, OpenOrganFolderCommand_Executed));
             _ = CommandBindings.Add(new CommandBinding(CloseWindowCommand, CloseWindowCommand_Executed));
 
@@ -78,12 +73,6 @@ namespace ListFlow.Views
 
             // Load the sub-templates.
             _ = SelectedMainTemplate.GetSubTemplates(false);
-
-            // Format the fields list.
-            Fields = mainTemplate.ExcelData.ColumnFieldNames.Keys.ToList();
-            _ = Fields.Remove("1");
-            Fields.Sort();
-            Fields.Insert(0, Properties.Resources.None);
 
             DataContext = this;
 
@@ -118,6 +107,22 @@ namespace ListFlow.Views
             {
                 _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
             }
+        }
+
+        private void QueryUICommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void QueryUICommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            FilteringSortingView dialog = new FilteringSortingView(SelectedMainTemplate.ExcelData.SheetName, SelectedMainTemplate.ExcelData.ColumnDataTypes, SelectedMainTemplate.SelectedSubTemplate)
+            {
+                Left = Left + 50,
+                Top = Top + 50
+            };
+
+            _ = dialog.ShowDialog();
         }
 
         private void MainSaveCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)

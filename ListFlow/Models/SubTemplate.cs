@@ -207,10 +207,10 @@ namespace ListFlow.Models
         }
 
         /// <summary>
-        /// Check if the word merge fields are present in the Excel datasource fields (columns).
+        /// Check if the Word merge fields are present in the Excel datasource fields (columns).
         /// </summary>
         /// <param name="sourceFields">List of the fields (columns) present in Excel datasource file.</param>
-        /// <returns>List of non-matching word merge fields.</returns>
+        /// <returns>List of non-matching Word merge fields.</returns>
         public List<string> CheckMergeFields(Dictionary<string, string> sourceFields)
         {
             List<string> nonMatchingFields = new List<string>();

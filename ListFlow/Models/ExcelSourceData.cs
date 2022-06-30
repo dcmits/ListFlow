@@ -23,6 +23,7 @@ namespace ListFlow.Models
         private string filePath;
         private string formatedFilePath;
         private Dictionary<string, string> columnFieldNames;
+        private Dictionary<string, Type> columnDataTypes;
         private Dictionary<string, string> duplicateColumnNames;
         private string sheetName;
 
@@ -76,7 +77,7 @@ namespace ListFlow.Models
         }
 
         /// <summary>
-        /// List of column names (original and optimized) present in the Excel table defined as data source with their Word Mail Merge syntax matches.
+        /// Lists the column names (original and optimized) present in the Excel table defined as data source with their Word Mail Merge syntax matches.
         /// </summary>
         public Dictionary<string, string> ColumnFieldNames
         {
@@ -93,7 +94,40 @@ namespace ListFlow.Models
         }
 
         /// <summary>
-        /// List of duplicate column name present in the Excel table defined as data source.
+        /// Lists the type of data contained in the columns present in the Excel table defined as data source.
+        /// </summary>
+        public Dictionary<string, Type> ColumnDataTypes
+        {
+            get => columnDataTypes;
+            set
+            {
+                if (columnDataTypes != value)
+                {
+                    columnDataTypes = value;
+
+                    OnPropertyChanged(nameof(ColumnDataTypes));
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Sorted columns list present in the Excel table defined as data source.
+        /// </summary>
+        public List<string> SortedColumns
+        {
+            get
+            {
+                List<string> columns = columnDataTypes.Keys.ToList();
+                _ = columns.Remove("1");
+                columns.Sort();
+                columns.Insert(0, Properties.Resources.None);
+
+                return columns;
+            }            
+        }
+
+        /// <summary>
+        /// Lists the duplicate column names present in the Excel table defined as data source.
         /// </summary>
         public Dictionary<string, string> DuplicateColumnNames
         {
@@ -319,25 +353,46 @@ namespace ListFlow.Models
                     columnFieldNames.Clear();
                 }
 
+                if (columnDataTypes is null)
+                {
+                    columnDataTypes = new Dictionary<string, Type>();
+                }
+                else
+                {
+                    columnDataTypes.Clear();
+                }
+
                 // Name column names.
+                string originalColumnName;
+                string renamedColumnName;
                 for (int col = 1; col <= xRange.Column; col++)
                 {
                     xSheet.Cells[1, col].Value = $"C{col - 1}";
 
                     // Create a list of the column names(original and new field names).
-                    if (columnFieldNames.ContainsKey(Convert.ToString(xSheet.Cells[2, col].Value)))
+                    originalColumnName = Convert.ToString(xSheet.Cells[1, col].Value);
+                    renamedColumnName = Convert.ToString(xSheet.Cells[2, col].Value);
+                    object columnContent = xSheet.Cells[3, col].Value;
+
+                    if (columnFieldNames.ContainsKey(renamedColumnName))
                     {
                         int i = 0;
                         do
                         {
                             i++;
-                        } while (columnFieldNames.ContainsKey($"{Convert.ToString(xSheet.Cells[2, col].Value)} {i}"));
+                        } while (columnFieldNames.ContainsKey($"{renamedColumnName} {i}"));
 
-                        columnFieldNames.Add($"{Convert.ToString(xSheet.Cells[2, col].Value)} {i}", Convert.ToString(xSheet.Cells[1, col].Value));
+                        columnFieldNames.Add($"{renamedColumnName} {i}", originalColumnName);
+
+                        // Data content type of the field (column).
+                        columnDataTypes.Add(renamedColumnName, columnContent != null ? columnContent.GetType() : typeof(string));
                     }
                     else
                     {
-                        columnFieldNames.Add(Convert.ToString(xSheet.Cells[2, col].Value), Convert.ToString(xSheet.Cells[1, col].Value));
+                        columnFieldNames.Add(renamedColumnName, originalColumnName);
+
+                        // Data content type of the field (column).
+                        columnDataTypes.Add(renamedColumnName, columnContent != null ? columnContent.GetType() : typeof(string));
                     }
                 }
 
@@ -424,6 +479,15 @@ namespace ListFlow.Models
                     columnFieldNames.Clear();
                 }
 
+                if (columnDataTypes is null)
+                {
+                    columnDataTypes = new Dictionary<string, Type>();
+                }
+                else
+                {
+                    columnDataTypes.Clear();
+                }
+
                 // [ITBAU-353] : Check if column name already exist, if yes, inform user on this issues.
                 if (duplicateColumnNames is null)
                 {
@@ -439,6 +503,7 @@ namespace ListFlow.Models
                 for (int col = 1; col <= xRange.Column; col++)
                 {
                     columnName = Convert.ToString(xSheet.Cells[1, col].Value);
+                    object columnContent = xSheet.Cells[2, col].Value;
                     if(columnFieldNames.ContainsKey(columnName))
                     {
                         // Duplicate column name.
@@ -448,6 +513,9 @@ namespace ListFlow.Models
                     { 
                         // Unique column name.
                         columnFieldNames.Add(columnName, FormatMergeFieldName(columnName));
+
+                        // Data content type of the field (column).
+                        columnDataTypes.Add(columnName, columnContent != null ? columnContent.GetType() : typeof(string));
                     }
                 }
                 xWorkbook.Close(oFalse, oMissing, oMissing);
@@ -515,7 +583,7 @@ namespace ListFlow.Models
 
         public override string ToString()
         {
-            return $"[{nameof(ExcelData)}: FilePath={FilePath}; formatedFilePath={formatedFilePath}; SheetName:{SheetName}; ColumnFieldNames count:{columnFieldNames.Count}";
+            return $"[{nameof(ExcelData)}: FilePath={FilePath}; FormatedFilePath={formatedFilePath}; SheetName:{SheetName}; ColumnFieldNames count:{columnFieldNames.Count}";
         }
 
         #endregion
@@ -531,5 +599,4 @@ namespace ListFlow.Models
         #endregion
 
     }
-
 }

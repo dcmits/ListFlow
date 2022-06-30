@@ -429,10 +429,10 @@
   <data name="Sort_Desc" xml:space="preserve">
     <value>Descending</value>
   </data>
-  <data name="Sort_Filter_And" xml:space="preserve">
+  <data name="Filter_And" xml:space="preserve">
     <value>And</value>
   </data>
-  <data name="Sort_Filter_Or" xml:space="preserve">
+  <data name="Filter_Or" xml:space="preserve">
     <value>Or</value>
   </data>
   <data name="Sort_By" xml:space="preserve">
@@ -441,34 +441,34 @@
   <data name="Sort_ThenBy" xml:space="preserve">
     <value>Then by:</value>
   </data>
-  <data name="Sort_Comparison_Eq" xml:space="preserve">
+  <data name="Filter_Comparison_Eq" xml:space="preserve">
     <value>Equal to</value>
   </data>
-  <data name="Sort_Comparison_Neq" xml:space="preserve">
+  <data name="Filter_Comparison_Neq" xml:space="preserve">
     <value>Not equal to</value>
   </data>
-  <data name="Sort_Comparison_Lt" xml:space="preserve">
+  <data name="Filter_Comparison_Lt" xml:space="preserve">
     <value>Less than</value>
   </data>
-  <data name="Sort_Comparison_Gt" xml:space="preserve">
+  <data name="Filter_Comparison_Gt" xml:space="preserve">
     <value>Greater than</value>
   </data>
-  <data name="Sort_Comparison_Lte" xml:space="preserve">
+  <data name="Filter_Comparison_Lte" xml:space="preserve">
     <value>Less than or equal</value>
   </data>
-  <data name="Sort_Comparison_Gte" xml:space="preserve">
+  <data name="Filter_Comparison_Gte" xml:space="preserve">
     <value>Greater than or equal</value>
   </data>
-  <data name="Sort_Comparison_Blk" xml:space="preserve">
+  <data name="Filter_Comparison_Blk" xml:space="preserve">
     <value>Is blank</value>
   </data>
-  <data name="Sort_Comparison_Nblk" xml:space="preserve">
+  <data name="Filter_Comparison_Nblk" xml:space="preserve">
     <value>Is not blank</value>
   </data>
-  <data name="Sort_Comparison_Contains" xml:space="preserve">
+  <data name="Filter_Comparison_Contains" xml:space="preserve">
     <value>Contains</value>
   </data>
-  <data name="Sort_Comparison_NotContains" xml:space="preserve">
+  <data name="Filter_Comparison_NotContains" xml:space="preserve">
     <value>Does not contains</value>
   </data>
   <data name="Sort_SortTitle" xml:space="preserve">
@@ -477,13 +477,13 @@
   <data name="Sort_FilterTitle" xml:space="preserve">
     <value>Filter Records</value>
   </data>
-  <data name="Sort_Filter_CompareTo" xml:space="preserve">
+  <data name="Filter_CompareTo" xml:space="preserve">
     <value>Compare to:</value>
   </data>
-  <data name="Sort_Filter_Comparison" xml:space="preserve">
+  <data name="Filter_Comparison" xml:space="preserve">
     <value>Comparison:</value>
   </data>
-  <data name="Sort_Filter_Field" xml:space="preserve">
+  <data name="Filter_Field" xml:space="preserve">
     <value>Field:</value>
   </data>
   <data name="ToolTip_Setup" xml:space="preserve">
@@ -819,7 +819,7 @@ This template is being ignored.</value>
     <value>List of sub-templates used in the selected main template</value>
   </data>
   <data name="Parameters_SubUserInfo" xml:space="preserve">
-    <value>Select the sub-template and modify the query, if necessary. Attention: any errors in the query may change the result of the final document creation!</value>
+    <value>Select the sub-template and modify the query, if necessary.</value>
   </data>
   <data name="Button_Save" xml:space="preserve">
     <value>_Save</value>
@@ -1039,5 +1039,35 @@ Click {1} to learn how to approve the sub-template.</value>
   </data>
   <data name="FinalDocumentCreation_Warning_UserInfo" xml:space="preserve">
     <value>Warnings occurred. Click the '{0}' button to view the process report</value>
+  </data>
+  <data name="ViewTitle_FilteringSorting" xml:space="preserve">
+    <value>Filtering &amp; Sorting</value>
+  </data>
+  <data name="ViewTitle_FilteringSortingParameters" xml:space="preserve">
+    <value>Filtering and sorting parameters</value>
+  </data>
+  <data name="Parameters_QuerySubTemplate" xml:space="preserve">
+    <value>Selected sub-template: </value>
+  </data>
+  <data name="Parameters_QueryFilteringTabTitle" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Parameters_QuerySortingTabTitle" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="LogicalAnd" xml:space="preserve">
+    <value>And</value>
+  </data>
+  <data name="LogicalOr" xml:space="preserve">
+    <value>Or</value>
+  </data>
+  <data name="Parameters_SqlQueryText" xml:space="preserve">
+    <value>SQL query text (for experts)</value>
+  </data>
+  <data name="Parameters_SqlQueryUI" xml:space="preserve">
+    <value>Data sorting and filtering wizard</value>
+  </data>
+  <data name="ToolTip_SqlQueryUI" xml:space="preserve">
+    <value>Allows you to select and sort data in a more user-friendly way than editing the SQL text in the field below.</value>
   </data>
 </root>

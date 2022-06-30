@@ -1209,6 +1209,141 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to And.
+        /// </summary>
+        public static string Filter_And {
+            get {
+                return ResourceManager.GetString("Filter_And", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compare to:.
+        /// </summary>
+        public static string Filter_CompareTo {
+            get {
+                return ResourceManager.GetString("Filter_CompareTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comparison:.
+        /// </summary>
+        public static string Filter_Comparison {
+            get {
+                return ResourceManager.GetString("Filter_Comparison", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is blank.
+        /// </summary>
+        public static string Filter_Comparison_Blk {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Blk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        public static string Filter_Comparison_Contains {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equal to.
+        /// </summary>
+        public static string Filter_Comparison_Eq {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Eq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Greater than.
+        /// </summary>
+        public static string Filter_Comparison_Gt {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Gt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Greater than or equal.
+        /// </summary>
+        public static string Filter_Comparison_Gte {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Gte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Less than.
+        /// </summary>
+        public static string Filter_Comparison_Lt {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Lt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Less than or equal.
+        /// </summary>
+        public static string Filter_Comparison_Lte {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Lte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is not blank.
+        /// </summary>
+        public static string Filter_Comparison_Nblk {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Nblk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not equal to.
+        /// </summary>
+        public static string Filter_Comparison_Neq {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_Neq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Does not contains.
+        /// </summary>
+        public static string Filter_Comparison_NotContains {
+            get {
+                return ResourceManager.GetString("Filter_Comparison_NotContains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field:.
+        /// </summary>
+        public static string Filter_Field {
+            get {
+                return ResourceManager.GetString("Filter_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or.
+        /// </summary>
+        public static string Filter_Or {
+            get {
+                return ResourceManager.GetString("Filter_Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check that the names of the merge fields match the fields in the source file..
         /// </summary>
         public static string FinalDocumentCreation_CheckMergeFields {
@@ -1966,6 +2101,24 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to And.
+        /// </summary>
+        public static string LogicalAnd {
+            get {
+                return ResourceManager.GetString("LogicalAnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or.
+        /// </summary>
+        public static string LogicalOr {
+            get {
+                return ResourceManager.GetString("LogicalOr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to *.
         /// </summary>
         public static string MandatoryField {
@@ -2092,6 +2245,51 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string Parameters_QueryFilteringTabTitle {
+            get {
+                return ResourceManager.GetString("Parameters_QueryFilteringTabTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort.
+        /// </summary>
+        public static string Parameters_QuerySortingTabTitle {
+            get {
+                return ResourceManager.GetString("Parameters_QuerySortingTabTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected sub-template: .
+        /// </summary>
+        public static string Parameters_QuerySubTemplate {
+            get {
+                return ResourceManager.GetString("Parameters_QuerySubTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL query text (for experts).
+        /// </summary>
+        public static string Parameters_SqlQueryText {
+            get {
+                return ResourceManager.GetString("Parameters_SqlQueryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data sorting and filtering wizard.
+        /// </summary>
+        public static string Parameters_SqlQueryUI {
+            get {
+                return ResourceManager.GetString("Parameters_SqlQueryUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Query.
         /// </summary>
         public static string Parameters_SubQuery {
@@ -2110,7 +2308,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the sub-template and modify the query, if necessary. Attention: any errors in the query may change the result of the final document creation!.
+        ///   Looks up a localized string similar to Select the sub-template and modify the query, if necessary..
         /// </summary>
         public static string Parameters_SubUserInfo {
             get {
@@ -2281,146 +2479,11 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Is blank.
-        /// </summary>
-        public static string Sort_Comparison_Blk {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Blk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Contains.
-        /// </summary>
-        public static string Sort_Comparison_Contains {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Contains", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Equal to.
-        /// </summary>
-        public static string Sort_Comparison_Eq {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Eq", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Greater than.
-        /// </summary>
-        public static string Sort_Comparison_Gt {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Gt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Greater than or equal.
-        /// </summary>
-        public static string Sort_Comparison_Gte {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Gte", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Less than.
-        /// </summary>
-        public static string Sort_Comparison_Lt {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Lt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Less than or equal.
-        /// </summary>
-        public static string Sort_Comparison_Lte {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Lte", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is not blank.
-        /// </summary>
-        public static string Sort_Comparison_Nblk {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Nblk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not equal to.
-        /// </summary>
-        public static string Sort_Comparison_Neq {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_Neq", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Does not contains.
-        /// </summary>
-        public static string Sort_Comparison_NotContains {
-            get {
-                return ResourceManager.GetString("Sort_Comparison_NotContains", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Descending.
         /// </summary>
         public static string Sort_Desc {
             get {
                 return ResourceManager.GetString("Sort_Desc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to And.
-        /// </summary>
-        public static string Sort_Filter_And {
-            get {
-                return ResourceManager.GetString("Sort_Filter_And", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Compare to:.
-        /// </summary>
-        public static string Sort_Filter_CompareTo {
-            get {
-                return ResourceManager.GetString("Sort_Filter_CompareTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Comparison:.
-        /// </summary>
-        public static string Sort_Filter_Comparison {
-            get {
-                return ResourceManager.GetString("Sort_Filter_Comparison", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Field:.
-        /// </summary>
-        public static string Sort_Filter_Field {
-            get {
-                return ResourceManager.GetString("Sort_Filter_Field", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Or.
-        /// </summary>
-        public static string Sort_Filter_Or {
-            get {
-                return ResourceManager.GetString("Sort_Filter_Or", resourceCulture);
             }
         }
         
@@ -2650,6 +2713,15 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allows you to select and sort data in a more user-friendly way than editing the SQL text in the field below..
+        /// </summary>
+        public static string ToolTip_SqlQueryUI {
+            get {
+                return ResourceManager.GetString("ToolTip_SqlQueryUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Undo {0} actions.
         /// </summary>
         public static string Undo_Actions {
@@ -2736,6 +2808,24 @@ namespace ListFlow.Properties {
         public static string ViewTitle_DuplicateColumn {
             get {
                 return ResourceManager.GetString("ViewTitle_DuplicateColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtering &amp; Sorting.
+        /// </summary>
+        public static string ViewTitle_FilteringSorting {
+            get {
+                return ResourceManager.GetString("ViewTitle_FilteringSorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filtering and sorting parameters.
+        /// </summary>
+        public static string ViewTitle_FilteringSortingParameters {
+            get {
+                return ResourceManager.GetString("ViewTitle_FilteringSortingParameters", resourceCulture);
             }
         }
         
