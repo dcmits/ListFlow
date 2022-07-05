@@ -233,7 +233,7 @@ namespace ListFlow.Views
             ComboBox cbxComp = sender as ComboBox;
             TextBox tbxValue = ((cbxComp.Parent as StackPanel).Parent as Grid).FindName(cbxComp.Name.Replace("cbxFilterComp", "tbxFilterValue")) as TextBox;
 
-            System.Console.WriteLine($"{cbxComp.Name}");
+            Console.WriteLine($"{cbxComp.Name}");
 
             if (cbxComp.SelectedItem != null)
             {
@@ -249,7 +249,7 @@ namespace ListFlow.Views
                 }
             }
 
-            System.Console.WriteLine(sender.ToString());
+            Console.WriteLine(sender.ToString());
         }
 
         private void cbxFilterField_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -260,38 +260,118 @@ namespace ListFlow.Views
             TextBox tbxValue = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxFilterField", "tbxFilterValue")) as TextBox;
             ComboBox cbxLogic = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterLogic_{++index}") as ComboBox;
             ComboBox cbxNextField = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterField_{index}") as ComboBox;
-
+           
             if (cbxField.SelectedIndex > 0)
             {
+                // Add a new filter item or change a existing filter item.
                 cbxComp.IsEnabled = true;
                 cbxComp.SelectedIndex = 0;
                 tbxValue.IsEnabled = true;
                 tbxValue.Text = string.Empty;
-                cbxLogic.IsEnabled = true;
-                cbxLogic.SelectedIndex = 0;
+                if (cbxLogic != null)
+                {
+                    cbxLogic.IsEnabled = true;
+                    cbxLogic.SelectedIndex = 0;
+                }
+                if (cbxNextField != null)
+                {
+                    cbxNextField.IsEnabled = true;
+                    cbxNextField.SelectedIndex = -1;
+                }
+            }
+            else
+            {
+                // Remove the selected filter item.
+
+                int noneIndex = sortAndFilter.FilterFields.IndexOf(fields[0]);
+                Console.WriteLine($"noneIndex: {cbxField.Name} {noneIndex}");
+
+                if (noneIndex == -1)
+                {
+                    cbxComp.IsEnabled = false;
+                    cbxComp.SelectedIndex = -1;
+                    tbxValue.IsEnabled = false;
+                    tbxValue.Text = string.Empty;
+                    if (cbxLogic != null)
+                    {
+                        cbxLogic.IsEnabled = false;
+                        cbxLogic.SelectedIndex = -1;
+                    }
+                    if (cbxNextField != null)
+                    {
+                        cbxNextField.IsEnabled = false;
+                        cbxNextField.SelectedIndex = -1;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"noneIndex: {noneIndex}");
+
+                    string filterLogic;
+                    string filterFields;
+                    string filterComparisons;
+                    string filterComparesTo;
+
+                    for (int i = sortAndFilter.FilterLogics.Count - 1; i > noneIndex; i--)
+                    {
+                        filterLogic = sortAndFilter.FilterLogics[i - 1];
+                        filterFields = sortAndFilter.FilterFields[i - 1];
+                        filterComparisons = sortAndFilter.FilterComparisons[i - 1];
+                        filterComparesTo = sortAndFilter.FilterComparesTo[i - 1];
+
+                        Console.WriteLine($"None: {filterLogic} {filterFields} {filterComparisons} {filterComparesTo}");
+
+                        Console.WriteLine($"1: {SortAndFilter.FilterLogics[i]} {SortAndFilter.FilterFields[i]} {SortAndFilter.FilterComparisons[i]} {SortAndFilter.FilterComparesTo[i]}");
+
+                        SortAndFilter.FilterLogics[i - 1] = SortAndFilter.FilterLogics[i];
+                        SortAndFilter.FilterFields[i - 1] = SortAndFilter.FilterFields[i];
+                        SortAndFilter.FilterComparisons[i - 1] = SortAndFilter.FilterComparisons[i];
+                        SortAndFilter.FilterComparesTo[i - 1] = SortAndFilter.FilterComparesTo[i];
+
+                        Console.WriteLine($"2: {SortAndFilter.FilterLogics[i - 1]} {SortAndFilter.FilterFields[i - 1]} {SortAndFilter.FilterComparisons[i - 1]} {SortAndFilter.FilterComparesTo[i - 1]}");
+
+                        SortAndFilter.FilterLogics[i] = string.Empty;
+                        SortAndFilter.FilterFields[i] = string.Empty;
+                        SortAndFilter.FilterComparisons[i] = string.Empty;
+                        SortAndFilter.FilterComparesTo[i] = string.Empty;
+                    }
+                }
+            }
+
+
+
+            //for (int i = 0; i < SortAndFilter.FilterFields.Count; i++)
+            //{
+            //    if (SortAndFilter.FilterFields[i].CompareTo(SortAndFilter.FilterFields[0]) == 0)
+            //    {
+
+            //    }
+            //}
+
+        }
+
+        private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cbxField = sender as ComboBox;
+            _ = int.TryParse(cbxField.Name.Replace("cbxSortField_", string.Empty), out int index);            
+            RadioButton rbnAsc = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxSortField", "rbnSortAsc")) as RadioButton;
+            RadioButton rbnDesc = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxSortField", "rbnSortDesc")) as RadioButton;
+            ComboBox cbxNextField = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterField_{++index}") as ComboBox;
+
+            if (cbxField.SelectedIndex > 0)
+            {
+                rbnAsc.IsEnabled = true;
+                rbnDesc.IsEnabled = true;
                 cbxNextField.IsEnabled = true;
                 cbxNextField.SelectedIndex = -1;
             }
             else
             {
-                cbxComp.IsEnabled = false;
-                cbxComp.SelectedIndex = -1;
-                tbxValue.IsEnabled = false;
-                tbxValue.Text = string.Empty;
-                cbxLogic.IsEnabled = false;
-                cbxLogic.SelectedIndex = -1;
+                rbnAsc.IsEnabled = false;
+                rbnDesc.IsEnabled = false;
                 cbxNextField.IsEnabled = false;
                 cbxNextField.SelectedIndex = -1;
             }
-
-
-
-            System.Console.WriteLine(sender.ToString());
-        }
-
-        private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            System.Console.WriteLine(sender.ToString());
         }
     }
 }

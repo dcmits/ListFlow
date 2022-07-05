@@ -2488,6 +2488,24 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direction:.
+        /// </summary>
+        public static string Sort_Direction {
+            get {
+                return ResourceManager.GetString("Sort_Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field:.
+        /// </summary>
+        public static string Sort_Field {
+            get {
+                return ResourceManager.GetString("Sort_Field", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter Records.
         /// </summary>
         public static string Sort_FilterTitle {

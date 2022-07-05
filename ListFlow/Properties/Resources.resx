@@ -1070,4 +1070,10 @@ Click {1} to learn how to approve the sub-template.</value>
   <data name="ToolTip_SqlQueryUI" xml:space="preserve">
     <value>Allows you to select and sort data in a more user-friendly way than editing the SQL text in the field below.</value>
   </data>
+  <data name="Sort_Field" xml:space="preserve">
+    <value>Field:</value>
+  </data>
+  <data name="Sort_Direction" xml:space="preserve">
+    <value>Direction:</value>
+  </data>
 </root>
