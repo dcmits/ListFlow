@@ -105,43 +105,43 @@
                                     <ComboBox
                                         x:Name="cbxFilterLogic_1"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[1], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_2"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[2], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_3"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[3], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_4"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[4], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_5"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[5], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_6"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[6], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                     <ComboBox
                                         x:Name="cbxFilterLogic_7"
                                         DisplayMemberPath="Value"
-                                        ItemsSource="{Binding SortAndFilter.Filters}"
+                                        ItemsSource="{Binding SortAndFilter.Logics}"
                                         SelectedValue="{Binding SortAndFilter.FilterLogics[7], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectedValuePath="Key" />
                                 </StackPanel>

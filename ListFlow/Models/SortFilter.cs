@@ -15,6 +15,7 @@ namespace ListFlow.Models
         private ObservableCollection<string> filterFields;
         private ObservableCollection<string> filterComparisons;
         private ObservableCollection<string> filterComparesTo;
+        private ObservableCollection<bool> filterHasValue;
 
         private ObservableCollection<string> sortFields;
         private ObservableCollection<bool> sortDirections;
@@ -31,7 +32,7 @@ namespace ListFlow.Models
                 if (filterComparisons != value)
                 {
                     filterComparisons = value;
-                    OnPropertyChanged(nameof(filterComparisons));
+                    OnPropertyChanged(nameof(FilterComparisons));
                 }
             }
         }
@@ -71,6 +72,7 @@ namespace ListFlow.Models
                 }
             }
         }
+        public ObservableCollection<bool> FilterHasValue => filterHasValue;
 
         public ObservableCollection<string> SortFields
         {
@@ -97,7 +99,7 @@ namespace ListFlow.Models
             }
         }
 
-        public Dictionary<string, string> Filters { get; set; }
+        public Dictionary<string, string> Logics { get; set; }
         public Dictionary<string, string> Comparisons { get; set; }
 
         #endregion
@@ -110,6 +112,7 @@ namespace ListFlow.Models
             FilterLogics = new ObservableCollection<string>(new string[8].ToList());
             FilterFields = new ObservableCollection<string>(new string[8].ToList());
             FilterComparesTo = new ObservableCollection<string>(new string[8].ToList());
+            filterHasValue = new ObservableCollection<bool>(new bool[8].ToList());
 
             SortFields = new ObservableCollection<string>(new string[8].ToList());
             SortDirections = new ObservableCollection<bool>(new bool[8].ToList());
@@ -147,6 +150,7 @@ namespace ListFlow.Models
                 FilterFields[i] = string.Empty;
                 FilterComparisons[i] = string.Empty;
                 FilterComparesTo[i] = string.Empty;
+                FilterHasValue[i] = false;
             }
         }
 
@@ -156,25 +160,25 @@ namespace ListFlow.Models
         private void FillLists()
         {
             // Fill Sort criteria list.
-            Filters = new Dictionary<string, string>
+            Logics = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 { "AND", Properties.Resources.Filter_And },
                 { "OR", Properties.Resources.Filter_Or }
             };
 
             // Fill Comparisons criteria list.
-            Comparisons = new Dictionary<string, string>
+            Comparisons = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                {"=", Properties.Resources.Filter_Comparison_Eq },
-                {"<>",  Properties.Resources.Filter_Comparison_Neq },
-                {"<", Properties.Resources.Filter_Comparison_Lt },
-                {">", Properties.Resources.Filter_Comparison_Gt },
-                {"<=", Properties.Resources.Filter_Comparison_Lte },
-                {">=", Properties.Resources.Filter_Comparison_Gte },
-                {"IS null", Properties.Resources.Filter_Comparison_Blk },
-                {"IS NOT null", Properties.Resources.Filter_Comparison_Nblk },
-                {"LIKE", Properties.Resources.Filter_Comparison_Contains },
-                {"NOT LIKE", Properties.Resources.Filter_Comparison_NotContains }
+                { "=", Properties.Resources.Filter_Comparison_Eq },
+                { "<>",  Properties.Resources.Filter_Comparison_Neq },
+                { "<", Properties.Resources.Filter_Comparison_Lt },
+                { ">", Properties.Resources.Filter_Comparison_Gt },
+                { "<=", Properties.Resources.Filter_Comparison_Lte },
+                { ">=", Properties.Resources.Filter_Comparison_Gte },
+                { "IS NULL", Properties.Resources.Filter_Comparison_Blk },
+                { "IS NOT NULL", Properties.Resources.Filter_Comparison_Nblk },
+                { "LIKE", Properties.Resources.Filter_Comparison_Contains },
+                { "NOT LIKE", Properties.Resources.Filter_Comparison_NotContains }
             };
         }
 

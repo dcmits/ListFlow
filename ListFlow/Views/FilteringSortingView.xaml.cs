@@ -107,6 +107,8 @@ namespace ListFlow.Views
             Reset(true);
             Reset(false);
 
+            InitForTest();
+
             dataUpdated = false;
         }
 
@@ -188,6 +190,48 @@ namespace ListFlow.Views
             }
         }
 
+        private void InitForTest()
+        {
+            SortAndFilter.FilterFields[0] = "Last Name";
+            SortAndFilter.FilterComparisons[0] = "<>";
+            SortAndFilter.FilterComparesTo[0] = "123";
+
+            SortAndFilter.FilterLogics[1] = "AND";
+            SortAndFilter.FilterFields[1] = "Gender";
+            SortAndFilter.FilterComparisons[1] = "IS NOT NULL";
+            SortAndFilter.FilterComparesTo[1] = "";
+
+            SortAndFilter.FilterLogics[2] = "AND";
+            SortAndFilter.FilterFields[2] = "Passport expiration";
+            SortAndFilter.FilterComparisons[2] = "=";
+            SortAndFilter.FilterComparesTo[2] = "";
+
+            SortAndFilter.FilterLogics[3] = "AND";
+            SortAndFilter.FilterFields[3] = "Badge Type";
+            SortAndFilter.FilterComparisons[3] = "=";
+            SortAndFilter.FilterComparesTo[3] = "";
+
+            SortAndFilter.FilterLogics[4] = "OR";
+            SortAndFilter.FilterFields[4] = "Event Title";
+            SortAndFilter.FilterComparisons[4] = "=";
+            SortAndFilter.FilterComparesTo[4] = "";
+
+            SortAndFilter.FilterLogics[5] = "AND";
+            SortAndFilter.FilterFields[5] = "Title";
+            SortAndFilter.FilterComparisons[5] = "=";
+            SortAndFilter.FilterComparesTo[5] = "";
+
+            SortAndFilter.FilterLogics[6] = "OR";
+            SortAndFilter.FilterFields[6] = "Status";
+            SortAndFilter.FilterComparisons[6] = "=";
+            SortAndFilter.FilterComparesTo[6] = "1";
+
+            SortAndFilter.FilterLogics[7] = "AND";
+            SortAndFilter.FilterFields[7] = "Rank";
+            SortAndFilter.FilterComparisons[7] = ">";
+            SortAndFilter.FilterComparesTo[7] = "2";
+        }
+
         #endregion
 
         #region Events
@@ -254,48 +298,68 @@ namespace ListFlow.Views
 
         private void cbxFilterField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Current Field control.
             ComboBox cbxField = sender as ComboBox;
+            // Index of the selected control.
             _ = int.TryParse(cbxField.Name.Replace("cbxFilterField_", string.Empty), out int index);
-            ComboBox cbxComp = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxFilterField", "cbxFilterComp")) as ComboBox;
-            TextBox tbxValue = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxFilterField", "tbxFilterValue")) as TextBox;
-            ComboBox cbxLogic = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterLogic_{++index}") as ComboBox;
-            ComboBox cbxNextField = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterField_{index}") as ComboBox;
+            // Comparaison control.
+            ComboBox cbxComp = grdFilter.FindName($"cbxFilterComp_{index}") as ComboBox;
+            // Criteria control.
+            TextBox tbxValue = grdFilter.FindName($"tbxFilterValue_{index}") as TextBox;
+            // Next Logic control.
+            ComboBox cbxNextLogic = grdFilter.FindName($"cbxFilterLogic_{++index}") as ComboBox;
+            // Next Field control.
+            ComboBox cbxNextField = grdFilter.FindName($"cbxFilterField_{index}") as ComboBox;
            
             if (cbxField.SelectedIndex > 0)
             {
                 // Add a new filter item or change a existing filter item.
-                cbxComp.IsEnabled = true;
-                cbxComp.SelectedIndex = 0;
-                tbxValue.IsEnabled = true;
-                tbxValue.Text = string.Empty;
-                if (cbxLogic != null)
+                if (cbxNextField != null && cbxNextField.SelectedIndex == -1)
                 {
-                    cbxLogic.IsEnabled = true;
-                    cbxLogic.SelectedIndex = 0;
+                    if (!cbxComp.IsEnabled)
+                    {
+                        cbxComp.IsEnabled = true;
+                        cbxComp.SelectedIndex = 0;
+
+                        tbxValue.IsEnabled = true;
+                        tbxValue.Text = string.Empty;
+                    }
+
+                    if (cbxNextLogic != null)
+                    {
+                        cbxNextLogic.IsEnabled = true;
+                        //cbxLogicNext.SelectedIndex = 0;
+                    }
+                    if (cbxNextField != null)
+                    {
+                        cbxNextField.IsEnabled = true;
+                        cbxNextField.SelectedIndex = -1;
+                    }
                 }
-                if (cbxNextField != null)
+                else
                 {
-                    cbxNextField.IsEnabled = true;
-                    cbxNextField.SelectedIndex = -1;
+                    // Last filter item.
+                    cbxComp.IsEnabled = cbxField.SelectedIndex > 0;
                 }
             }
             else
             {
                 // Remove the selected filter item.
-
                 int noneIndex = sortAndFilter.FilterFields.IndexOf(fields[0]);
                 Console.WriteLine($"noneIndex: {cbxField.Name} {noneIndex}");
 
                 if (noneIndex == -1)
                 {
+                    Console.WriteLine($"!!!! noneIndex: {noneIndex}");
+
                     cbxComp.IsEnabled = false;
                     cbxComp.SelectedIndex = -1;
                     tbxValue.IsEnabled = false;
                     tbxValue.Text = string.Empty;
-                    if (cbxLogic != null)
+                    if (cbxNextLogic != null)
                     {
-                        cbxLogic.IsEnabled = false;
-                        cbxLogic.SelectedIndex = -1;
+                        cbxNextLogic.IsEnabled = false;
+                        cbxNextLogic.SelectedIndex = -1;
                     }
                     if (cbxNextField != null)
                     {
@@ -305,49 +369,48 @@ namespace ListFlow.Views
                 }
                 else
                 {
-                    Console.WriteLine($"noneIndex: {noneIndex}");
+                    // Moves up one position the criteria located after the disabled criterion (field = [none]).
+                    int lastUsedIndex = sortAndFilter.FilterFields.IndexOf(string.Empty);
 
-                    string filterLogic;
-                    string filterFields;
-                    string filterComparisons;
-                    string filterComparesTo;
-
-                    for (int i = sortAndFilter.FilterLogics.Count - 1; i > noneIndex; i--)
+                    if (lastUsedIndex == -1)
                     {
-                        filterLogic = sortAndFilter.FilterLogics[i - 1];
-                        filterFields = sortAndFilter.FilterFields[i - 1];
-                        filterComparisons = sortAndFilter.FilterComparisons[i - 1];
-                        filterComparesTo = sortAndFilter.FilterComparesTo[i - 1];
+                        lastUsedIndex = sortAndFilter.FilterFields.Count - 1;
+                    }
+                    else if (lastUsedIndex == sortAndFilter.FilterFields.Count - 1)
+                    {
 
-                        Console.WriteLine($"None: {filterLogic} {filterFields} {filterComparisons} {filterComparesTo}");
+                    }
+                    else
+                    {
+                        //lastUsedIndex++;
+                    }
 
-                        Console.WriteLine($"1: {SortAndFilter.FilterLogics[i]} {SortAndFilter.FilterFields[i]} {SortAndFilter.FilterComparisons[i]} {SortAndFilter.FilterComparesTo[i]}");
+                    if (lastUsedIndex - noneIndex == 1)
+                    {
+                        //SortAndFilter.FilterLogics[noneIndex] = SortAndFilter.FilterLogics[nextIndex];
+                        SortAndFilter.FilterFields[noneIndex] = string.Empty;
+                    }
+                    else
+                    {
+                        int nextIndex;
 
-                        SortAndFilter.FilterLogics[i - 1] = SortAndFilter.FilterLogics[i];
-                        SortAndFilter.FilterFields[i - 1] = SortAndFilter.FilterFields[i];
-                        SortAndFilter.FilterComparisons[i - 1] = SortAndFilter.FilterComparisons[i];
-                        SortAndFilter.FilterComparesTo[i - 1] = SortAndFilter.FilterComparesTo[i];
+                        for (int i = noneIndex; i < lastUsedIndex; i++)
+                        {
+                            nextIndex = i + 1;
+                            SortAndFilter.FilterLogics[i] = SortAndFilter.FilterLogics[nextIndex];
+                            SortAndFilter.FilterFields[i] = SortAndFilter.FilterFields[nextIndex];
+                            SortAndFilter.FilterComparisons[i] = SortAndFilter.FilterComparisons[nextIndex];
+                            SortAndFilter.FilterComparesTo[i] = SortAndFilter.FilterComparesTo[nextIndex];
+                        }
 
-                        Console.WriteLine($"2: {SortAndFilter.FilterLogics[i - 1]} {SortAndFilter.FilterFields[i - 1]} {SortAndFilter.FilterComparisons[i - 1]} {SortAndFilter.FilterComparesTo[i - 1]}");
-
-                        SortAndFilter.FilterLogics[i] = string.Empty;
-                        SortAndFilter.FilterFields[i] = string.Empty;
-                        SortAndFilter.FilterComparisons[i] = string.Empty;
-                        SortAndFilter.FilterComparesTo[i] = string.Empty;
+                        if (lastUsedIndex == sortAndFilter.FilterFields.Count - 1)
+                        {
+                            SortAndFilter.FilterLogics[lastUsedIndex] = SortAndFilter.Logics.First().Key;
+                            SortAndFilter.FilterFields[lastUsedIndex] = string.Empty;
+                        }
                     }
                 }
             }
-
-
-
-            //for (int i = 0; i < SortAndFilter.FilterFields.Count; i++)
-            //{
-            //    if (SortAndFilter.FilterFields[i].CompareTo(SortAndFilter.FilterFields[0]) == 0)
-            //    {
-
-            //    }
-            //}
-
         }
 
         private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
