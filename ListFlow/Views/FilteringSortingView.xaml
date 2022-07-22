@@ -351,6 +351,7 @@
                                     <ComboBox
                                         x:Name="cbxSortField_7"
                                         ItemsSource="{Binding Fields}"
+                                                                                SelectionChanged="cbxSortField_SelectionChanged"
                                         SelectedValue="{Binding SortAndFilter.SortFields[7], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Orientation="Vertical">
@@ -413,42 +414,50 @@
                                         x:Name="rbnSortDesc_0"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
-                                        GroupName="SortDir_0" />
+                                        GroupName="SortDir_0"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                     <!--  Add ISChecked Binding to SortDirections value with a converter. If value = false => IsChecked = True  -->
                                     <!--  or group the two RadioButton in the same parent container  -->
                                     <RadioButton
                                         x:Name="rbnSortDesc_1"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[1], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_1" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_2"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[2], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_2" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_3"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[3], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_3" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_4"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[4], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_4" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_5"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[5], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_5" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_6"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[6], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         GroupName="SortDir_6" />
                                     <RadioButton
                                         x:Name="rbnSortDesc_7"
                                         Margin="4,4,4,5"
+                                        IsChecked="{Binding SortAndFilter.SortDirections[7], Converter={StaticResource BooleanInverterConverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
                                         GroupName="SortDir_7" />
                                 </StackPanel>

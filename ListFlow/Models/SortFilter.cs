@@ -243,7 +243,7 @@ namespace ListFlow.Models
                     if (!string.IsNullOrEmpty(sortFields[i]))
                     {
                         sortDir = sortDirections[i] ? "ASC" : "DESC";
-                        _ = sql.Append($"`{sortFields[i]}` {sortDir}, ");
+                        _ = sql.Append($"`{sortFields[i]}` {sortDir},");
                     }
                 }
 

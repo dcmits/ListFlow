@@ -183,10 +183,11 @@ namespace ListFlow.Views
                     (grdSort.FindName($"rbnSortAsc_{i}") as RadioButton).IsChecked = true;
                     (grdSort.FindName($"rbnSortDesc_{i}") as RadioButton).IsChecked = false;
                     (grdSort.FindName($"rbnSortAsc_{i}") as RadioButton).IsEnabled = false;
+                    (grdSort.FindName($"rbnSortDesc_{i}") as RadioButton).IsEnabled = false;
                     (grdSort.FindName($"cbxSortField_{i}") as ComboBox).IsEnabled = false;
                 }
 
-                //SortAndFilter.ResetSort();
+                SortAndFilter.ResetSort();
             }
         }
 
@@ -241,6 +242,24 @@ namespace ListFlow.Views
 
             SortAndFilter.SortFields[1] = "First Name";
             SortAndFilter.SortDirections[1] = false;
+
+            SortAndFilter.SortFields[2] = "Status";
+            SortAndFilter.SortDirections[2] = false;
+
+            SortAndFilter.SortFields[3] = "Event Title";
+            SortAndFilter.SortDirections[3] = true;
+
+            SortAndFilter.SortFields[4] = "Badge Type";
+            SortAndFilter.SortDirections[4] = false;
+
+            SortAndFilter.SortFields[5] = "Title";
+            SortAndFilter.SortDirections[5] = true;
+
+            SortAndFilter.SortFields[6] = "Passport expiration";
+            SortAndFilter.SortDirections[6] = true;
+
+            SortAndFilter.SortFields[7] = "Rank";
+            SortAndFilter.SortDirections[7] = true;
         }
 
         #endregion
@@ -271,18 +290,6 @@ namespace ListFlow.Views
             ((ListBox)sender).ScrollIntoView(e.AddedItems[0]);
         }
 
-        #region Properties Change (Events)
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
-
-        #endregion
-
         private void cbxFilterComp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxComp = sender as ComboBox;
@@ -301,10 +308,9 @@ namespace ListFlow.Views
                     tbxValue.IsEnabled = true;
                 }
             }
-
-            Console.WriteLine(sender.ToString());
         }
 
+                
         private void cbxFilterField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Current Field control.
@@ -434,16 +440,75 @@ namespace ListFlow.Views
             {
                 rbnAsc.IsEnabled = true;
                 rbnDesc.IsEnabled = true;
-                cbxNextField.IsEnabled = true;
-                cbxNextField.SelectedIndex = -1;
+
+                if (cbxNextField != null)
+                {
+                    cbxNextField.IsEnabled = true;
+                    cbxNextField.SelectedIndex = -1;
+                }
             }
             else
             {
-                rbnAsc.IsEnabled = false;
-                rbnDesc.IsEnabled = false;
-                cbxNextField.IsEnabled = false;
-                cbxNextField.SelectedIndex = -1;
+                // Remove the selected sort item.
+                int noneIndex = sortAndFilter.SortFields.IndexOf(fields[0]);
+
+                if (noneIndex == -1)
+                {
+                    Console.WriteLine("nodeIndex == -1");
+                }
+                else
+                {
+                    // Moves up one position the criteria located after the disabled criterion (field = [none]).
+                    int lastUsedIndex = sortAndFilter.SortFields.IndexOf(string.Empty);
+
+                    if (lastUsedIndex == -1)
+                    {
+                        lastUsedIndex = sortAndFilter.SortFields.Count - 1;
+                    }
+
+                    if (lastUsedIndex - noneIndex == 1)
+                    {
+                        SortAndFilter.SortFields[noneIndex] = string.Empty;
+                    }
+                    else
+                    {
+                        int nextIndex;
+
+                        for (int i = noneIndex; i < lastUsedIndex; i++)
+                        {
+                            nextIndex = i + 1;
+                            SortAndFilter.SortDirections[i] = SortAndFilter.SortDirections[nextIndex];
+                            SortAndFilter.SortFields[i] = SortAndFilter.SortFields[nextIndex];
+                        }
+
+                        if (lastUsedIndex == sortAndFilter.SortFields.Count - 1)
+                        {
+                            SortAndFilter.SortFields[lastUsedIndex] = string.Empty;
+                            SortAndFilter.SortDirections[lastUsedIndex] = true;
+                        }
+                    }
+                }
+                //rbnAsc.IsEnabled = false;
+                //rbnDesc.IsEnabled = false;
+                //if (cbxNextField != null)
+                //{
+                //    cbxNextField.IsEnabled = false;
+                //    cbxNextField.SelectedIndex = -1;
+                //}
             }
+            }
+
+        #region Properties Change (Events)
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
+        #endregion
+
     }
 }
