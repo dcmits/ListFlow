@@ -1,0 +1,3 @@
+SELECT * FROM `Sheet1$` WHERE `Last Name` <> '123' AND `Passport expiration` = '' AND `Badge Type` = '' OR `Event Title` = '' AND `Title` = '' OR `Status` = '1' AND `Rank` > 2
+
+SELECT * FROM `Sheet1$` WHERE `Last Name`<>'123' AND `Passport expiration`='' AND (`Badge Type`='' OR `Event Title`='') AND (`Title`='' OR `Status`='1') AND `Rank`>2

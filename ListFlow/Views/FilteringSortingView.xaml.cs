@@ -22,12 +22,6 @@ namespace ListFlow.Views
         private string sheet;
         private Dictionary<string, Type> fieldContentTypes;
 
-        //private List<string> filterFields;
-        //private List<string> filterLogicals;
-        //private List<string> filterComparaisons;
-
-        //private List<string> filters;
-
         private SortFilter sortAndFilter;
         private List<string> fields;
 
@@ -87,7 +81,7 @@ namespace ListFlow.Views
             sortAndFilter = new SortFilter();
             SortAndFilter = sortAndFilter;
 
-            // Format the fields list.
+            // Sort and Format the fields list.
             fields = columnDataTypes.Keys.ToList();
             _ = fields.Remove("1");
             fields.Sort();
@@ -161,9 +155,13 @@ namespace ListFlow.Views
 
         #region Methods
 
-        private void Reset(bool filter)
+        /// <summary>
+        /// Reset Filters or Sorts.
+        /// </summary>
+        /// <param name="filters">True = reset filters, False = reset sorts.</param>
+        private void Reset(bool filters)
         {
-            if (filter)
+            if (filters)
             {
                 for (int i = 1; i < sortAndFilter.FilterLogics.Count; i++)
                 {
@@ -182,14 +180,20 @@ namespace ListFlow.Views
             {
                 for (int i = 1; i < sortAndFilter.FilterLogics.Count; i++)
                 {
-                    (grdSort.FindName($"cbxFilterLogic_{i}") as ComboBox).IsEnabled = false;
-                    (grdSort.FindName($"cbxFilterField_{i}") as ComboBox).IsEnabled = false;
+                    (grdSort.FindName($"rbnSortAsc_{i}") as RadioButton).IsChecked = true;
+                    (grdSort.FindName($"rbnSortDesc_{i}") as RadioButton).IsChecked = false;
+                    (grdSort.FindName($"rbnSortAsc_{i}") as RadioButton).IsEnabled = false;
+                    (grdSort.FindName($"cbxSortField_{i}") as ComboBox).IsEnabled = false;
                 }
 
-                SortAndFilter.ResetSort();
+                //SortAndFilter.ResetSort();
             }
         }
 
+        /// <summary>
+        /// Initialize screen with test values.
+        /// For debug purpose only.
+        /// </summary>
         private void InitForTest()
         {
             SortAndFilter.FilterFields[0] = "Last Name";
@@ -230,6 +234,13 @@ namespace ListFlow.Views
             SortAndFilter.FilterFields[7] = "Rank";
             SortAndFilter.FilterComparisons[7] = ">";
             SortAndFilter.FilterComparesTo[7] = "2";
+
+
+            SortAndFilter.SortFields[0] = "Last Name";
+            SortAndFilter.SortDirections[0] = true;
+
+            SortAndFilter.SortFields[1] = "First Name";
+            SortAndFilter.SortDirections[1] = false;
         }
 
         #endregion
@@ -275,9 +286,7 @@ namespace ListFlow.Views
         private void cbxFilterComp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxComp = sender as ComboBox;
-            TextBox tbxValue = ((cbxComp.Parent as StackPanel).Parent as Grid).FindName(cbxComp.Name.Replace("cbxFilterComp", "tbxFilterValue")) as TextBox;
-
-            Console.WriteLine($"{cbxComp.Name}");
+            TextBox tbxValue = grdFilter.FindName(cbxComp.Name.Replace("cbxFilterComp", "tbxFilterValue")) as TextBox;
 
             if (cbxComp.SelectedItem != null)
             {
@@ -328,7 +337,12 @@ namespace ListFlow.Views
                     if (cbxNextLogic != null)
                     {
                         cbxNextLogic.IsEnabled = true;
-                        //cbxLogicNext.SelectedIndex = 0;
+
+                        // Select AND as default filter logic if next filter item is not defined.
+                        if (index < sortAndFilter.FilterFields.Count - 1 && string.IsNullOrEmpty(sortAndFilter.FilterFields[index + 1]))
+                        {
+                            cbxNextLogic.SelectedIndex = 0;
+                        }
                     }
                     if (cbxNextField != null)
                     {
@@ -346,21 +360,20 @@ namespace ListFlow.Views
             {
                 // Remove the selected filter item.
                 int noneIndex = sortAndFilter.FilterFields.IndexOf(fields[0]);
-                Console.WriteLine($"noneIndex: {cbxField.Name} {noneIndex}");
 
                 if (noneIndex == -1)
                 {
-                    Console.WriteLine($"!!!! noneIndex: {noneIndex}");
-
                     cbxComp.IsEnabled = false;
                     cbxComp.SelectedIndex = -1;
                     tbxValue.IsEnabled = false;
                     tbxValue.Text = string.Empty;
+
                     if (cbxNextLogic != null)
                     {
                         cbxNextLogic.IsEnabled = false;
                         cbxNextLogic.SelectedIndex = -1;
                     }
+
                     if (cbxNextField != null)
                     {
                         cbxNextField.IsEnabled = false;
@@ -376,18 +389,9 @@ namespace ListFlow.Views
                     {
                         lastUsedIndex = sortAndFilter.FilterFields.Count - 1;
                     }
-                    else if (lastUsedIndex == sortAndFilter.FilterFields.Count - 1)
-                    {
-
-                    }
-                    else
-                    {
-                        //lastUsedIndex++;
-                    }
 
                     if (lastUsedIndex - noneIndex == 1)
                     {
-                        //SortAndFilter.FilterLogics[noneIndex] = SortAndFilter.FilterLogics[nextIndex];
                         SortAndFilter.FilterFields[noneIndex] = string.Empty;
                     }
                     else
@@ -415,11 +419,16 @@ namespace ListFlow.Views
 
         private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Current Field control.
             ComboBox cbxField = sender as ComboBox;
+            // Index of the selected control.
             _ = int.TryParse(cbxField.Name.Replace("cbxSortField_", string.Empty), out int index);            
-            RadioButton rbnAsc = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxSortField", "rbnSortAsc")) as RadioButton;
-            RadioButton rbnDesc = ((cbxField.Parent as StackPanel).Parent as Grid).FindName(cbxField.Name.Replace("cbxSortField", "rbnSortDesc")) as RadioButton;
-            ComboBox cbxNextField = ((cbxField.Parent as StackPanel).Parent as Grid).FindName($"cbxFilterField_{++index}") as ComboBox;
+            // Asc sort direction control.
+            RadioButton rbnAsc = grdSort.FindName(cbxField.Name.Replace("cbxSortField", "rbnSortAsc")) as RadioButton;
+            // Desc sort direction control.
+            RadioButton rbnDesc = grdSort.FindName(cbxField.Name.Replace("cbxSortField", "rbnSortDesc")) as RadioButton;
+            // Next Field control.
+            ComboBox cbxNextField = grdSort.FindName($"cbxSortField_{++index}") as ComboBox;
 
             if (cbxField.SelectedIndex > 0)
             {

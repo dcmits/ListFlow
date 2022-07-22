@@ -316,42 +316,42 @@
                                     <ComboBox
                                         x:Name="cbxSortField_0"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[0], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[0], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_1"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[1], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[1], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_2"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[2], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[2], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_3"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[3], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[3], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_4"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[4], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[4], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_5"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[5], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[5], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_6"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[6], UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding SortAndFilter.SortFields[6], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                         SelectionChanged="cbxSortField_SelectionChanged" />
                                     <ComboBox
                                         x:Name="cbxSortField_7"
                                         ItemsSource="{Binding Fields}"
-                                        SelectedValue="{Binding SortAndFilter.SortFields[7], UpdateSourceTrigger=PropertyChanged}" />
+                                        SelectedValue="{Binding SortAndFilter.SortFields[7], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Orientation="Vertical">
                                     <Label Padding="5,0" Content="{x:Static prop:Resources.Sort_Direction}" />
@@ -360,49 +360,49 @@
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_0"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[0]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[0], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_1"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_1"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[1]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[1], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_2"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_2"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[2]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[2], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_3"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_3"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[3]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[3], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_4"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_4"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[4]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[4], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_5"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_5"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[5]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[5], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_6"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_6"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[6]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[6], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                     <RadioButton
                                         x:Name="rbnSortAsc_7"
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Asc}"
                                         GroupName="SortDir_7"
-                                        IsChecked="{Binding SortAndFilter.SortDirections[7]}" />
+                                        IsChecked="{Binding SortAndFilter.SortDirections[7], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Orientation="Vertical">
                                     <Label
@@ -414,6 +414,8 @@
                                         Margin="4,4,4,5"
                                         Content="{x:Static prop:Resources.Sort_Desc}"
                                         GroupName="SortDir_0" />
+                                    <!--  Add ISChecked Binding to SortDirections value with a converter. If value = false => IsChecked = True  -->
+                                    <!--  or group the two RadioButton in the same parent container  -->
                                     <RadioButton
                                         x:Name="rbnSortDesc_1"
                                         Margin="4,4,4,5"

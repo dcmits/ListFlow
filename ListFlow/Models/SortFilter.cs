@@ -211,15 +211,15 @@ namespace ListFlow.Models
                             case ">=":
                                 if (fieldContentTypes[filterFields[i]] == typeof(double))
                                 {
-                                    _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}` {filterComparisons[i]} {filterComparesTo[i].Trim()} ".TrimStart());
+                                    _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}`{filterComparisons[i]}{filterComparesTo[i].Trim()} ".TrimStart());
                                 }
                                 else
                                 { 
-                                    _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}` {filterComparisons[i]} '{filterComparesTo[i].Trim()}' ".TrimStart());
+                                    _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}`{filterComparisons[i]}'{filterComparesTo[i].Trim()}' ".TrimStart());
                                 }
                                 break;
-                            case "IS null":
-                            case "IS NOT null":
+                            case "IS NULL":
+                            case "IS NOT NULL":
                                 _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}` {filterComparisons[i]} ".TrimStart());
                                 break;
                             case "LIKE":
@@ -236,21 +236,23 @@ namespace ListFlow.Models
             {
                 _ = sql.Append("ORDER BY ");
 
+                string sortDir;
+
                 for (int i = 0; i < sortFields.Count; i++)
                 {
                     if (!string.IsNullOrEmpty(sortFields[i]))
                     {
-                        _ = sql.Append($"`{sortFields[i]}` {sortDirections[i]}, ");
+                        sortDir = sortDirections[i] ? "ASC" : "DESC";
+                        _ = sql.Append($"`{sortFields[i]}` {sortDir}, ");
                     }
                 }
 
                 // Remove the last comma.
-                sql.Remove(sql.Length - 1, 1);
+                _ = sql.Remove(sql.Length - 1, 1);
             }
 
             return sql.ToString().Trim();
         }
-
 
         #endregion
 
