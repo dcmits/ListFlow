@@ -810,10 +810,10 @@ This template is being ignored.</value>
     <value>Sub-templates</value>
   </data>
   <data name="Parameters_SubQuery" xml:space="preserve">
-    <value>Query</value>
+    <value>Data filtering and sorting query</value>
   </data>
   <data name="ContextualHelp_Parameters_SubQuery" xml:space="preserve">
-    <value>Query used for data selection for the selected sub-template</value>
+    <value>Query used for data sorting and filtering for the selected sub-template</value>
   </data>
   <data name="ContextualHelp_Parameters_SubTemplatesList" xml:space="preserve">
     <value>List of sub-templates used in the selected main template</value>
@@ -1075,5 +1075,13 @@ Click {1} to learn how to approve the sub-template.</value>
   </data>
   <data name="Sort_Direction" xml:space="preserve">
     <value>Direction:</value>
+  </data>
+  <data name="ContextualHelp_Parameters_SubQueryUI" xml:space="preserve">
+    <value>Wizard for creating the data sorting and filtering query for the selected sub-template.</value>
+  </data>
+  <data name="ContextualHelp_Parameters_SubQueryText" xml:space="preserve">
+    <value>Text of the data sorting and filtering query for the selected sub-model.
+Use this editor only if you have some knowledge of SQL syntax.
+In case of any error the sub-template will not be processed during the generation of the final document.</value>
   </data>
 </root>

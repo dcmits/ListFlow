@@ -17,7 +17,7 @@ namespace ListFlow.Views
     {
         #region Fields
 
-        private MainTemplate selectedMainTemplate;
+        private SubTemplate selectedSubTemplate;
         private bool dataUpdated;
         private string sheet;
         private Dictionary<string, Type> fieldContentTypes;
@@ -39,15 +39,15 @@ namespace ListFlow.Views
 
         #region Properties
 
-        public MainTemplate SelectedMainTemplate
+        public SubTemplate SelectedSubTemplate
         {
-            get => selectedMainTemplate;
+            get => selectedSubTemplate;
             set
             {
-                if (selectedMainTemplate != value)
+                if (selectedSubTemplate != value)
                 {
-                    selectedMainTemplate = value;
-                    OnPropertyChanged(nameof(SelectedMainTemplate));
+                    selectedSubTemplate = value;
+                    OnPropertyChanged(nameof(SelectedSubTemplate));
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace ListFlow.Views
         {
             InitializeComponent();
 
-            sortAndFilter = new SortFilter();
+            sortAndFilter = new SortFilter(subTemplate.Query);
             SortAndFilter = sortAndFilter;
 
             // Sort and Format the fields list.
@@ -101,6 +101,9 @@ namespace ListFlow.Views
             Reset(true);
             Reset(false);
 
+            // Parse Query.
+            //selectedMainTemplate = subTemplate;
+
             InitForTest();
 
             dataUpdated = false;
@@ -118,7 +121,7 @@ namespace ListFlow.Views
 
         private void QuerySaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            System.Console.WriteLine(SortAndFilter.GetSQL(sheet, fieldContentTypes));
+            System.Console.WriteLine(SortAndFilter.BuildSQL(sheet, fieldContentTypes));
 
 
 
@@ -268,7 +271,7 @@ namespace ListFlow.Views
 
         private void SubTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedMainTemplate.SelectedSubTemplate.IsQueryValueChanged = false;
+            SelectedSubTemplate.IsQueryValueChanged = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -350,6 +353,7 @@ namespace ListFlow.Views
                             cbxNextLogic.SelectedIndex = 0;
                         }
                     }
+
                     if (cbxNextField != null)
                     {
                         cbxNextField.IsEnabled = true;
@@ -436,6 +440,7 @@ namespace ListFlow.Views
             // Next Field control.
             ComboBox cbxNextField = grdSort.FindName($"cbxSortField_{++index}") as ComboBox;
 
+            // Add a new sort item or change a existing sort item.
             if (cbxField.SelectedIndex > 0)
             {
                 rbnAsc.IsEnabled = true;
@@ -444,7 +449,11 @@ namespace ListFlow.Views
                 if (cbxNextField != null)
                 {
                     cbxNextField.IsEnabled = true;
-                    cbxNextField.SelectedIndex = -1;
+
+                    if (index < sortAndFilter.SortFields.Count - 1 && string.IsNullOrEmpty(sortAndFilter.SortFields[index + 1]))
+                    {
+                        cbxNextField.SelectedIndex = -1;
+                    }
                 }
             }
             else
@@ -452,11 +461,7 @@ namespace ListFlow.Views
                 // Remove the selected sort item.
                 int noneIndex = sortAndFilter.SortFields.IndexOf(fields[0]);
 
-                if (noneIndex == -1)
-                {
-                    Console.WriteLine("nodeIndex == -1");
-                }
-                else
+                if (noneIndex != -1)
                 {
                     // Moves up one position the criteria located after the disabled criterion (field = [none]).
                     int lastUsedIndex = sortAndFilter.SortFields.IndexOf(string.Empty);
@@ -479,24 +484,23 @@ namespace ListFlow.Views
                             nextIndex = i + 1;
                             SortAndFilter.SortDirections[i] = SortAndFilter.SortDirections[nextIndex];
                             SortAndFilter.SortFields[i] = SortAndFilter.SortFields[nextIndex];
+
+                            (grdSort.FindName($"rbnSortAsc_{nextIndex}") as RadioButton).IsEnabled = false;
+                            (grdSort.FindName($"rbnSortDesc_{nextIndex}") as RadioButton).IsEnabled = false;
                         }
 
                         if (lastUsedIndex == sortAndFilter.SortFields.Count - 1)
                         {
                             SortAndFilter.SortFields[lastUsedIndex] = string.Empty;
                             SortAndFilter.SortDirections[lastUsedIndex] = true;
+
+                            (grdSort.FindName($"rbnSortAsc_{lastUsedIndex}") as RadioButton).IsEnabled = false;
+                            (grdSort.FindName($"rbnSortDesc_{lastUsedIndex}") as RadioButton).IsEnabled = false;
                         }
                     }
                 }
-                //rbnAsc.IsEnabled = false;
-                //rbnDesc.IsEnabled = false;
-                //if (cbxNextField != null)
-                //{
-                //    cbxNextField.IsEnabled = false;
-                //    cbxNextField.SelectedIndex = -1;
-                //}
             }
-            }
+        }
 
         #region Properties Change (Events)
 

@@ -1,3 +1,52 @@
 SELECT * FROM `Sheet1$` WHERE `Last Name` <> '123' AND `Passport expiration` = '' AND `Badge Type` = '' OR `Event Title` = '' AND `Title` = '' OR `Status` = '1' AND `Rank` > 2
 
 SELECT * FROM `Sheet1$` WHERE `Last Name`<>'123' AND `Passport expiration`='' AND (`Badge Type`='' OR `Event Title`='') AND (`Title`='' OR `Status`='1') AND `Rank`>2
+
+
+
+TOKEN_SELECT: SELECT
+42: *
+TOKEN_FROM: FROM
+TOKEN_ID: [Sheet1$]
+TOKEN_WHERE: WHERE
+TOKEN_ID: [Representation Type]
+61: =
+TOKEN_STRING: 'Business and Industry Entity'
+TOKEN_AND: AND
+TOKEN_ID: [Status]
+61: =
+TOKEN_STRING: 'Approved'
+TOKEN_AND: AND
+LEX_WHITE:
+40: (
+TOKEN_ID: [Check-in Date]
+TOKEN_IS: IS
+TOKEN_NOT: NOT
+TOKEN_NULL: null
+TOKEN_AND: AND
+TOKEN_ID: [Check-in Date]
+60: <
+62: >
+TOKEN_STRING: ''
+41: )
+TOKEN_ORDER: ORDER
+TOKEN_BY: BY
+TOKEN_ID: [Rep Sub Type]
+TOKEN_ASC: ASC
+44: ,
+TOKEN_ID: [Rank]
+TOKEN_ASC: ASC
+44: ,
+TOKEN_ID: [Last Name]
+TOKEN_ASC: ASC
+
+* Table name
+/TSqlScript/TSqlBatch/SelectStatement/QuerySpecification/FromClause/NamedTableReference/SchemaObjectName/Identifier[1]/text()
+
+* 
+
+* Select all OderByClause field names
+/TSqlScript/TSqlBatch/SelectStatement/QuerySpecification/OrderByClause//ExpressionWithSortOrder/ColumnReferenceExpression/MultiPartIdentifier/Identifier/text()
+
+* Select all OrderClause sort direction (ELement name)
+/TSqlScript/TSqlBatch/SelectStatement/QuerySpecification/OrderByClause//ExpressionWithSortOrder/*[1]

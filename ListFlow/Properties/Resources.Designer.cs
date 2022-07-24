@@ -443,11 +443,31 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query used for data selection for the selected sub-template.
+        ///   Looks up a localized string similar to Query used for data sorting and filtering for the selected sub-template.
         /// </summary>
         public static string ContextualHelp_Parameters_SubQuery {
             get {
                 return ResourceManager.GetString("ContextualHelp_Parameters_SubQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text of the data sorting and filtering query for the selected sub-model.
+        ///Use this editor only if you have some knowledge of SQL syntax.
+        ///In case of any error the sub-template will not be processed during the generation of the final document..
+        /// </summary>
+        public static string ContextualHelp_Parameters_SubQueryText {
+            get {
+                return ResourceManager.GetString("ContextualHelp_Parameters_SubQueryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wizard for creating the data sorting and filtering query for the selected sub-template..
+        /// </summary>
+        public static string ContextualHelp_Parameters_SubQueryUI {
+            get {
+                return ResourceManager.GetString("ContextualHelp_Parameters_SubQueryUI", resourceCulture);
             }
         }
         
@@ -2290,7 +2310,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Query.
+        ///   Looks up a localized string similar to Data filtering and sorting query.
         /// </summary>
         public static string Parameters_SubQuery {
             get {

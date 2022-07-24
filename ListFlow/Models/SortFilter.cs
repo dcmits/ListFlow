@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Microsoft.SqlServer.Management.SqlParser.Parser;
 
 namespace ListFlow.Models
 {
@@ -106,7 +107,7 @@ namespace ListFlow.Models
 
         #region Constructors
 
-        public SortFilter()
+        public SortFilter(string sql)
         {
             FilterComparisons = new ObservableCollection<string>(new string[8].ToList());
             FilterLogics = new ObservableCollection<string>(new string[8].ToList());
@@ -117,10 +118,12 @@ namespace ListFlow.Models
             SortFields = new ObservableCollection<string>(new string[8].ToList());
             SortDirections = new ObservableCollection<bool>(new bool[8].ToList());
 
-            ResetFilter();
-            ResetSort();
+            //ResetFilter();
+            //ResetSort();
 
             FillLists();
+
+            _ = ParseSQL(sql);
         }
 
         #endregion
@@ -188,7 +191,7 @@ namespace ListFlow.Models
         /// <param name="sheetName">Name of the Sheet in Excel.</param>
         /// <param name="fieldContentTypes">List of fields with their data types.</param>
         /// <returns>SQL code.</returns>
-        public string GetSQL(string sheetName, Dictionary<string, Type> fieldContentTypes)
+        public string BuildSQL(string sheetName, Dictionary<string, Type> fieldContentTypes)
         {
             StringBuilder sql = new StringBuilder($"SELECT * FROM `{sheetName}$` ");
 
@@ -219,8 +222,17 @@ namespace ListFlow.Models
                                 }
                                 break;
                             case "IS NULL":
-                            case "IS NOT NULL":
                                 _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}` {filterComparisons[i]} ".TrimStart());
+                                break;
+                            case "IS NOT NULL":
+                                if (fieldContentTypes[filterFields[i]] == typeof(double))
+                                {
+                                    _ = sql.Append($"{filterLogics[i]} `{filterFields[i]}` {filterComparisons[i]} ".TrimStart());
+                                }
+                                else
+                                {
+                                    _ = sql.Append($"{filterLogics[i]} (`{filterFields[i]}` {filterComparisons[i]} AND `{filterFields[i]}` <> '') ".TrimStart());
+                                }                                
                                 break;
                             case "LIKE":
                             case "NOT LIKE":
@@ -254,6 +266,55 @@ namespace ListFlow.Models
             return sql.ToString().Trim();
         }
 
+        private bool ParseSQL(string sql)
+        {
+            ParseOptions parseOptions = new ParseOptions();
+            Scanner scanner = new Scanner(parseOptions);
+
+            int state = 0;
+            int lastTokenEnd = -1;
+            int token;
+
+            List<TokenInfo> tokens = new List<TokenInfo>();
+
+            scanner.SetSource(sql, 0);
+
+            while ((token = scanner.GetNext(ref state, out int start, out int end, out bool isPairMatch, out bool isExecAutoParamHelp)) != (int)Tokens.EOF)
+            {
+                TokenInfo tokenInfo =
+                    new TokenInfo()
+                    {
+                        Start = start,
+                        End = end,
+                        IsPairMatch = isPairMatch,
+                        IsExecAutoParamHelp = isExecAutoParamHelp,
+                        Sql = sql.Substring(start, end - start + 1),
+                        TokenText = (Tokens)token,
+                        TokenID = token
+                    };
+
+                tokens.Add(tokenInfo);
+
+                lastTokenEnd = end;
+            }
+
+            TokenInfo item = tokens.Single(x => x.TokenID == (int)Tokens.TOKEN_WHERE);
+
+            if (item != null)
+            {
+                Console.WriteLine($"Where clause present");
+            }
+
+            item = tokens.Single(x => x.TokenID == (int)Tokens.TOKEN_ORDER);
+
+            if (item != null)
+            {
+                Console.WriteLine($"Order by clause present");
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Events
@@ -266,5 +327,17 @@ namespace ListFlow.Models
 
         #endregion
 
+    }
+
+    public class TokenInfo
+    {
+        public int Start { get; set; }
+        public int End { get; set; }
+        public bool IsPairMatch { get; set; }
+
+        public bool IsExecAutoParamHelp { get; set; }
+        public string Sql { get; set; }
+        public Tokens TokenText { get; set; }
+        public int TokenID { get; set; }
     }
 }
