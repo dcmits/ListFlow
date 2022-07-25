@@ -1,0 +1,158 @@
+=======================================================================
+
+SELECT * 
+	FROM
+		[Sheet1$]
+	WHERE 
+		[Representation Type]='Business and Industry Entity' 
+		AND [Status]='Approved' 
+		AND [Check-in Date] IS null 
+		AND [Rank]=1 
+	ORDER BY 
+		[Rep Sub Type] DESC,
+		[Rank] ASC,
+		[Last Name] ASC
+
+0 5 False False SELECT TOKEN_SELECT 288
+7 7 False False * 42 42
+9 12 False False FROM TOKEN_FROM 244
+14 22 False False [Sheet1$] TOKEN_ID 173
+24 28 False False WHERE TOKEN_WHERE 308
+30 50 False False [Representation Type] TOKEN_ID 173
+51 51 False False = 61 61
+52 81 False False 'Business and Industry Entity' TOKEN_STRING 176
+83 85 False False AND TOKEN_AND 136
+87 94 False False [Status] TOKEN_ID 173
+95 95 False False = 61 61
+96 105 False False 'Approved' TOKEN_STRING 176
+107 109 False False AND TOKEN_AND 136
+111 125 False False [Check-in Date] TOKEN_ID 173
+127 128 False False IS TOKEN_IS 258
+130 133 False False null TOKEN_NULL 267
+135 137 False False AND TOKEN_AND 136
+139 144 False False [Rank] TOKEN_ID 173
+145 145 False False = 61 61
+146 146 False False 1 TOKEN_INTEGER 182
+148 152 False False ORDER TOKEN_ORDER 274
+154 155 False False BY TOKEN_BY 211
+157 170 False False [Rep Sub Type] TOKEN_ID 173
+172 175 False False DESC TOKEN_DESC 229
+176 176 False False , 44 44
+177 182 False False [Rank] TOKEN_ID 173
+184 186 False False ASC TOKEN_ASC 205
+187 187 False False , 44 44
+188 198 False False [Last Name] TOKEN_ID 173
+200 202 False False ASC TOKEN_ASC 205
+
+=======================================================================
+
+SELECT *
+	FROM
+		[Sheet1$]
+	WHERE
+		[Representation Type]='Business and Industry Entity'
+		AND [Status]='Approved' 
+		AND 
+		(
+			[Check-in Date] IS NOT null 
+			OR [Check-in Date]<>''
+		)
+		AND [Rank]=1
+	ORDER BY
+		[Rep Sub Type] DESC,
+		[Rank] ASC,
+		[Last Name] ASC
+
+0 5 False False SELECT TOKEN_SELECT 288
+7 7 False False * 42 42
+9 12 False False FROM TOKEN_FROM 244
+14 22 False False [Sheet1$] TOKEN_ID 173
+24 28 False False WHERE TOKEN_WHERE 308
+30 50 False False [Representation Type] TOKEN_ID 173
+51 51 False False = 61 61
+52 81 False False 'Business and Industry Entity' TOKEN_STRING 176
+83 85 False False AND TOKEN_AND 136
+87 94 False False [Status] TOKEN_ID 173
+95 95 False False = 61 61
+96 105 False False 'Approved' TOKEN_STRING 176
+107 109 False False AND TOKEN_AND 136
+110 110 True False   LEX_WHITE 986
+111 111 True False ( 40 40
+112 126 False False [Check-in Date] TOKEN_ID 173
+128 129 False False IS TOKEN_IS 258
+131 133 False False NOT TOKEN_NOT 137
+135 138 False False null TOKEN_NULL 267
+140 141 False False OR TOKEN_OR 135
+143 157 False False [Check-in Date] TOKEN_ID 173
+158 158 False False < 60 60
+159 159 False False > 62 62
+160 161 False False '' TOKEN_STRING 176
+162 162 True False ) 41 41
+164 166 False False AND TOKEN_AND 136
+168 173 False False [Rank] TOKEN_ID 173
+174 174 False False = 61 61
+175 175 False False 1 TOKEN_INTEGER 182
+177 181 False False ORDER TOKEN_ORDER 274
+183 184 False False BY TOKEN_BY 211
+186 199 False False [Rep Sub Type] TOKEN_ID 173
+201 204 False False DESC TOKEN_DESC 229
+205 205 False False , 44 44
+206 211 False False [Rank] TOKEN_ID 173
+213 215 False False ASC TOKEN_ASC 205
+216 216 False False , 44 44
+217 227 False False [Last Name] TOKEN_ID 173
+229 231 False False ASC TOKEN_ASC 205
+
+=======================================================================
+
+SELECT * 
+	FROM
+		[Sheet1$]
+	WHERE
+	(
+		[Last Name] IS NOT null
+		AND [Last Name] <> ''
+	)
+	AND [First Name] LIKE '%A%'
+	AND [Status] = '1'
+	OR [Status] = '2'
+	ORDER BY
+		[Rep Sub Type] DESC,
+		[Last Name] ASC
+
+0 5 False False SELECT TOKEN_SELECT 288
+7 7 False False * 42 42
+9 12 False False FROM TOKEN_FROM 244
+14 22 False False [Sheet1$] TOKEN_ID 173
+24 28 False False WHERE TOKEN_WHERE 308
+29 29 True False   LEX_WHITE 986
+30 30 True False ( 40 40
+31 41 False False [Last Name] TOKEN_ID 173
+43 44 False False IS TOKEN_IS 258
+46 48 False False NOT TOKEN_NOT 137
+50 53 False False null TOKEN_NULL 267
+56 58 False False And TOKEN_AND 136
+60 70 False False [Last Name] TOKEN_ID 173
+72 72 False False < 60 60
+73 73 False False > 62 62
+75 76 False False '' TOKEN_STRING 176
+77 77 True False ) 41 41
+79 81 False False And TOKEN_AND 136
+83 94 False False [First Name] TOKEN_ID 173
+96 99 False False LIKE TOKEN_LIKE 260
+101 105 False False '%A%' TOKEN_STRING 176
+107 109 False False And TOKEN_AND 136
+111 118 False False [Status] TOKEN_ID 173
+120 120 False False = 61 61
+122 124 False False '1' TOKEN_STRING 176
+126 127 False False OR TOKEN_OR 135
+129 136 False False [Status] TOKEN_ID 173
+138 138 False False = 61 61
+140 142 False False '2' TOKEN_STRING 176
+144 148 False False ORDER TOKEN_ORDER 274
+150 151 False False BY TOKEN_BY 211
+153 166 False False [Rep Sub Type] TOKEN_ID 173
+168 171 False False DESC TOKEN_DESC 229
+172 172 False False , 44 44
+174 184 False False [Last Name] TOKEN_ID 173
+186 188 False False ASC TOKEN_ASC 205
