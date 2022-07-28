@@ -102,6 +102,7 @@ namespace ListFlow.Views
             Reset(false);
 
             // Parse Query.
+            _= SortAndFilter.FlattenSQL(subTemplate.Query);
             //selectedMainTemplate = subTemplate;
 
             InitForTest();
