@@ -11,19 +11,21 @@ using System;
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for FilteringSortingView.xaml
+    /// Query creation wizard (filtering and sorting of fields).
     /// </summary>
     public partial class FilteringSortingView : Window, INotifyPropertyChanged
     {
         #region Fields
 
         private SubTemplate selectedSubTemplate;
-        private readonly bool dataUpdated;
+        // True if the data has been modified by the user.
+        private bool dataUpdated;
+        // Name of the Excel sheet containing the data.
         private readonly string sheet;
+        // List of fields with their data types.
         private readonly Dictionary<string, Type> fieldContentTypes;
 
         private SortFilter sortAndFilter;
-        private readonly List<string> fields;
 
         #endregion
 
@@ -39,6 +41,7 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // Selected sub-template.
         public SubTemplate SelectedSubTemplate
         {
             get => selectedSubTemplate;
@@ -52,6 +55,7 @@ namespace ListFlow.Views
             }
         }
 
+        // List of filters and data sorting.
         public SortFilter SortAndFilter
         {
             get => sortAndFilter;
@@ -65,24 +69,29 @@ namespace ListFlow.Views
             }
         }
 
-        public List<string> Fields
-        {
-            get => fields;
-        }
+        // Formatted list of fields (without the [ and ]).
+        public List<string> Fields { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        /// Query creation wizard (filtering and sorting of fields).
+        /// </summary>
+        /// <param name="sheetName">Name of the Excel sheet containing the data.</param>
+        /// <param name="columnDataTypes">List of fields with their data types.</param>
+        /// <param name="sortFilter">List of filters and data sorting.</param>
+        /// <param name="selectedSubTemplate">Selected sub-template.</param>
         public FilteringSortingView(string sheetName, Dictionary<string, Type> columnDataTypes, SortFilter sortFilter, SubTemplate selectedSubTemplate)
         {
             InitializeComponent();
 
             // Sort and Format the fields list.
-            fields = columnDataTypes.Keys.ToList();
-            _ = fields.Remove("1");
-            fields.Sort();
-            fields.Insert(0, Properties.Resources.None);
+            Fields = columnDataTypes.Keys.ToList();
+            _ = Fields.Remove("1");
+            Fields.Sort();
+            Fields.Insert(0, Properties.Resources.None);
 
             fieldContentTypes = columnDataTypes;
             sheet = sheetName;
@@ -116,21 +125,24 @@ namespace ListFlow.Views
             e.CanExecute = SortAndFilter.IsValueChanged;
         }
 
+        /// <summary>
+        /// Saves data sorting and selection parameters.
+        /// </summary>
         private void QuerySaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Console.WriteLine(SortAndFilter.BuildSQL(sheet, fieldContentTypes));
+            SelectedSubTemplate.Query=SortAndFilter.BuildSQL(sheet, fieldContentTypes);
+            try
+            {
+                SelectedSubTemplate.SaveQuery();
+                dataUpdated = true;
 
-            Console.WriteLine();
-
-            //try
-            //{
-            //    SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
-            //    dataUpdated = true;
-            //}
-            //catch (System.Exception ex)
-            //{
-            //    _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
-            //}
+                DialogResult = dataUpdated;
+                SystemCommands.CloseWindow(this);
+            }
+            catch (Exception ex)
+            {
+                _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
+            }
         }
 
         private void QueryResetCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
@@ -138,6 +150,9 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
+        /// <summary>
+        /// Resets sorting and data selection settings.
+        /// </summary>
         private void QueryResetCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (tbc.SelectedIndex == 0)
@@ -207,6 +222,9 @@ namespace ListFlow.Views
             SortAndFilter.IsValueChanged = false;
         }
 
+        /// <summary>
+        /// Activate or deactivate the control containing the value to be compared according to the type of comparison selected.
+        /// </summary>
         private void cbxFilterComp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cbxComp = sender as ComboBox;
@@ -229,7 +247,10 @@ namespace ListFlow.Views
             }
         }
 
-                
+        /// <summary>
+        /// Activate or deactivate the controls of the data filter line according to the selected field.
+        /// If the selected field is "None" the controls must be disabled.
+        /// </summary>
         private void cbxFilterField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Current Field control.
@@ -345,6 +366,10 @@ namespace ListFlow.Views
             SortAndFilter.IsValueChanged = true;
         }
 
+        /// <summary>
+        /// Activate or deactivate the controls of the data sorting line according to the selected field.
+        /// If the selected field is "None" the controls must be disabled.
+        /// </summary>
         private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Current Field control.

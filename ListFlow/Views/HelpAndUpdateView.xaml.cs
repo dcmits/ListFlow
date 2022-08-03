@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for HelpAndUpdateView.xaml
+    /// Update and help.
     /// </summary>
     public partial class HelpAndUpdateView : Window
     {
@@ -30,6 +19,7 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // Version of the running application.
         public string CurrentVersion
         {
             get => currentVersion;
@@ -45,6 +35,7 @@ namespace ListFlow.Views
             }
         }
 
+        // New application version available.
         public string AvailableVersion
         {
             get => availableVersion;
@@ -68,6 +59,9 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Update and help.
+        /// </summary>
         public HelpAndUpdateView()
         {
             InitializeComponent();
@@ -80,6 +74,10 @@ namespace ListFlow.Views
             AvailableVersion = CheckForNewVersion();
         }
 
+        /// <summary>
+        /// Check if a new version is available.
+        /// </summary>
+        /// <returns></returns>
         private string CheckForNewVersion()
         {
             return Properties.Resources.Update_NoNewVersionAvailable;

@@ -12,9 +12,23 @@ namespace ListFlow.Helpers
         {
             if ((bool)value)
             {
+                if (parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0)
+                {
+                    return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
+            }
+            else if (parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0)
+            {
                 return Visibility.Visible;
             }
-            return Visibility.Collapsed;
+            else
+            {
+                return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

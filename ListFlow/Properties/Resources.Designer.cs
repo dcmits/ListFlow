@@ -2635,7 +2635,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SQL query text with errors (highlighted in red).
+        ///   Looks up a localized string similar to SQL query text with mistakes (highlighted in red).
         /// </summary>
         public static string SqlErrorsReport_SqlCode {
             get {
@@ -2644,13 +2644,22 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The wizard cannot be displayed because the SQL query text contains a number of errors.
+        ///   Looks up a localized string similar to The SQL query text can&apos;t be saved because it contains a number of mistakes..
+        /// </summary>
+        public static string SqlErrorsReport_UserMessage_SyntaxError {
+            get {
+                return ResourceManager.GetString("SqlErrorsReport_UserMessage_SyntaxError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wizard can&apos;t be displayed because the SQL query text contains a number of mistakes.
         ///Click Reset Filters &amp; Sorts button to display the wizard without sorting and filtering parameters (reset the SQL query text).
         ///Click Cancel button to correct/edit the SQL query text..
         /// </summary>
-        public static string SqlErrorsReport_UserMessage {
+        public static string SqlErrorsReport_UserMessage_UI {
             get {
-                return ResourceManager.GetString("SqlErrorsReport_UserMessage", resourceCulture);
+                return ResourceManager.GetString("SqlErrorsReport_UserMessage_UI", resourceCulture);
             }
         }
         

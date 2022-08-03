@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.SqlServer.Management.SqlParser.Parser;
-//using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 namespace ListFlow.Models
 {
@@ -206,7 +204,7 @@ namespace ListFlow.Models
         /// <returns>SQL code.</returns>
         public string BuildSQL(string sheetName, Dictionary<string, Type> fieldContentTypes)
         {
-            StringBuilder sql = new StringBuilder($"SELECT * FROM `{sheetName}$` ");
+            StringBuilder sql = new StringBuilder($"SELECT * FROM [{sheetName}$] ");
 
             // Filters (WHERE SQL part).
             if (filterFields.Any(x => !string.IsNullOrEmpty(x)))
@@ -275,7 +273,7 @@ namespace ListFlow.Models
                     if (!string.IsNullOrEmpty(sortFields[i]))
                     {
                         sortDir = sortDirections[i] ? "ASC" : "DESC";
-                        _ = sql.Append($"`{sortFields[i]}` {sortDir},");
+                        _ = sql.Append($"[{sortFields[i]}] {sortDir},");
                     }
                 }
 
@@ -295,9 +293,6 @@ namespace ListFlow.Models
         {
             // SQL Parser.
             ParseResult sqlParseResult = Parser.Parse(sql);
-
-            //TSql150Parser parser = new TSql150Parser(true, SqlEngineType.All);
-            //_ = parser.Parse(new StringReader(sql), out IList<ParseError> parseErrors);
 
             if (sqlParseResult.Errors.Count() == 0)
             {
@@ -457,7 +452,7 @@ namespace ListFlow.Models
                                                 if (string.CompareOrdinal(comparaisons[0], "IS NOT NULL") == 0)
                                                 {
                                                     // 'IS NOT NULL' comparaison.
-                                                    if ((string.CompareOrdinal(comparaisons[1], "<>") == 0 & string.CompareOrdinal(values[1], "''") == 0) ||
+                                                    if ((string.CompareOrdinal(comparaisons[1], "<>") == 0 & string.CompareOrdinal(values[1], string.Empty) == 0) ||
                                                         (string.IsNullOrEmpty(comparaisons[1]) & string.IsNullOrEmpty(values[1])))
                                                     {
                                                         // Add the item details to the lists.
@@ -469,7 +464,7 @@ namespace ListFlow.Models
                                                 else if (string.CompareOrdinal(comparaisons[0], "IS NULL") == 0)
                                                 {
                                                     // 'IS NULL' comparaison.
-                                                    if ((string.CompareOrdinal(comparaisons[1], "=") == 0 & string.CompareOrdinal(values[1], "''") == 0) ||
+                                                    if ((string.CompareOrdinal(comparaisons[1], "=") == 0 & string.CompareOrdinal(values[1], string.Empty) == 0) ||
                                                         (string.IsNullOrEmpty(comparaisons[1]) & string.IsNullOrEmpty(values[1])))
                                                     {
                                                         // Add the item details to the lists.
@@ -582,7 +577,10 @@ namespace ListFlow.Models
             return sqlParseResult;
         }
 
-        public void ShowFlattenSQLResult()
+        /// <summary>
+        /// Displays the result of the conversion of the text of the SQL query into an array. 
+        /// </summary>
+        public void ShowFlattenedSQLResult()
         {
             Console.WriteLine("Filtering");
             Console.WriteLine(new string('-', 50));
@@ -647,9 +645,11 @@ namespace ListFlow.Models
         }
 
         #endregion
-
     }
 
+    /// <summary>
+    /// Parsing token.
+    /// </summary>
     public class TokenInfo
     {
         public int Start { get; set; }

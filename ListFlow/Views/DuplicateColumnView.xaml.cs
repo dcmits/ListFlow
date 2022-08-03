@@ -8,7 +8,7 @@ using ListFlow.Controls;
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for DuplicateColumnView.xaml
+    /// Displays the list of column names in the file that are not unique.
     /// </summary>
     public partial class DuplicateColumnView : Window
     {
@@ -21,6 +21,7 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // Message to the user displayed in the header of the window.
         public string Message
         {
             get => message;
@@ -36,6 +37,7 @@ namespace ListFlow.Views
             }
         }
 
+        // List of non-unique columns, key: name of the column in Excel format, value: title of the column.
         public Dictionary<string, string> DuplicateColumns
         {
             get => duplicateColumns;
@@ -60,6 +62,10 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Displays the list of column names in the file that are not unique.
+        /// </summary>
+        /// <param name="duplicateColumns">List of non-unique columns, key: name of the column in Excel format, value: title of the column.</param>
         public DuplicateColumnView(Dictionary<string, string> duplicateColumns)
         {
             InitializeComponent();
@@ -131,6 +137,5 @@ namespace ListFlow.Views
 
         #endregion
     }
-
 
 }

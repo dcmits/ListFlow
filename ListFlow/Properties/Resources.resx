@@ -1094,7 +1094,7 @@ In case of any error the sub-template will not be processed during the generatio
     <value>SQL errors report</value>
   </data>
   <data name="SqlErrorsReport_SqlCode" xml:space="preserve">
-    <value>SQL query text with errors (highlighted in red)</value>
+    <value>SQL query text with mistakes (highlighted in red)</value>
   </data>
   <data name="SqlErrorsReport_ErrorsList" xml:space="preserve">
     <value>List of errors present in the SQL query text</value>
@@ -1106,12 +1106,15 @@ In case of any error the sub-template will not be processed during the generatio
     <value>List of errors contained in the SQL code.
 Select the error to see the possible location of the error in the SQL code (text marked in red).</value>
   </data>
-  <data name="SqlErrorsReport_UserMessage" xml:space="preserve">
-    <value>The wizard cannot be displayed because the SQL query text contains a number of errors.
+  <data name="SqlErrorsReport_UserMessage_UI" xml:space="preserve">
+    <value>The wizard can't be displayed because the SQL query text contains a number of mistakes.
 Click Reset Filters &amp; Sorts button to display the wizard without sorting and filtering parameters (reset the SQL query text).
 Click Cancel button to correct/edit the SQL query text.</value>
   </data>
   <data name="Button_ResetFilterSort" xml:space="preserve">
     <value>_Reset Filters &amp; Sorts</value>
+  </data>
+  <data name="SqlErrorsReport_UserMessage_SyntaxError" xml:space="preserve">
+    <value>The SQL query text can't be saved because it contains a number of mistakes.</value>
   </data>
 </root>

@@ -7,17 +7,19 @@ using ListFlow.Models;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System;
+using Microsoft.SqlServer.Management.SqlParser.Parser;
 
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for TemplateParametersView.xaml
+    /// Setup of the main template and the sub-templates.
     /// </summary>
     public partial class TemplateParametersView : Window, INotifyPropertyChanged
     {
         #region Fields
 
         private MainTemplate selectedMainTemplate;
+        // True if the data has been modified by the user. 
         private bool dataUpdated;
 
         #endregion
@@ -34,6 +36,7 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // Selected main template.
         public MainTemplate SelectedMainTemplate
         {
             get => selectedMainTemplate;
@@ -47,6 +50,7 @@ namespace ListFlow.Views
             }
         }
 
+        // List of fields in the Excel file.
         public List<string> Fields
         {
             get => SelectedMainTemplate.ExcelData.SortedColumns;
@@ -56,6 +60,11 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        
+        /// <summary>
+        /// Setup of the main template and the sub-templates.
+        /// </summary>
+        /// <param name="mainTemplate">Selected main template.</param>
         public TemplateParametersView(MainTemplate mainTemplate)
         {
             InitializeComponent();
@@ -82,6 +91,9 @@ namespace ListFlow.Views
 
         #region Commands Binding
 
+        /// <summary>
+        /// Opens the folder of the selected main model in the Windows file explorer.
+        /// </summary>
         private void OpenOrganFolderCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Process explorer = new Process();
@@ -95,16 +107,36 @@ namespace ListFlow.Views
             e.CanExecute = SelectedMainTemplate.SelectedSubTemplate.IsQueryValueChanged && SelectedMainTemplate.SelectedSubTemplate.Query != null && !string.IsNullOrEmpty(SelectedMainTemplate.SelectedSubTemplate.Query.Trim());
         }
 
+        /// <summary>
+        /// Saves the SQL code in the selected sub-template after checking the syntax of the SQL code.
+        /// </summary>
         private void QuerySaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            try
+            // Check the query syntax.
+            ParseResult sqlParseResult = Parser.Parse(SelectedMainTemplate.SelectedSubTemplate.Query);
+            if (sqlParseResult.Errors.Count() == 0)
             {
-                SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
-                dataUpdated = true;
+                try
+                {
+                    // Save the SQL code in then selectec sub-template.
+                    SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
+                    dataUpdated = true;
+                }
+                catch (Exception ex)
+                {
+                    _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
+                // Displays the list of errors present in the SQL code.
+                SqlParserReportView dialog = new SqlParserReportView(sqlParseResult, Properties.Resources.SqlErrorsReport_UserMessage_SyntaxError, false)
+                {
+                    Left = Left + 50,
+                    Top = Top + 50
+                };
+
+                _ = dialog.ShowDialog();
             }
         }
 
@@ -113,16 +145,22 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
+        /// <summary>
+        /// Displays the data selection and sorting assistant for the creation/modification of the SQL query.
+        /// </summary>
         private void QueryUICommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             bool? dialogResult = null;
 
             SortFilter sortFilter = new SortFilter();
-            Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult parseErrors = sortFilter.FlattenSQL(SelectedMainTemplate.SelectedSubTemplate.Query);
+
+            // Check the query syntax.
+            ParseResult parseErrors = sortFilter.FlattenSQL(SelectedMainTemplate.SelectedSubTemplate.Query);
 
             if (parseErrors.Errors.Count() > 0)
             {
-                SqlParserReportView dialog = new SqlParserReportView(parseErrors, Properties.Resources.SqlErrorsReport_UserMessage)
+                // Displays the list of errors present in the SQL code.
+                SqlParserReportView dialog = new SqlParserReportView(parseErrors, Properties.Resources.SqlErrorsReport_UserMessage_UI, true)
                 {
                     Left = Left + 50,
                     Top = Top + 50
@@ -133,6 +171,7 @@ namespace ListFlow.Views
 
             if (dialogResult == null || dialogResult == true)
             {
+                // Displays the data selection and sorting assistant screen.
                 FilteringSortingView dialog = new FilteringSortingView(SelectedMainTemplate.ExcelData.SheetName, SelectedMainTemplate.ExcelData.ColumnDataTypes, sortFilter, SelectedMainTemplate.SelectedSubTemplate)
                 {
                     Left = Left + 50,

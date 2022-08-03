@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using ListFlow.Controls;
 using System.Windows.Documents;
 using Microsoft.SqlServer.Management.SqlParser.Parser;
 using System.Windows.Media;
-using System;
 
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for SqlParserReportView.xaml
+    /// Result of parsing of the SQL query.
     /// </summary>
     public partial class SqlParserReportView : Window
     {
@@ -26,15 +23,27 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // List of errors during the parsing process.
         public ParseResult ParseErrors { get; set; }
+        // FlowDocument to display the text of the SQL query to point to the location of the error.
         public FlowDocument FlowDocSql { get; set; }
+        // Explanatory message, in the header of the window, for the user's attention.
         public string UserMessage { get; set; }
+        // True: validation of the SQL code before the wizard for creating sorting parameters and data selection. false: validation of the SQL code before saving the query.
+        // Disable/enable buttons depending on the context.
+        public bool SortFilterUI { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public SqlParserReportView(ParseResult errors, string userMessage)
+        /// <summary>
+        /// Result of parsing of the SQL query.
+        /// </summary>
+        /// <param name="errors">List of errors during SQL code parsing.</param>
+        /// <param name="userMessage">Explanatory message, in the header of the window, for the user's attention.</param>
+        /// <param name="sortFilterUI">Disable/enable buttons depending on the context.</param>
+        public SqlParserReportView(ParseResult errors, string userMessage, bool sortFilterUI)
         {
             InitializeComponent();
 
@@ -53,6 +62,7 @@ namespace ListFlow.Views
             };
 
             UserMessage = userMessage;
+            SortFilterUI = sortFilterUI;
 
             DataContext = this;
         }
@@ -66,6 +76,9 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
+        /// <summary>
+        /// Displays the data sorting and selection screen.
+        /// </summary>
         private void ResetCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             DialogResult = true;
@@ -89,6 +102,9 @@ namespace ListFlow.Views
 
         }
 
+        /// <summary>
+        /// Highlights the location in the SQL code of the error selected in the list.
+        /// </summary>
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             System.Windows.Controls.ListBox lbx = (System.Windows.Controls.ListBox)sender;
@@ -157,6 +173,5 @@ namespace ListFlow.Views
         #endregion
 
         #endregion
-
     }
 }

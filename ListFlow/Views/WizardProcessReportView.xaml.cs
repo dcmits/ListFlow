@@ -14,7 +14,7 @@ using System.Xml.Linq;
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for WizardProcessReportView.xaml
+    /// Detailed report of the creation of the final document.
     /// </summary>
     public partial class WizardProcessReportView : Window, INotifyPropertyChanged
     {
@@ -23,11 +23,11 @@ namespace ListFlow.Views
         // FlowDocument for the screen.
         private FlowDocument screenFlowDoc;
         // FlowDocuement for the Clipboard.
-        private FlowDocument clipboardFlowDoc;
+        private readonly FlowDocument clipboardFlowDoc;
         // True if Event details fields was mandatory or optional.
-        private bool viewEventsDetails;
+        private readonly bool viewEventsDetails;
         // True if the Excel columns was renamed.
-        private bool useRenameColumns;
+        private readonly bool useRenameColumns;
 
         #endregion
 
@@ -40,6 +40,12 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Detailed report of the creation of the final document.
+        /// </summary>
+        /// <param name="documentCreationEvent">List of actions performed during the creation of the final document</param>
+        /// <param name="viewEventsDetails">Includes information about the event.</param>
+        /// <param name="useRenameColumns">Displays the option to rename columns.</param>
         public WizardProcessReportView(FinalDocCreationSteps documentCreationEvent, bool viewEventsDetails, bool useRenameColumns)
         {
             InitializeComponent();
@@ -76,6 +82,12 @@ namespace ListFlow.Views
 
         #region Methods
 
+        /// <summary>
+        /// Builds the FlowDocument based on the list of actions performed during the creation of the final document.
+        /// </summary>
+        /// <param name="docCreationEvents">List of actions performed during the creation of the final document.</param>
+        /// <param name="clipboard">True: build the document for the clipboard, false build the FlowDocument for the screen.</param>
+        /// <returns></returns>
         private FlowDocument CreateFlowDocument(FinalDocCreationSteps docCreationEvents, bool clipboard = false)
         {
             FlowDocument flowDoc = new FlowDocument
@@ -347,6 +359,13 @@ namespace ListFlow.Views
             return flowDoc;
         }
 
+        /// <summary>
+        /// Create a two-column table paragraph with the title of the event and the details to the FlowDocument.
+        /// </summary>
+        /// <param name="docCreationEvents">List of actions performed during the creation of the final document.</param>
+        /// <param name="itemTitle">Paragraph title.</param>
+        /// <param name="entryCategory">Event category.</param>
+        /// <returns>Paragraph created.</returns>
         private TableRow AddTemplateDetail(FinalDocCreationSteps docCreationEvents, string itemTitle, FinalDocCreationSteps.EntryCategory entryCategory)
         {
             TableRow tableRow = new TableRow();
@@ -372,6 +391,11 @@ namespace ListFlow.Views
             return tableRow;
         }
 
+        /// <summary>
+        /// Generates the list of styles to be used for the display of texts in the FlowDocument.
+        /// </summary>
+        /// <param name="content">Content to be parsed.</param>
+        /// <returns>List of styles used in the content.</returns>
         private List<TextStyling> ParseTextStyling(string content)
         {
             List<TextStyling> textStylings = new List<TextStyling>();
@@ -396,6 +420,9 @@ namespace ListFlow.Views
 
         #region Events
 
+        /// <summary>
+        /// Copy the FlowDocument to the clipboard.
+        /// </summary>
         private void CopyClipboardCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             TextRange range = new TextRange(clipboardFlowDoc.ContentStart, clipboardFlowDoc.ContentEnd);
@@ -436,6 +463,9 @@ namespace ListFlow.Views
         #endregion
     }
 
+    /// <summary>
+    /// Style of text.
+    /// </summary>
     public class TextStyling
     {
         public string Text { get; set; }

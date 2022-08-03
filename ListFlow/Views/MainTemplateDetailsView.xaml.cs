@@ -7,13 +7,15 @@ using ListFlow.Models;
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Interaction logic for MainTemplateDetailsView.xaml
+    /// Information on the main template.
     /// </summary>
     public partial class MainTemplateDetailsView : Window
     {
         #region Properties
 
+        // Selected main template.
         public MainTemplate SelectedMainTemplate { get; set; }
+        // List of sub-templates of the selected main template.
         public List<string> SubTemplateTags { get; set; }
 
         #endregion
@@ -26,6 +28,10 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Information on the main template.
+        /// </summary>
+        /// <param name="selectedMainTemplate">Selected main template.</param>
         public MainTemplateDetailsView(MainTemplate selectedMainTemplate)
         {
             InitializeComponent();

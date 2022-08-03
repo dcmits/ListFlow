@@ -141,16 +141,23 @@
                         <Button
                             HorizontalAlignment="Right"
                             Command="{x:Static local:SqlParserReportView.CloseWindowCommand}"
+                            Content="{x:Static prop:Resources.Button_Quit}"
+                            IsDefault="True"
+                            IsEnabled="True"
+                            Visibility="{Binding SortFilterUI, Converter={StaticResource BooleanToCollapsedConverter}, ConverterParameter=Inverse}" />
+                        <Button
+                            HorizontalAlignment="Right"
+                            Command="{x:Static local:SqlParserReportView.CloseWindowCommand}"
                             Content="{x:Static prop:Resources.Button_Cancel}"
                             IsDefault="True"
                             IsEnabled="True"
-                            Visibility="Visible" />
+                            Visibility="{Binding SortFilterUI, Converter={StaticResource BooleanToCollapsedConverter}}" />
                         <Button
                             HorizontalAlignment="Right"
                             Command="{x:Static local:SqlParserReportView.ResetCommand}"
                             Content="{x:Static prop:Resources.Button_ResetFilterSort}"
                             IsEnabled="True"
-                            Visibility="Visible" />
+                            Visibility="{Binding SortFilterUI, Converter={StaticResource BooleanToCollapsedConverter}}" />
                     </StackPanel>
                 </Grid>
             </Grid>
