@@ -8,7 +8,6 @@
     xmlns:local="clr-namespace:ListFlow.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:ListFlow.Properties"
-    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     Title="{x:Static prop:Resources.ViewTitle_FilteringSorting}"
     Width="700"
     Height="416"
@@ -63,7 +62,7 @@
 
             <!--  Main Window Content  -->
             <Grid Grid.Row="1">
-                <Grid Margin="5,10">
+                <Grid Margin="5,10,5,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -74,7 +73,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
                         <Label Padding="5,0,0,0" Content="{x:Static prop:Resources.Parameters_QuerySubTemplate}" />
-                        <Label Content="Selected Sub-Template" />
+                        <Label Content="{Binding SelectedSubTemplate.FileName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <TabControl
                         x:Name="tbc"
@@ -462,8 +461,14 @@
                         Grid.Row="3"
                         Grid.Column="2"
                         Grid.ColumnSpan="2"
+                        Margin="0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
+                        <Button
+                            Margin="5"
+                            Command="{x:Static local:FilteringSortingView.CloseWindowCommand}"
+                            Content="{x:Static prop:Resources.Button_Cancel}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
                         <Button
                             Margin="5"
                             Command="{x:Static local:FilteringSortingView.QueryResetCommand}"

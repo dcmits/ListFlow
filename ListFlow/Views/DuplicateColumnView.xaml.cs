@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ListFlow.Controls;
 
 namespace ListFlow.Views
@@ -84,6 +74,10 @@ namespace ListFlow.Views
             Message = duplicateColumns.Count > 1 ? string.Format(Properties.Resources.DupColumns_Message, duplicateColumns.Count) : Properties.Resources.DupColumn_Message;
         }
 
+        #endregion
+
+        #region Commands Binding
+
         private void ExitCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -93,10 +87,6 @@ namespace ListFlow.Views
         {
             SystemCommands.CloseWindow(this);
         }
-
-        #endregion
-
-        #region Commands Binding
 
         private void CloseWindowCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {

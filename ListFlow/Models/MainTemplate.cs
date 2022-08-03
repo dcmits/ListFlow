@@ -653,7 +653,6 @@ namespace ListFlow.Models
 
                                             if (!queryToLong)
                                             {
-                                                //TODO: Add SQL Parser.
                                                 // Check the query syntax.
                                                 ParseResult sqlParseResult = Parser.Parse(subTemplate.Query);
                                                 if (sqlParseResult.Errors.Count() == 0)

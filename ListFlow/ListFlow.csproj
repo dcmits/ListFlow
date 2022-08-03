@@ -150,6 +150,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SqlParserReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TemplateParametersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +197,7 @@
     <Compile Include="Helpers\OrganFolderConverter.cs" />
     <Compile Include="Helpers\ProgressBarHighlightConverter.cs" />
     <Compile Include="Helpers\StringFormatConverter.cs" />
+    <Compile Include="Helpers\StringToVisibilityConverter.cs" />
     <Compile Include="Helpers\TextBlockBehavior.cs" />
     <Compile Include="Helpers\TextBoxBehavior.cs" />
     <Compile Include="Helpers\ToolBox.cs" />
@@ -217,6 +222,9 @@
     </Compile>
     <Compile Include="Views\MainTemplateDetailsView.xaml.cs">
       <DependentUpon>MainTemplateDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SqlParserReportView.xaml.cs">
+      <DependentUpon>SqlParserReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TemplateParametersView.xaml.cs">
       <DependentUpon>TemplateParametersView.xaml</DependentUpon>

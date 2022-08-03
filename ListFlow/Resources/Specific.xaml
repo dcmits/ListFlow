@@ -10,6 +10,7 @@
     <hlp:BooleanInverterConverter x:Key="BooleanInverterConverter" />
     <hlp:EventDetailsUsageToBooleanConverter x:Key="EventDetailsUsageToBooleanConverter" />
     <hlp:EventDetailsUsageToVisibilityConverter x:Key="EventDetailsUsageToVisibilityConverter" />
+    <hlp:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
     <SolidColorBrush x:Key="ThemeForeground" Color="#4FD0FF" />
     <SolidColorBrush x:Key="DisabledStep" Color="#868686" />

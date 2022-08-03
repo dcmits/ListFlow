@@ -1017,10 +1017,10 @@ In order to be used in ListFlow the sub-templates must be approved, therefore th
 Click {1} to learn how to approve the sub-template.</value>
   </data>
   <data name="Exception_SqlSyntaxIssue" xml:space="preserve">
-    <value>The SQL query to select and sort data contains one syntax error. The sub-template being processed is ignored.</value>
+    <value>The SQL query text to select and sort data contains one syntax error. The sub-template being processed is ignored.</value>
   </data>
   <data name="Exception_SqlSyntaxIssues" xml:space="preserve">
-    <value>The SQL query to select and sort data contains {0} syntax errors. The sub-template being processed is ignored.</value>
+    <value>The SQL query text to select and sort data contains {0} syntax errors. The sub-template being processed is ignored.</value>
   </data>
   <data name="Exception_SqlSyntaxIssuesQuery" xml:space="preserve">
     <value>&lt;TextErrorForegroundBrush&gt;SQL query: &lt;/TextErrorForegroundBrush&gt;&lt;TextForegroundBrush&gt;&lt;!--{0}--&gt;&lt;/TextForegroundBrush&gt;</value>
@@ -1068,7 +1068,7 @@ Click {1} to learn how to approve the sub-template.</value>
     <value>Data sorting and filtering wizard</value>
   </data>
   <data name="ToolTip_SqlQueryUI" xml:space="preserve">
-    <value>Allows you to select and sort data in a more user-friendly way than editing the SQL text in the field below.</value>
+    <value>Allows you to select and sort data in a more user-friendly way than editing the SQL query text in the field below.</value>
   </data>
   <data name="Sort_Field" xml:space="preserve">
     <value>Field:</value>
@@ -1083,5 +1083,35 @@ Click {1} to learn how to approve the sub-template.</value>
     <value>Text of the data sorting and filtering query for the selected sub-model.
 Use this editor only if you have some knowledge of SQL syntax.
 In case of any error the sub-template will not be processed during the generation of the final document.</value>
+  </data>
+  <data name="Exception_SqlNoFromClause" xml:space="preserve">
+    <value>The SQL query text does not contain a FROM clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$]</value>
+  </data>
+  <data name="Exception_SqlNoSelectClause" xml:space="preserve">
+    <value>The SQL query text does not contain a SELECT clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$]</value>
+  </data>
+  <data name="ViewTitle_SqlErrorsReport" xml:space="preserve">
+    <value>SQL errors report</value>
+  </data>
+  <data name="SqlErrorsReport_SqlCode" xml:space="preserve">
+    <value>SQL query text with errors (highlighted in red)</value>
+  </data>
+  <data name="SqlErrorsReport_ErrorsList" xml:space="preserve">
+    <value>List of errors present in the SQL query text</value>
+  </data>
+  <data name="ContextualHelp_SqlErrorsReport_SqlCode" xml:space="preserve">
+    <value>SQL query text with the possible location of the error marked in red.</value>
+  </data>
+  <data name="ContextualHelp_SqlErrorsReport_ErrorsList" xml:space="preserve">
+    <value>List of errors contained in the SQL code.
+Select the error to see the possible location of the error in the SQL code (text marked in red).</value>
+  </data>
+  <data name="SqlErrorsReport_UserMessage" xml:space="preserve">
+    <value>The wizard cannot be displayed because the SQL query text contains a number of errors.
+Click Reset Filters &amp; Sorts button to display the wizard without sorting and filtering parameters (reset the SQL query text).
+Click Cancel button to correct/edit the SQL query text.</value>
+  </data>
+  <data name="Button_ResetFilterSort" xml:space="preserve">
+    <value>_Reset Filters &amp; Sorts</value>
   </data>
 </root>

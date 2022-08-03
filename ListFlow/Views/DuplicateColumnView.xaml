@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prop="clr-namespace:ListFlow.Properties"
     Title="{x:Static prop:Resources.ViewTitle_DuplicateColumn}"
-    Width="470"
-    Height="318"
+    Width="600"
+    Height="375"
     Background="{StaticResource WindowBackground}"
     Loaded="Window_Loaded"
     ResizeMode="NoResize"
@@ -62,7 +62,7 @@
 
             <!--  Main Window Content  -->
             <Grid Grid.Row="1">
-                <Grid Margin="5,10">
+                <Grid Margin="5,10,5,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -73,7 +73,6 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
                     <TextBlock
                         Grid.ColumnSpan="3"
                         Height="Auto"
@@ -83,7 +82,6 @@
                         Foreground="{StaticResource TextForegroundBrush}"
                         Text="{Binding Message}"
                         TextWrapping="Wrap" />
-
                     <DataGrid
                         Grid.Row="1"
                         Grid.Column="0"
@@ -121,8 +119,8 @@
                             </DataGridTextColumn>
                             <!--  Value  -->
                             <DataGridTextColumn
-                                Width="300"
-                                MinWidth="300"
+                                Width="433"
+                                MinWidth="433"
                                 Binding="{Binding Value}"
                                 ElementStyle="{StaticResource DataGridTextCellLeftStyle}"
                                 HeaderStyle="{StaticResource DataGridColumnHeaderStretchSytle}"
@@ -145,7 +143,6 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-
                     <Button
                         Grid.Row="2"
                         Grid.Column="0"

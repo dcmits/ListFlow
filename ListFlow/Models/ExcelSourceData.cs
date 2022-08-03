@@ -160,21 +160,35 @@ namespace ListFlow.Models
         /// <returns>True if no error.</returns>
         public bool Connect(bool renameColumns, string columnForceToSplit)
         {
-            bool result;
+            bool result = false;
 
             if (StartExcel(false))
             {
-                SheetName = renameColumns ? FormatFileContent(columnForceToSplit) : CheckFile();
+                SheetName = CheckFile();
 
                 if (string.IsNullOrEmpty(SheetName))
                 {
                     _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_NoExcelSheet, filePath), Properties.Resources.Exception_ConnectSource_Title);
-
-                    result = false;
                 }
                 else
                 {
-                    result = duplicateColumnNames is null || duplicateColumnNames.Count == 0;
+                    if ((duplicateColumnNames is null || duplicateColumnNames.Count == 0) && renameColumns)
+                    {
+                        SheetName = FormatFileContent(columnForceToSplit);
+
+                        if (string.IsNullOrEmpty(SheetName))
+                        {
+                            _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_NoExcelSheet, filePath), Properties.Resources.Exception_ConnectSource_Title);
+                        }
+                        else
+                        {
+                            result = true;
+                        }
+                    }
+                    else if (duplicateColumnNames is null || duplicateColumnNames.Count == 0)
+                    {
+                        result = true;
+                    }
                 }
 
                 CloseExcel();
@@ -182,8 +196,6 @@ namespace ListFlow.Models
             else
             {
                 _ = new Helpers.CustomException(Properties.Resources.Exception_LaunchExcel, Properties.Resources.Exception_ConnectSource_Title);
-
-                result = false;
             }
 
             return result;

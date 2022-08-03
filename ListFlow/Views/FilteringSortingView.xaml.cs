@@ -18,12 +18,12 @@ namespace ListFlow.Views
         #region Fields
 
         private SubTemplate selectedSubTemplate;
-        private bool dataUpdated;
-        private string sheet;
-        private Dictionary<string, Type> fieldContentTypes;
+        private readonly bool dataUpdated;
+        private readonly string sheet;
+        private readonly Dictionary<string, Type> fieldContentTypes;
 
         private SortFilter sortAndFilter;
-        private List<string> fields;
+        private readonly List<string> fields;
 
         #endregion
 
@@ -74,12 +74,9 @@ namespace ListFlow.Views
 
         #region Constructors
 
-        public FilteringSortingView(string sheetName, Dictionary<string, Type> columnDataTypes, SubTemplate subTemplate)
+        public FilteringSortingView(string sheetName, Dictionary<string, Type> columnDataTypes, SortFilter sortFilter, SubTemplate selectedSubTemplate)
         {
             InitializeComponent();
-
-            sortAndFilter = new SortFilter(subTemplate.Query);
-            SortAndFilter = sortAndFilter;
 
             // Sort and Format the fields list.
             fields = columnDataTypes.Keys.ToList();
@@ -95,17 +92,15 @@ namespace ListFlow.Views
             _ = CommandBindings.Add(new CommandBinding(QueryResetCommand, QueryResetCommand_Executed, QueryResetCommand_CanExecuted));
             _ = CommandBindings.Add(new CommandBinding(CloseWindowCommand, CloseWindowCommand_Executed));
 
+            SelectedSubTemplate = selectedSubTemplate;
+
             DataContext = this;
 
             // Reset Controls.
-            Reset(true);
-            Reset(false);
+            Reset(true, sortFilter.FilterFields.Count());
+            Reset(false, sortFilter.SortFields.Count());
 
-            // Parse Query.
-            _= SortAndFilter.FlattenSQL(subTemplate.Query);
-            //selectedMainTemplate = subTemplate;
-
-            InitForTest();
+            SortAndFilter = sortFilter;
 
             dataUpdated = false;
         }
@@ -116,15 +111,16 @@ namespace ListFlow.Views
 
         private void QuerySaveCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
-            //e.CanExecute = SelectedMainTemplate.SelectedSubTemplate.IsQueryValueChanged && SelectedMainTemplate.SelectedSubTemplate.Query != null && !string.IsNullOrEmpty(SelectedMainTemplate.SelectedSubTemplate.Query.Trim());
+            //e.CanExecute = true;
+
+            e.CanExecute = SortAndFilter.IsValueChanged;
         }
 
         private void QuerySaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            System.Console.WriteLine(SortAndFilter.BuildSQL(sheet, fieldContentTypes));
+            Console.WriteLine(SortAndFilter.BuildSQL(sheet, fieldContentTypes));
 
-
+            Console.WriteLine();
 
             //try
             //{
@@ -144,9 +140,16 @@ namespace ListFlow.Views
 
         private void QueryResetCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Reset(tbc.SelectedIndex == 0);
-
-            System.Console.WriteLine(SortAndFilter);
+            if (tbc.SelectedIndex == 0)
+            {
+                Reset(true, SortAndFilter.FilterFields.Count());
+                SortAndFilter.ResetFilter();
+            }
+            else
+            {
+                Reset(false, SortAndFilter.SortFields.Count());
+                SortAndFilter.ResetSort();
+            }
         }
 
         private void CloseWindowCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -163,11 +166,12 @@ namespace ListFlow.Views
         /// Reset Filters or Sorts.
         /// </summary>
         /// <param name="filters">True = reset filters, False = reset sorts.</param>
-        private void Reset(bool filters)
+        /// <param name="itemCount">Number of items to reset.</param>
+        private void Reset(bool filters, int itemCount)
         {
             if (filters)
             {
-                for (int i = 1; i < sortAndFilter.FilterLogics.Count; i++)
+                for (int i = 1; i < itemCount; i++)
                 {
                     (grdFilter.FindName($"cbxFilterLogic_{i}") as ComboBox).IsEnabled = false;
                     (grdFilter.FindName($"cbxFilterField_{i}") as ComboBox).IsEnabled = false;
@@ -177,12 +181,10 @@ namespace ListFlow.Views
 
                 (grdFilter.FindName("cbxFilterComp_0") as ComboBox).IsEnabled = false;
                 (grdFilter.FindName("tbxFilterValue_0") as TextBox).IsEnabled = false;
-
-                SortAndFilter.ResetFilter();
             }
             else
             {
-                for (int i = 1; i < sortAndFilter.FilterLogics.Count; i++)
+                for (int i = 1; i < itemCount; i++)
                 {
                     (grdSort.FindName($"rbnSortAsc_{i}") as RadioButton).IsChecked = true;
                     (grdSort.FindName($"rbnSortDesc_{i}") as RadioButton).IsChecked = false;
@@ -190,108 +192,19 @@ namespace ListFlow.Views
                     (grdSort.FindName($"rbnSortDesc_{i}") as RadioButton).IsEnabled = false;
                     (grdSort.FindName($"cbxSortField_{i}") as ComboBox).IsEnabled = false;
                 }
-
-                SortAndFilter.ResetSort();
             }
-        }
-
-        /// <summary>
-        /// Initialize screen with test values.
-        /// For debug purpose only.
-        /// </summary>
-        private void InitForTest()
-        {
-            SortAndFilter.FilterFields[0] = "Last Name";
-            SortAndFilter.FilterComparisons[0] = "<>";
-            SortAndFilter.FilterComparesTo[0] = "123";
-
-            SortAndFilter.FilterLogics[1] = "AND";
-            SortAndFilter.FilterFields[1] = "Gender";
-            SortAndFilter.FilterComparisons[1] = "IS NOT NULL";
-            SortAndFilter.FilterComparesTo[1] = "";
-
-            SortAndFilter.FilterLogics[2] = "AND";
-            SortAndFilter.FilterFields[2] = "Passport expiration";
-            SortAndFilter.FilterComparisons[2] = "=";
-            SortAndFilter.FilterComparesTo[2] = "";
-
-            SortAndFilter.FilterLogics[3] = "AND";
-            SortAndFilter.FilterFields[3] = "Badge Type";
-            SortAndFilter.FilterComparisons[3] = "=";
-            SortAndFilter.FilterComparesTo[3] = "";
-
-            SortAndFilter.FilterLogics[4] = "OR";
-            SortAndFilter.FilterFields[4] = "Event Title";
-            SortAndFilter.FilterComparisons[4] = "=";
-            SortAndFilter.FilterComparesTo[4] = "";
-
-            SortAndFilter.FilterLogics[5] = "AND";
-            SortAndFilter.FilterFields[5] = "Title";
-            SortAndFilter.FilterComparisons[5] = "=";
-            SortAndFilter.FilterComparesTo[5] = "";
-
-            SortAndFilter.FilterLogics[6] = "OR";
-            SortAndFilter.FilterFields[6] = "Status";
-            SortAndFilter.FilterComparisons[6] = "=";
-            SortAndFilter.FilterComparesTo[6] = "1";
-
-            SortAndFilter.FilterLogics[7] = "AND";
-            SortAndFilter.FilterFields[7] = "Rank";
-            SortAndFilter.FilterComparisons[7] = ">";
-            SortAndFilter.FilterComparesTo[7] = "2";
-
-
-            SortAndFilter.SortFields[0] = "Last Name";
-            SortAndFilter.SortDirections[0] = true;
-
-            SortAndFilter.SortFields[1] = "First Name";
-            SortAndFilter.SortDirections[1] = false;
-
-            SortAndFilter.SortFields[2] = "Status";
-            SortAndFilter.SortDirections[2] = false;
-
-            SortAndFilter.SortFields[3] = "Event Title";
-            SortAndFilter.SortDirections[3] = true;
-
-            SortAndFilter.SortFields[4] = "Badge Type";
-            SortAndFilter.SortDirections[4] = false;
-
-            SortAndFilter.SortFields[5] = "Title";
-            SortAndFilter.SortDirections[5] = true;
-
-            SortAndFilter.SortFields[6] = "Passport expiration";
-            SortAndFilter.SortDirections[6] = true;
-
-            SortAndFilter.SortFields[7] = "Rank";
-            SortAndFilter.SortDirections[7] = true;
         }
 
         #endregion
 
         #region Events
 
-        private void SubTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SelectedSubTemplate.IsQueryValueChanged = false;
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Ajust Window Height to the content.
             Height -= 24d;
 
-            //if (SelectedMainTemplate.SubTemplates.Count > 0)
-            //{
-            //    SelectedMainTemplate.SelectedSubTemplate = SelectedMainTemplate.SubTemplates.First();
-            //}
-        }
-
-        /// <summary>
-        /// Scroll to the selected item to be sure is visible.
-        /// </summary>
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ((ListBox)sender).ScrollIntoView(e.AddedItems[0]);
+            SortAndFilter.IsValueChanged = false;
         }
 
         private void cbxFilterComp_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -311,6 +224,8 @@ namespace ListFlow.Views
                 {
                     tbxValue.IsEnabled = true;
                 }
+
+                SortAndFilter.IsValueChanged = true;
             }
         }
 
@@ -426,6 +341,8 @@ namespace ListFlow.Views
                     }
                 }
             }
+
+            SortAndFilter.IsValueChanged = true;
         }
 
         private void cbxSortField_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -501,6 +418,8 @@ namespace ListFlow.Views
                     }
                 }
             }
+
+            SortAndFilter.IsValueChanged = true;
         }
 
         #region Properties Change (Events)

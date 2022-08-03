@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.SqlServer.Management.SqlParser.Parser;
-using Microsoft.SqlServer.TransactSql.ScriptDom;
+//using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 namespace ListFlow.Models
 {
@@ -19,6 +19,8 @@ namespace ListFlow.Models
         private ObservableCollection<string> filterComparisons;
         private ObservableCollection<string> filterComparesTo;
         private ObservableCollection<bool> filterHasValue;
+
+        private bool isValueChanged;
 
         private ObservableCollection<string> sortFields;
         private ObservableCollection<bool> sortDirections;
@@ -101,6 +103,18 @@ namespace ListFlow.Models
                 }
             }
         }
+        public bool IsValueChanged
+        {
+            get => isValueChanged;
+            set
+            {
+                if (isValueChanged != value)
+                {
+                    isValueChanged = value;
+                    OnPropertyChanged(nameof(IsValueChanged));
+                }
+            }
+        }
 
         public Dictionary<string, string> Logics { get; set; }
         public Dictionary<string, string> Comparisons { get; set; }
@@ -109,7 +123,7 @@ namespace ListFlow.Models
 
         #region Constructors
 
-        public SortFilter(string sql)
+        public SortFilter()
         {
             FilterComparisons = new ObservableCollection<string>(new string[8].ToList());
             FilterLogics = new ObservableCollection<string>(new string[8].ToList());
@@ -120,12 +134,7 @@ namespace ListFlow.Models
             SortFields = new ObservableCollection<string>(new string[8].ToList());
             SortDirections = new ObservableCollection<bool>(new bool[8].ToList());
 
-            //ResetFilter();
-            //ResetSort();
-
             FillLists();
-
-            _ = ParseSQL(sql);
         }
 
         #endregion
@@ -157,6 +166,8 @@ namespace ListFlow.Models
                 FilterComparesTo[i] = string.Empty;
                 FilterHasValue[i] = false;
             }
+
+            IsValueChanged = true;
         }
 
         /// <summary>
@@ -275,38 +286,23 @@ namespace ListFlow.Models
             return sql.ToString().Trim();
         }
 
-        public bool FlattenSQL(string sql)
+        /// <summary>
+        /// Decompose the SQL code.
+        /// </summary>
+        /// <param name="sql">SQL code to decompose.</param>
+        /// <returns>List of errors ou null if no error.</returns>
+        public ParseResult FlattenSQL(string sql)
         {
-            bool success = false;
-
             // SQL Parser.
-            TSql150Parser parser = new TSql150Parser(true, SqlEngineType.All);
+            ParseResult sqlParseResult = Parser.Parse(sql);
 
-            _ = parser.Parse(new StringReader(sql), out IList<ParseError> parseErrors);
+            //TSql150Parser parser = new TSql150Parser(true, SqlEngineType.All);
+            //_ = parser.Parse(new StringReader(sql), out IList<ParseError> parseErrors);
 
-            if (parseErrors.Count == 0)
+            if (sqlParseResult.Errors.Count() == 0)
             {
                 // Create the list of tokens (parse sql).
                 List<TokenInfo> tokens = ParseSql(sql);
-
-                // Default values for the result list.
-                string[] dummy = new string[8];
-                for (int i = 0; i < dummy.Length; i++)
-                {
-                    dummy[i] = string.Empty;
-                }
-
-                // Init the result lits.
-                // Filtering items (WHERE clause).
-                List<string> filterComparaisons = new List<string>(dummy);
-                List<string> filterLogics = new List<string>(dummy);
-                List<string> filterFields = new List<string>(dummy);
-                List<string> filterComparesTo = new List<string>(dummy);
-                List<bool> filterHasValue = new List<bool>(new bool[8].ToList());
-
-                // Sorting items (ORDER BY clause).
-                List<string> sortFields = new List<string>(dummy);
-                List<bool> sortDirections = new List<bool>(new bool[8].ToList());
 
                 // Chek if SELECT clause exist.
                 if (tokens.FindIndex(x => x.TokenID == (int)Tokens.TOKEN_SELECT) != -1)
@@ -333,7 +329,7 @@ namespace ListFlow.Models
                                 switch (tokens[i].TokenID)
                                 {
                                     case (int)Tokens.TOKEN_ID:
-                                        fieldName = tokens[i].Sql;
+                                        fieldName = tokens[i].Sql.Replace("[", string.Empty).Replace("]", string.Empty);
                                         break;
                                     case (int)Tokens.TOKEN_ASC:
                                     case (int)Tokens.TOKEN_DESC:
@@ -346,8 +342,8 @@ namespace ListFlow.Models
                                 if (!string.IsNullOrEmpty(fieldName) & !string.IsNullOrEmpty(orderDirection))
                                 {
                                     // Add the field and sort direction in the lists.
-                                    sortFields[index] = fieldName;
-                                    sortDirections[index] = (string.Compare(orderDirection, "ASC") == 0);
+                                    SortFields[index] = fieldName;
+                                    SortDirections[index] = string.Compare(orderDirection, "ASC") == 0;
 
                                     fieldName = string.Empty;
                                     orderDirection = string.Empty;
@@ -397,7 +393,7 @@ namespace ListFlow.Models
                                             switch (tokens[j].TokenID)
                                             {
                                                 case (int)Tokens.TOKEN_ID:
-                                                    fields.Add(tokens[j].Sql.Trim());
+                                                    fields.Add(tokens[j].Sql.Trim().TrimStart('[').TrimEnd(']'));
                                                     newItem = false;
                                                     k++;
                                                     break;
@@ -434,12 +430,20 @@ namespace ListFlow.Models
                                                     }
                                                     break;
                                                 case (int)Tokens.TOKEN_STRING:
-                                                    values.Add(tokens[j].Sql.Trim());
+                                                case (int)Tokens.TOKEN_INTEGER:
+                                                    string value = tokens[j].Sql.Trim();
+                                                    if (value.StartsWith("'") & value.EndsWith("'"))
+                                                    {
+                                                        values.Add(value.TrimEnd('\'').TrimStart('\''));
+                                                    }
+                                                    else
+                                                    { 
+                                                        values.Add(tokens[j].Sql.Trim());
+                                                    }
                                                     break;
                                                 default:
                                                     break;
                                             }
-
                                         }
 
                                         // Add the last logic to complete the list.
@@ -457,9 +461,9 @@ namespace ListFlow.Models
                                                         (string.IsNullOrEmpty(comparaisons[1]) & string.IsNullOrEmpty(values[1])))
                                                     {
                                                         // Add the item details to the lists.
-                                                        filterFields[index] = fields[0];
-                                                        filterComparaisons[index] = comparaisons[0];
-                                                        filterComparesTo[index] = values[0];
+                                                        FilterFields[index] = fields[0];
+                                                        FilterComparisons[index] = comparaisons[0];
+                                                        FilterComparesTo[index] = values[0];
                                                     }
                                                 }
                                                 else if (string.CompareOrdinal(comparaisons[0], "IS NULL") == 0)
@@ -469,9 +473,9 @@ namespace ListFlow.Models
                                                         (string.IsNullOrEmpty(comparaisons[1]) & string.IsNullOrEmpty(values[1])))
                                                     {
                                                         // Add the item details to the lists.
-                                                        filterFields[index] = fields[0];
-                                                        filterComparaisons[index] = comparaisons[0];
-                                                        filterComparesTo[index] = values[0];
+                                                        FilterFields[index] = fields[0];
+                                                        FilterComparisons[index] = comparaisons[0];
+                                                        FilterComparesTo[index] = values[0];
                                                     }
                                                 }
                                                 else
@@ -480,10 +484,13 @@ namespace ListFlow.Models
                                                     for (int l = 0; l < fields.Count(); l++)
                                                     {
                                                         // Add the item details to the lists.
-                                                        filterFields[index] = fields[l];
-                                                        filterComparaisons[index] = comparaisons[l];
-                                                        filterComparesTo[index] = values[l];
-                                                        filterLogics[index] = logics[l];
+                                                        FilterFields[index] = fields[l];
+                                                        FilterComparisons[index] = comparaisons[l];
+                                                        FilterComparesTo[index] = values[l];
+                                                        if (index < FilterLogics.Count)
+                                                        {
+                                                            FilterLogics[index + 1] = logics[l];
+                                                        }
                                                     }
                                                 }
                                             }
@@ -493,10 +500,13 @@ namespace ListFlow.Models
                                                 for (int l = 0; l < fields.Count(); l++)
                                                 {
                                                     // Add the item details to the lists.
-                                                    filterFields[index] = fields[l];
-                                                    filterComparaisons[index] = comparaisons[l];
-                                                    filterComparesTo[index] = values[l];
-                                                    filterLogics[index] = logics[l];
+                                                    FilterFields[index] = fields[l];
+                                                    FilterComparisons[index] = comparaisons[l];
+                                                    FilterComparesTo[index] = values[l];
+                                                    if (index < FilterLogics.Count)
+                                                    {
+                                                        FilterLogics[index + 1] = logics[l];
+                                                    }
                                                 }
                                             }
                                         }
@@ -505,16 +515,18 @@ namespace ListFlow.Models
                                             // Different fields.
                                             for (int l = 0; l < fields.Count(); l++)
                                             {
-                                                filterFields[index] = fields[l];
-                                                filterComparaisons[index] = comparaisons[l];
-                                                filterComparesTo[index] = values[l];
-                                                filterLogics[index] = logics[l];
+                                                FilterFields[index] = fields[l];
+                                                FilterComparisons[index] = comparaisons[l];
+                                                FilterComparesTo[index] = values[l];
+                                                if (index < FilterLogics.Count)
+                                                {
+                                                    FilterLogics[index + 1] = logics[l];
+                                                }
                                             }
                                         }
 
                                         i = j;
                                     }
-
                                 }
                                 else
                                 {
@@ -522,130 +534,76 @@ namespace ListFlow.Models
                                     switch (tokens[i].TokenID)
                                     {
                                         case (int)Tokens.TOKEN_ID:
-                                            filterFields[index] = tokens[i].Sql.Trim();
+                                            FilterFields[index] = tokens[i].Sql.Trim().TrimStart('[').TrimEnd(']');
                                             break;
                                         case (int)Tokens.TOKEN_IS:
                                         case (int)Tokens.TOKEN_NOT:
                                         case (int)Tokens.TOKEN_NULL:
                                         case (int)Tokens.TOKEN_LIKE:
-                                            filterComparaisons[index] = $"{filterComparaisons[index]} {tokens[i].Sql.ToUpper()}";
+                                            FilterComparisons[index] = $"{FilterComparisons[index]} {tokens[i].Sql.ToUpper()}";
                                             break;
                                         case (int)Tokens.TOKEN_AND:
-                                        case (int)Tokens.TOKEN_OR:                                        
-                                            filterLogics[index] = tokens[i].Sql.ToUpper();
+                                        case (int)Tokens.TOKEN_OR:
+                                            if (index < FilterLogics.Count)
+                                            {
+                                                FilterLogics[index + 1] = tokens[i].Sql.ToUpper();
+                                            }
                                             index++;
                                             break;
                                         case '=':
                                         case '<':
                                         case '>':
-                                                filterComparaisons[index] = $"{filterComparaisons[index]}{tokens[i].Sql}";
+                                                FilterComparisons[index] = $"{FilterComparisons[index]}{tokens[i].Sql}";
                                             break;
                                         case (int)Tokens.TOKEN_STRING:
                                         case (int)Tokens.TOKEN_INTEGER:
-                                            filterComparesTo[index] = tokens[i].Sql.Trim();
+                                            string value = tokens[i].Sql.Trim();
+                                            if (value.StartsWith("'") & value.EndsWith("'"))
+                                            {
+                                                FilterComparesTo[index] = value.TrimEnd('\'').TrimStart('\'');
+                                            }
+                                            else
+                                            {
+                                                FilterComparesTo[index] = tokens[i].Sql.Trim();
+                                            }
                                             break;
                                         default:
                                             break;
                                     }
                                 }
                             }
-
                         }
 
-                        return true;
+                        return sqlParseResult;
                     }
-                    else
-                    {
-                        Console.WriteLine($"The SQL code does not contain a FROM clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$]");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"The SQL code does not contain a SELECT clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$]");
-                }
-
-
-                //Console.WriteLine("Filtering");
-                //Console.WriteLine(new string('-', 50));
-                //for (int i = 0; i < filterComparaisons.Count; i++)
-                //{
-                //    Console.WriteLine($"{filterFields[i].PadRight(15)} {filterComparaisons[i].PadRight(12)} {filterComparesTo[i].PadRight(15)} {filterLogics[i].PadLeft(5)}");
-                //}
-                //Console.WriteLine("Sorting");
-                //Console.WriteLine(new string('-', 50));
-                //for (int i = 0; i < filterComparaisons.Count; i++)
-                //{
-                //    Console.WriteLine($"{sortFields[i].PadRight(40, ' ')} {sortDirections[i].ToString().PadLeft(9, ' ')}");
-                //}
-                //Console.WriteLine(new string('=', 50));
-                //Console.ReadKey();  
-
-            }
-            else
-            { 
-                foreach (ParseError parseError in parseErrors)
-                {
-                    Console.WriteLine(parseError.Message);
                 }
             }
 
-            return success;
+            return sqlParseResult;
         }
 
-        private bool ParseSQL(string sql)
+        public void ShowFlattenSQLResult()
         {
-            ParseOptions parseOptions = new ParseOptions();
-            Scanner scanner = new Scanner(parseOptions);
-
-            int state = 0;
-            int lastTokenEnd = -1;
-            int token;
-
-            List<TokenInfo> tokens = new List<TokenInfo>();
-
-            scanner.SetSource(sql, 0);
-
-            while ((token = scanner.GetNext(ref state, out int start, out int end, out bool isPairMatch, out bool isExecAutoParamHelp)) != (int)Tokens.EOF)
+            Console.WriteLine("Filtering");
+            Console.WriteLine(new string('-', 50));
+            for (int i = 0; i < FilterComparisons.Count; i++)
             {
-                TokenInfo tokenInfo =
-                    new TokenInfo()
-                    {
-                        Start = start,
-                        End = end,
-                        IsPairMatch = isPairMatch,
-                        IsExecAutoParamHelp = isExecAutoParamHelp,
-                        Sql = sql.Substring(start, end - start + 1),
-                        TokenText = (Tokens)token,
-                        TokenID = token
-                    };
-
-                tokens.Add(tokenInfo);
-
-                lastTokenEnd = end;
+                Console.WriteLine($"{FilterFields[i].PadRight(15)} {FilterComparisons[i].PadRight(12)} {FilterComparesTo[i].PadRight(15)} {FilterLogics[i].PadLeft(5)}");
             }
-
-            TokenInfo item = tokens.Single(x => x.TokenID == (int)Tokens.TOKEN_WHERE);
-
-            if (item != null)
+            Console.WriteLine("Sorting");
+            Console.WriteLine(new string('-', 50));
+            for (int i = 0; i < FilterComparisons.Count; i++)
             {
-                Console.WriteLine($"Where clause present");
+                Console.WriteLine($"{SortFields[i].PadRight(40, ' ')} {SortDirections[i].ToString().PadLeft(9, ' ')}");
             }
-
-            item = tokens.Single(x => x.TokenID == (int)Tokens.TOKEN_ORDER);
-
-            if (item != null)
-            {
-                Console.WriteLine($"Order by clause present");
-            }
-
-            return true;
+            Console.WriteLine(new string('=', 50));
         }
 
         /// <summary>
         /// Parse the SQL code and create the list of tokens.
         /// </summary>
-        /// <param name="sql">Code SQL to be parsed.</param>
-        /// <returns>LIst of all tokens.</returns>
+        /// <param name="sql">SQL Code to parsed.</param>
+        /// <returns>List of all tokens.</returns>
         private static List<TokenInfo> ParseSql(string sql)
         {
             ParseOptions parseOptions = new ParseOptions();
@@ -697,7 +655,6 @@ namespace ListFlow.Models
         public int Start { get; set; }
         public int End { get; set; }
         public bool IsPairMatch { get; set; }
-
         public bool IsExecAutoParamHelp { get; set; }
         public string Sql { get; set; }
         public Tokens TokenText { get; set; }

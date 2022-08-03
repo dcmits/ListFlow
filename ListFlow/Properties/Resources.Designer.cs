@@ -196,6 +196,15 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Reset Filters &amp; Sorts.
+        /// </summary>
+        public static string Button_ResetFilterSort {
+            get {
+                return ResourceManager.GetString("Button_ResetFilterSort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Save.
         /// </summary>
         public static string Button_Save {
@@ -477,6 +486,25 @@ namespace ListFlow.Properties {
         public static string ContextualHelp_Parameters_SubTemplatesList {
             get {
                 return ResourceManager.GetString("ContextualHelp_Parameters_SubTemplatesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of errors contained in the SQL code.
+        ///Select the error to see the possible location of the error in the SQL code (text marked in red)..
+        /// </summary>
+        public static string ContextualHelp_SqlErrorsReport_ErrorsList {
+            get {
+                return ResourceManager.GetString("ContextualHelp_SqlErrorsReport_ErrorsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL query text with the possible location of the error marked in red..
+        /// </summary>
+        public static string ContextualHelp_SqlErrorsReport_SqlCode {
+            get {
+                return ResourceManager.GetString("ContextualHelp_SqlErrorsReport_SqlCode", resourceCulture);
             }
         }
         
@@ -1038,7 +1066,25 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The SQL query to select and sort data contains one syntax error. The sub-template being processed is ignored..
+        ///   Looks up a localized string similar to The SQL query text does not contain a FROM clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$].
+        /// </summary>
+        public static string Exception_SqlNoFromClause {
+            get {
+                return ResourceManager.GetString("Exception_SqlNoFromClause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SQL query text does not contain a SELECT clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$].
+        /// </summary>
+        public static string Exception_SqlNoSelectClause {
+            get {
+                return ResourceManager.GetString("Exception_SqlNoSelectClause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The SQL query text to select and sort data contains one syntax error. The sub-template being processed is ignored..
         /// </summary>
         public static string Exception_SqlSyntaxIssue {
             get {
@@ -1047,7 +1093,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The SQL query to select and sort data contains {0} syntax errors. The sub-template being processed is ignored..
+        ///   Looks up a localized string similar to The SQL query text to select and sort data contains {0} syntax errors. The sub-template being processed is ignored..
         /// </summary>
         public static string Exception_SqlSyntaxIssues {
             get {
@@ -2580,6 +2626,35 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of errors present in the SQL query text.
+        /// </summary>
+        public static string SqlErrorsReport_ErrorsList {
+            get {
+                return ResourceManager.GetString("SqlErrorsReport_ErrorsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL query text with errors (highlighted in red).
+        /// </summary>
+        public static string SqlErrorsReport_SqlCode {
+            get {
+                return ResourceManager.GetString("SqlErrorsReport_SqlCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wizard cannot be displayed because the SQL query text contains a number of errors.
+        ///Click Reset Filters &amp; Sorts button to display the wizard without sorting and filtering parameters (reset the SQL query text).
+        ///Click Cancel button to correct/edit the SQL query text..
+        /// </summary>
+        public static string SqlErrorsReport_UserMessage {
+            get {
+                return ResourceManager.GetString("SqlErrorsReport_UserMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of sub-templates.
         /// </summary>
         public static string SubTemplate_List_Title {
@@ -2751,7 +2826,7 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allows you to select and sort data in a more user-friendly way than editing the SQL text in the field below..
+        ///   Looks up a localized string similar to Allows you to select and sort data in a more user-friendly way than editing the SQL query text in the field below..
         /// </summary>
         public static string ToolTip_SqlQueryUI {
             get {
@@ -2909,6 +2984,15 @@ namespace ListFlow.Properties {
         public static string ViewTitle_SortFilter {
             get {
                 return ResourceManager.GetString("ViewTitle_SortFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL errors report.
+        /// </summary>
+        public static string ViewTitle_SqlErrorsReport {
+            get {
+                return ResourceManager.GetString("ViewTitle_SqlErrorsReport", resourceCulture);
             }
         }
         

@@ -19,7 +19,6 @@ namespace ListFlow.Views
 
         private MainTemplate selectedMainTemplate;
         private bool dataUpdated;
-        //private List<string> fields;
 
         #endregion
 
@@ -103,7 +102,7 @@ namespace ListFlow.Views
                 SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
                 dataUpdated = true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
             }
@@ -116,13 +115,32 @@ namespace ListFlow.Views
 
         private void QueryUICommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            FilteringSortingView dialog = new FilteringSortingView(SelectedMainTemplate.ExcelData.SheetName, SelectedMainTemplate.ExcelData.ColumnDataTypes, SelectedMainTemplate.SelectedSubTemplate)
-            {
-                Left = Left + 50,
-                Top = Top + 50
-            };
+            bool? dialogResult = null;
 
-            _ = dialog.ShowDialog();
+            SortFilter sortFilter = new SortFilter();
+            Microsoft.SqlServer.Management.SqlParser.Parser.ParseResult parseErrors = sortFilter.FlattenSQL(SelectedMainTemplate.SelectedSubTemplate.Query);
+
+            if (parseErrors.Errors.Count() > 0)
+            {
+                SqlParserReportView dialog = new SqlParserReportView(parseErrors, Properties.Resources.SqlErrorsReport_UserMessage)
+                {
+                    Left = Left + 50,
+                    Top = Top + 50
+                };
+
+                dialogResult  = dialog.ShowDialog();
+            }
+
+            if (dialogResult == null || dialogResult == true)
+            {
+                FilteringSortingView dialog = new FilteringSortingView(SelectedMainTemplate.ExcelData.SheetName, SelectedMainTemplate.ExcelData.ColumnDataTypes, sortFilter, SelectedMainTemplate.SelectedSubTemplate)
+                {
+                    Left = Left + 50,
+                    Top = Top + 50
+                };
+
+                _ = dialog.ShowDialog();
+            }
         }
 
         private void MainSaveCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
@@ -138,7 +156,7 @@ namespace ListFlow.Views
                 dataUpdated = true;
 
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
             }
