@@ -278,8 +278,7 @@
                                     HorizontalAlignment="Center"
                                     Command="{x:Static local:TemplateParametersView.QueryUICommand}"
                                     Content="{x:Static prop:Resources.Parameters_SqlQueryUI}"
-                                    ToolTip="{x:Static prop:Resources.ToolTip_SqlQueryUI}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    ToolTip="{x:Static prop:Resources.ToolTip_SqlQueryUI}" />
                                 <Image
                                     Grid.Row="2"
                                     Grid.Column="3"
@@ -311,7 +310,8 @@
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
                                         Text="{Binding SelectedMainTemplate.SelectedSubTemplate.Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        TextWrapping="Wrap" />
+                                        TextWrapping="Wrap"
+                                        IsEnabled="{Binding SelectedMainTemplate.SelectedSubTemplate, Converter={StaticResource NullToBooleanConverter}, ConverterParameter=Inverse}"/>
                                 </Grid>
                                 <StackPanel Orientation="Vertical" />
                                 <StackPanel
@@ -335,8 +335,7 @@
                                     Margin="8,3,8,5"
                                     HorizontalAlignment="Right"
                                     Command="{x:Static local:TemplateParametersView.QuerySaveCommand}"
-                                    Content="{x:Static prop:Resources.Button_Save}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    Content="{x:Static prop:Resources.Button_Save}" />
                             </Grid>
                         </TabItem>
                     </TabControl>

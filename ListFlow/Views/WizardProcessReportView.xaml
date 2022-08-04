@@ -59,19 +59,22 @@
             </Grid>
             <Grid Grid.Row="1">
                 <FlowDocumentScrollViewer
-                    Margin="10"
+                    Margin="5,10,5,5"
                     BorderBrush="{StaticResource NormalBorderBrush}"
                     BorderThickness="1"
                     Document="{Binding ScreenFlowDoc}"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
             </Grid>
-            <Button
+            <StackPanel
                 Grid.Row="2"
-                Margin="0,5,15,10"
                 HorizontalAlignment="Right"
-                Command="{x:Static local:WizardProcessReportView.CopyClipboardCommand}"
-                Content="{x:Static prop:Resources.Button_CopyClipboard}"
-                IsEnabled="True" />
+                Orientation="Horizontal">
+                <Button
+                    Margin="5"
+                    Command="{x:Static local:WizardProcessReportView.CopyClipboardCommand}"
+                    Content="{x:Static prop:Resources.Button_CopyClipboard}"
+                    IsEnabled="True" />
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

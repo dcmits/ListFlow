@@ -312,70 +312,74 @@ namespace ListFlow.Models
 
                 foreach (string wDocFile in fileList)
                 {
-                    // Search Main.docx (main template) file.
-                    if (string.Compare(Path.GetFileName(wDocFile), MainTemplateFileName) == 0)
+                    // Ignore empty file.
+                    if (new FileInfo(wDocFile).Length > 0)
                     {
-                        // Get the file properties of the main template.
-                        PackageProperties fileProperties = GetFileProperties(wDocFile, out Exception ex);
-                        if (fileProperties != null)
+                        // Search Main.docx (main template) file.
+                        if (string.Compare(Path.GetFileName(wDocFile), MainTemplateFileName) == 0)
                         {
-                            Title = string.IsNullOrEmpty(fileProperties.Title) ? Path.GetFileName(Path.GetDirectoryName(wDocFile)) : fileProperties.Title;
-                            Comment = fileProperties.Description ?? string.Empty;
-
-                            if (fileProperties.Category != null)
+                            // Get the file properties of the main template.
+                            PackageProperties fileProperties = GetFileProperties(wDocFile, out Exception ex);
+                            if (fileProperties != null)
                             {
-                                if (string.IsNullOrEmpty(fileProperties.Category))
-                                {
-                                    UseEventDetailFields = EventDetails.Usage.Optional;
-                                }
-                                else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Mandatory)))
-                                {
-                                    UseEventDetailFields = EventDetails.Usage.Mandatory;
-                                }
-                                else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Optional)))
-                                {
-                                    UseEventDetailFields = EventDetails.Usage.Optional;
-                                }
-                                else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Hidden)))
-                                {
-                                    UseEventDetailFields = EventDetails.Usage.Hidden;
-                                }
+                                Title = string.IsNullOrEmpty(fileProperties.Title) ? Path.GetFileName(Path.GetDirectoryName(wDocFile)) : fileProperties.Title;
+                                Comment = fileProperties.Description ?? string.Empty;
 
-                                if (fileProperties.Category.Contains(RenameColumnsOption))
+                                if (fileProperties.Category != null)
                                 {
-                                    RenameColumns = true;
-
-                                    if (fileProperties.Category.Contains(ColumnForceToSplitOption))
+                                    if (string.IsNullOrEmpty(fileProperties.Category))
                                     {
-                                        ColumnForceToSplit = Helpers.ToolBox.ExtractBetweenTwoStrings(fileProperties.Category, "=[", "]", false, false);
+                                        UseEventDetailFields = EventDetails.Usage.Optional;
                                     }
+                                    else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Mandatory)))
+                                    {
+                                        UseEventDetailFields = EventDetails.Usage.Mandatory;
+                                    }
+                                    else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Optional)))
+                                    {
+                                        UseEventDetailFields = EventDetails.Usage.Optional;
+                                    }
+                                    else if (fileProperties.Category.Contains(Enum.GetName(typeof(EventDetails.Usage), EventDetails.Usage.Hidden)))
+                                    {
+                                        UseEventDetailFields = EventDetails.Usage.Hidden;
+                                    }
+
+                                    if (fileProperties.Category.Contains(RenameColumnsOption))
+                                    {
+                                        RenameColumns = true;
+
+                                        if (fileProperties.Category.Contains(ColumnForceToSplitOption))
+                                        {
+                                            ColumnForceToSplit = Helpers.ToolBox.ExtractBetweenTwoStrings(fileProperties.Category, "=[", "]", false, false);
+                                        }
+                                    }
+
+                                    wAppVisible = fileProperties.Category.Contains("WordAppVisible");
+                                }
+                                else
+                                {
+                                    UseEventDetailFields = EventDetails.Usage.Optional;
                                 }
 
-                                wAppVisible = fileProperties.Category.Contains("WordAppVisible");
+                                eventDetails = new EventDetails(UseEventDetailFields);
                             }
                             else
                             {
-                                UseEventDetailFields = EventDetails.Usage.Optional;
+                                _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_ReadMainTemplateFileProperties, ex.Message), Properties.Resources.Exception_ReadFileProperties_Title);
+
+                                // Ignore this Main template.
+                                Title = string.Empty;
                             }
 
-                            eventDetails = new EventDetails(UseEventDetailFields);
+                            Name = Path.GetFileName(wDocFile);
                         }
                         else
                         {
-                            _ = new Helpers.CustomException(string.Format(Properties.Resources.Exception_ReadMainTemplateFileProperties, ex.Message), Properties.Resources.Exception_ReadFileProperties_Title);
-
-                            // Ignore this Main template.
-                            Title = string.Empty;
-                        }
-
-                        Name = Path.GetFileName(wDocFile);
-                    }
-                    else
-                    {
-                        // Add only docx file.
-                        if (Path.GetExtension(wDocFile) == ".docx" && !Path.GetFileName(wDocFile).StartsWith("~$"))
-                        {
-                            subTemplates.Add(new SubTemplate(wDocFile));
+                            // Add only docx file.
+                            if (Path.GetExtension(wDocFile) == ".docx" && !Path.GetFileName(wDocFile).StartsWith("~$"))
+                            {
+                                subTemplates.Add(new SubTemplate(wDocFile));
+                            }
                         }
                     }
                 }
@@ -389,7 +393,7 @@ namespace ListFlow.Models
         /// <summary>
         /// Get the list of sub-templates used in the main template.
         /// </summary>
-        public List<string> GetSubTemplates(bool logDisabled)
+        public List<string> GetSubTemplates(bool logDisabled, string defaultSheetName)
         {
             List<string> log = new List<string>();
 
@@ -427,10 +431,14 @@ namespace ListFlow.Models
                     }
                     else
                     {
-                        subTemplate.Disabled = true;
-                        if (logDisabled)
+                        // Set default Query.
+                        if (!SetFileProperties(subTemplate.FilePath, $"SELECT * FROM [{defaultSheetName}$]"))
                         {
-                            log.Add(string.Format(Properties.Resources.Exception_SubTemplateMissingQuery, subTemplate.FileName, Properties.Resources.FileProperty_Description));
+                            subTemplate.Disabled = true;
+                            if (logDisabled)
+                            {
+                                log.Add(string.Format(Properties.Resources.Exception_SubTemplateMissingQuery, subTemplate.FileName, Properties.Resources.FileProperty_Description));
+                            }
                         }
                     }
                 }
@@ -1024,19 +1032,19 @@ namespace ListFlow.Models
             // Show a message when merge is completed with or without error.
             if (errorRaised)
             {
-                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
+                //lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Foreground = Brushes.Red; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Unsuccessfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
             }
             else if (warningRaided)
             {
-                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
+                //lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Foreground = Brushes.Orange; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Warning_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
             }
             else
             {
-                lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
+                //lbl?.Dispatcher.Invoke(new Action(() => { userInfo.FontSize = 14; }));
                 lbl?.Dispatcher.Invoke(new Action(() => { userInfo.Content = string.Format(Properties.Resources.FinalDocumentCreation_Successfully_UserInfo, Properties.Resources.Button_ProcessReport.Replace("_", "")); }));
             }
 
@@ -1079,7 +1087,6 @@ namespace ListFlow.Models
         /// <returns>All the properties or null (if file not found or unavailable.</returns>
         private PackageProperties GetFileProperties(string file, out Exception exception)
         {
-
             if (!IsFileInUse(file, out Exception fileInUseException))
             {
                 PackageProperties properties;
@@ -1201,6 +1208,32 @@ namespace ListFlow.Models
                     }
                 }
                 docx.PackageProperties.Category = category;
+
+                docx.Close();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _ = new Helpers.CustomException($"{string.Format(Properties.Resources.Exception_WriteFileProperties, file)}{Environment.NewLine}{Environment.NewLine}{Properties.Resources.Exception_ErrorDetails}{Environment.NewLine}{ex.Message}", Properties.Resources.Exception_WriteFileProperties_Title);
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Set the file properties Comment field.
+        /// </summary>
+        /// <param name="file">File to be processed.</param>
+        /// <param name="comments">Comments propterty content.</param>
+        /// <returns>True if update done without error.</returns>
+        private bool SetFileProperties(string file, string comments)
+        {
+            try
+            {
+                Package docx = Package.Open(file, FileMode.Open, FileAccess.ReadWrite);
+
+                docx.PackageProperties.Description = comments;
 
                 docx.Close();
 

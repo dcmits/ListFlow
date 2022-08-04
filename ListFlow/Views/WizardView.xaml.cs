@@ -12,7 +12,7 @@ using ListFlow.Helpers;
 namespace ListFlow.Views
 {
     /// <summary>
-    /// Main Screen.
+    /// Final document creation wizard (main screen).
     /// </summary>
     public partial class WizardView : Window
     {
@@ -45,6 +45,9 @@ namespace ListFlow.Views
 
         #region Constructors
 
+        /// <summary>
+        /// Final document creation wizard (main screen).
+        /// </summary>
         public WizardView()
         {
             InitializeComponent();
@@ -147,8 +150,11 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
-        private static readonly Action EmptyDelegate = delegate () { };
+        //private static readonly Action EmptyDelegate = delegate () { };
 
+        /// <summary>
+        /// Moves to the next step in the process of creating the final document.
+        /// </summary>
         private async void NextStepCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             switch (mainTemplatesViewModel.CurrentStep)
@@ -205,7 +211,7 @@ namespace ListFlow.Views
                         Close();
                     }
 
-                    subTemplateLog = mainTemplatesViewModel.SelectedMainTemplate.GetSubTemplates(true);
+                    subTemplateLog = mainTemplatesViewModel.SelectedMainTemplate.GetSubTemplates(true, mainTemplatesViewModel.SelectedMainTemplate.ExcelData.SheetName);
 
                     mainTemplatesViewModel.NextStepButtonText = Properties.Resources.Button_LastStep;
 
@@ -276,6 +282,9 @@ namespace ListFlow.Views
             }
         }
 
+        /// <summary>
+        /// Moves to the previous step in the process of creating the final document.
+        /// </summary>
         private void PrevStepCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             switch (mainTemplatesViewModel.CurrentStep)
@@ -326,6 +335,9 @@ namespace ListFlow.Views
             SystemCommands.CloseWindow(this);
         }
 
+        /// <summary>
+        /// Resets the event details fields.
+        /// </summary>
         private void ResetCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             mainTemplatesViewModel.SelectedMainTemplate.EventDetails.Reset();
@@ -340,6 +352,9 @@ namespace ListFlow.Views
                 : false;
         }
 
+        /// <summary>
+        /// Displays the detailed report of the final document creation process.
+        /// </summary>
         private void ProcessReportCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             WizardProcessReportView dialog = new WizardProcessReportView(mainTemplatesViewModel.SelectedMainTemplate.DocCreationSteps, 
@@ -358,6 +373,9 @@ namespace ListFlow.Views
             e.CanExecute = mainTemplatesViewModel.CurrentStep == 4;
         }
 
+        /// <summary>
+        /// Displays the settings screen for the main template and sub-templates.
+        /// </summary>
         private void TemplateParametersCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             TemplateParametersView dialog = new TemplateParametersView(mainTemplatesViewModel.SelectedMainTemplate)
@@ -371,7 +389,6 @@ namespace ListFlow.Views
         private void TemplateParametersCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = mainTemplatesViewModel.CurrentStep == 3;
-            //e.CanExecute = mainTemplatesViewModel.CurrentStep == 1 && mainTemplatesViewModel.MainTemplates.Count > 0;
         }
 
         private void HelpCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
@@ -379,6 +396,9 @@ namespace ListFlow.Views
             e.CanExecute = true;
         }
 
+        /// <summary>
+        /// Displays the help and update screen of this tool.
+        /// </summary>
         private void HelpCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             HelpAndUpdateView dialog = new HelpAndUpdateView()
@@ -407,10 +427,6 @@ namespace ListFlow.Views
 
             _ = mainTemplateDetails.ShowDialog();
         }
-
-        #endregion
-
-        #region Methods
 
         #endregion
     }

@@ -30,6 +30,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -190,6 +192,7 @@
     <Compile Include="Helpers\ItemsCountConverter.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Helpers\NullStringToBooleanConverter.cs" />
+    <Compile Include="Helpers\NullToBooleanConverter.cs" />
     <Compile Include="Helpers\NullVisibilityConverter.cs" />
     <Compile Include="Helpers\OrganFolderConverter.cs" />
     <Compile Include="Helpers\ProgressBarHighlightConverter.cs" />

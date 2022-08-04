@@ -10,25 +10,9 @@ namespace ListFlow.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((bool)value)
-            {
-                if (parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0)
-                {
-                    return Visibility.Collapsed;
-                }
-                else
-                {
-                    return Visibility.Visible;
-                }
-            }
-            else if (parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0)
-            {
-                return Visibility.Visible;
-            }
-            else
-            {
-                return Visibility.Collapsed;
-            }
+            return (bool)value
+                ? parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0 ? Visibility.Collapsed : (object)Visibility.Visible
+                : parameter != null && string.CompareOrdinal(parameter.ToString(), "Inverse") == 0 ? Visibility.Visible : (object)Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -40,8 +24,9 @@ namespace ListFlow.Helpers
                     return false;
                 case Visibility.Visible:
                     return true;
+                default:
+                    return false;
             }
-            return null;
         }
     }
 }

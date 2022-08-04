@@ -1075,6 +1075,15 @@ namespace ListFlow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The SQL code must start with this code to be valid:.
+        /// </summary>
+        public static string Exception_SqlNoMinimumClauses {
+            get {
+                return ResourceManager.GetString("Exception_SqlNoMinimumClauses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The SQL query text does not contain a SELECT clause. The minimum code for a valid SQL query is: SELECT * FROM [Sheet1$].
         /// </summary>
         public static string Exception_SqlNoSelectClause {

@@ -135,25 +135,24 @@
                     <StackPanel
                         Grid.Row="5"
                         Grid.ColumnSpan="3"
-                        Margin="2,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                         <Button
-                            HorizontalAlignment="Right"
+                            Margin="5"
                             Command="{x:Static local:SqlParserReportView.CloseWindowCommand}"
                             Content="{x:Static prop:Resources.Button_Quit}"
                             IsDefault="True"
                             IsEnabled="True"
                             Visibility="{Binding SortFilterUI, Converter={StaticResource BooleanToCollapsedConverter}, ConverterParameter=Inverse}" />
                         <Button
-                            HorizontalAlignment="Right"
+                            Margin="5"
                             Command="{x:Static local:SqlParserReportView.CloseWindowCommand}"
                             Content="{x:Static prop:Resources.Button_Cancel}"
                             IsDefault="True"
                             IsEnabled="True"
                             Visibility="{Binding SortFilterUI, Converter={StaticResource BooleanToCollapsedConverter}}" />
                         <Button
-                            HorizontalAlignment="Right"
+                            Margin="5"
                             Command="{x:Static local:SqlParserReportView.ResetCommand}"
                             Content="{x:Static prop:Resources.Button_ResetFilterSort}"
                             IsEnabled="True"

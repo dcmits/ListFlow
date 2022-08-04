@@ -20,7 +20,6 @@ namespace ListFlow.Views
     {
         #region Fields
 
-        // FlowDocument for the screen.
         private FlowDocument screenFlowDoc;
         // FlowDocuement for the Clipboard.
         private readonly FlowDocument clipboardFlowDoc;
@@ -65,6 +64,7 @@ namespace ListFlow.Views
 
         #region Properties
 
+        // FlowDocument for the screen.
         public FlowDocument ScreenFlowDoc
         {
             get => screenFlowDoc;

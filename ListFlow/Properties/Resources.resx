@@ -1117,4 +1117,7 @@ Click Cancel button to correct/edit the SQL query text.</value>
   <data name="SqlErrorsReport_UserMessage_SyntaxError" xml:space="preserve">
     <value>The SQL query text can't be saved because it contains a number of mistakes.</value>
   </data>
+  <data name="Exception_SqlNoMinimumClauses" xml:space="preserve">
+    <value>The SQL code must start with this code to be valid:</value>
+  </data>
 </root>

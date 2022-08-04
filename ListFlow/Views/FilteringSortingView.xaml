@@ -461,24 +461,20 @@
                         Grid.Row="3"
                         Grid.Column="2"
                         Grid.ColumnSpan="2"
-                        Margin="0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                         <Button
                             Margin="5"
                             Command="{x:Static local:FilteringSortingView.CloseWindowCommand}"
-                            Content="{x:Static prop:Resources.Button_Cancel}"
-                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                            Content="{x:Static prop:Resources.Button_Cancel}" />
                         <Button
                             Margin="5"
                             Command="{x:Static local:FilteringSortingView.QueryResetCommand}"
-                            Content="{x:Static prop:Resources.Button_Reset}"
-                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                            Content="{x:Static prop:Resources.Button_Reset}" />
                         <Button
                             Margin="5"
                             Command="{x:Static local:FilteringSortingView.QuerySaveCommand}"
-                            Content="{x:Static prop:Resources.Button_Save}"
-                            WindowChrome.IsHitTestVisibleInChrome="True" />
+                            Content="{x:Static prop:Resources.Button_Save}" />
                     </StackPanel>
                 </Grid>
             </Grid>

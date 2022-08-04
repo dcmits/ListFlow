@@ -670,24 +670,20 @@
                     </StackPanel>
                     <StackPanel
                         Grid.Column="1"
-
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                         <Button
                             Margin="5"
-                            HorizontalAlignment="Right"
                             Command="{x:Static local:WizardView.CancelCommand}"
                             Content="{x:Static prop:Resources.Button_Cancel}"
                             IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Margin="5"
-                            HorizontalAlignment="Right"
                             Command="{x:Static local:WizardView.PrevStepCommand}"
                             Content="{x:Static prop:Resources.Button_PrevStep}"
                             IsEnabled="{Binding IsMergeNotInProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Margin="5"
-                            HorizontalAlignment="Right"
                             Command="{x:Static local:WizardView.NextStepCommand}"
                             Content="{Binding NextStepButtonText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="{Binding IsNotLastStep, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />

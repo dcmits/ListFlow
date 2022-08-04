@@ -11,8 +11,8 @@ using System.Windows;
 [assembly: AssemblyDescription("Generates Word documents based on templates and lists")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ITBAU/PSS/DCM/DGACM Geneva United Nations Office")]
-[assembly: AssemblyProduct("ListFlow Beta")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("ListFlow")]
+[assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.10.2.8")]
-[assembly: AssemblyFileVersion("0.10.2.8")]
+[assembly: AssemblyVersion("1.0.1.9")]
+[assembly: AssemblyFileVersion("1.0.1.9")]

@@ -130,7 +130,7 @@ namespace ListFlow.Views
         /// </summary>
         private void QuerySaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SelectedSubTemplate.Query=SortAndFilter.BuildSQL(sheet, fieldContentTypes);
+            SelectedSubTemplate.Query = SortAndFilter.BuildSQL(sheet, fieldContentTypes);
             try
             {
                 SelectedSubTemplate.SaveQuery();
@@ -306,7 +306,7 @@ namespace ListFlow.Views
             else
             {
                 // Remove the selected filter item.
-                int noneIndex = sortAndFilter.FilterFields.IndexOf(fields[0]);
+                int noneIndex = sortAndFilter.FilterFields.IndexOf(Fields[0]);
 
                 if (noneIndex == -1)
                 {
@@ -402,7 +402,7 @@ namespace ListFlow.Views
             else
             {
                 // Remove the selected sort item.
-                int noneIndex = sortAndFilter.SortFields.IndexOf(fields[0]);
+                int noneIndex = sortAndFilter.SortFields.IndexOf(Fields[0]);
 
                 if (noneIndex != -1)
                 {

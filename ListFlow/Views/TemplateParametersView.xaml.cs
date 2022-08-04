@@ -24,6 +24,12 @@ namespace ListFlow.Views
 
         #endregion
 
+        #region Constants
+
+        private string MinSqlCode = "SELECT * FROM [{0}]";
+
+        #endregion
+
         #region Command Routing
 
         public static readonly RoutedCommand QuerySaveCommand = new RoutedCommand();
@@ -80,7 +86,7 @@ namespace ListFlow.Views
             SelectedMainTemplate.IsParametersValueChanged = false;
 
             // Load the sub-templates.
-            _ = SelectedMainTemplate.GetSubTemplates(false);
+            _ = SelectedMainTemplate.GetSubTemplates(false, SelectedMainTemplate.ExcelData.SheetName);
 
             DataContext = this;
 
@@ -104,7 +110,10 @@ namespace ListFlow.Views
 
         private void QuerySaveCommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = SelectedMainTemplate.SelectedSubTemplate.IsQueryValueChanged && SelectedMainTemplate.SelectedSubTemplate.Query != null && !string.IsNullOrEmpty(SelectedMainTemplate.SelectedSubTemplate.Query.Trim());
+            e.CanExecute = SelectedMainTemplate.SelectedSubTemplate != null &&
+                                SelectedMainTemplate.SelectedSubTemplate.IsQueryValueChanged &&
+                                SelectedMainTemplate.SelectedSubTemplate.Query != null &&
+                                !string.IsNullOrEmpty(SelectedMainTemplate.SelectedSubTemplate.Query.Trim());
         }
 
         /// <summary>
@@ -116,15 +125,24 @@ namespace ListFlow.Views
             ParseResult sqlParseResult = Parser.Parse(SelectedMainTemplate.SelectedSubTemplate.Query);
             if (sqlParseResult.Errors.Count() == 0)
             {
-                try
+                if (SelectedMainTemplate.SelectedSubTemplate.Query.StartsWith(string.Format(MinSqlCode, SelectedMainTemplate.SelectedSubTemplate.SheetName), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    // Save the SQL code in then selectec sub-template.
-                    SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
-                    dataUpdated = true;
+                    try
+                    {
+                        // Save the SQL code in then selectec sub-template.
+                        SelectedMainTemplate.SelectedSubTemplate.SaveQuery();
+                        dataUpdated = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, ex.Message, Controls.MessageBoxUC.MessageType.Error);
+                    _ = Controls.MessageBoxUC.Show(null, Properties.Resources.Exception_MessageBox_TitleText, 
+                                                    $"{Properties.Resources.Exception_SqlNoMinimumClauses}\r\n\r\n{string.Format(MinSqlCode, SelectedMainTemplate.SelectedSubTemplate.SheetName)}",
+                                                    Controls.MessageBoxUC.MessageType.Error);
                 }
             }
             else
@@ -142,7 +160,7 @@ namespace ListFlow.Views
 
         private void QueryUICommand_CanExecuted(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = SelectedMainTemplate.SelectedSubTemplate != null;
         }
 
         /// <summary>
@@ -187,6 +205,9 @@ namespace ListFlow.Views
             e.CanExecute = SelectedMainTemplate.IsParametersValueChanged && !string.IsNullOrEmpty(SelectedMainTemplate.Title.Trim());
         }
 
+        /// <summary>
+        /// Saves the parameters of the main template.
+        /// </summary>
         private void MainSaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try

@@ -6,7 +6,8 @@
     <!--  Converters  -->
     <hlp:BooleanToVisibilityConverter x:Key="BooleanToVisibiliyConverter" />
     <hlp:BooleanToCollapsedConverter x:Key="BooleanToCollapsedConverter" />
-    <hlp:NullStringToBooleanConverter x:Key="NullToBooleanConverter" />
+    <hlp:NullStringToBooleanConverter x:Key="NullStringToBooleanConverter" />
+    <hlp:NullToBooleanConverter x:Key="NullToBooleanConverter" />
     <hlp:BooleanInverterConverter x:Key="BooleanInverterConverter" />
     <hlp:EventDetailsUsageToBooleanConverter x:Key="EventDetailsUsageToBooleanConverter" />
     <hlp:EventDetailsUsageToVisibilityConverter x:Key="EventDetailsUsageToVisibilityConverter" />
